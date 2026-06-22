@@ -294,6 +294,30 @@ export default function App() {
     saveOrdersToStorage(nextOrders);
     setLatestOrder(newOrder);
 
+    // Send order directly to Gmail/Admin Mailbox via our server-side API
+    fetch('/api/place-order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ order: newOrder }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          if (data.emailSent) {
+            triggerToast('Order Submitted', `Order placed! Notification email sent to ${data.recipient || 'your inbox'}.`, 'success');
+          } else {
+            console.warn(data.message);
+            // Non-disruptive feedback for the development/config process
+            triggerToast('Order Submitted', 'Order received locally! Setup SMTP email credentials to receive direct notifications.', 'success');
+          }
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to dispatch order notification email:', err);
+      });
+
     // Wipe cart in storage
     saveCartToStorage([]);
     localStorage.removeItem('akash_cart_discount_percent');
