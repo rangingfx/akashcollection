@@ -38,7 +38,7 @@ export default function OrderSuccessModal({ order, onContinueShopping }: OrderSu
             </p>
           </div>
           <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto leading-relaxed">
-            Shukriya for choosing Akash Collection! We have received your order details and our tailoring team is preparing your package.
+            Shukriya for choosing Akash Collection Wholesale! We have received your order details and our tailoring team is preparing your package.
           </p>
         </div>
 

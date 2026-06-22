@@ -45,7 +45,7 @@ export default function NewsletterSubscription() {
             STAY IN THE KNOW
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-stone-900">
-            Join the <span className="italic">Akash Club</span>
+            Join the <span className="italic">Akash Wholesale Club</span>
           </h2>
           <p className="text-stone-600 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto font-sans">
             Subscribe to be the first to know about new catalog releases, luxury lookbook previews, weekly styling edits, and exclusive member-only collections in Pakistan.

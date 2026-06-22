@@ -72,8 +72,8 @@ export default function Header({
           <span className="font-serif text-3xl font-bold tracking-tighter text-[#1a1a1a]">
             AKASH
           </span>
-          <span className="text-[9px] uppercase tracking-[0.4em] -mt-1 text-stone-500 font-medium">
-            Collection
+          <span className="text-[9px] uppercase tracking-[0.4em] -mt-1 text-stone-500 font-medium whitespace-nowrap">
+            Collection Wholesale
           </span>
         </div>
 
@@ -273,7 +273,7 @@ export default function Header({
             </div>
 
             <div className="mt-auto pt-8 text-center text-[10px] text-gray-400 font-mono" id="mobile-nav-foot">
-              <p>© 2026 Akash Collection Pakistan</p>
+              <p>© 2026 Akash Collection Wholesale Pakistan</p>
               <p className="mt-1">Designed with Modern Pakistani Elegance</p>
             </div>
           </div>

@@ -46,7 +46,7 @@ export default function ProductCard({
       try {
         await navigator.share({
           title: product.title,
-          text: `Check out this gorgeous ${product.title} on Akash Collection!`,
+          text: `Check out this gorgeous ${product.title} on Akash Collection Wholesale!`,
           url: shareUrl,
         });
         if (onShareSuccess) {

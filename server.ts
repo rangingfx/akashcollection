@@ -71,7 +71,7 @@ function generateOrderHtml(order: any): string {
         
         <!-- Header Banner -->
         <div style="background-color: #1c1917; color: #ffffff; padding: 30px 24px; text-align: center;">
-          <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 24px; letter-spacing: 0.1em; font-weight: 600; text-transform: uppercase;">Akash Collection</h1>
+          <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 24px; letter-spacing: 0.1em; font-weight: 600; text-transform: uppercase;">Akash Collection Wholesale</h1>
           <p style="margin: 8px 0 0 0; color: #d6d3d1; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; font-family: monospace;">New Web Order Received</p>
         </div>
 
@@ -161,7 +161,7 @@ function generateOrderHtml(order: any): string {
 
         <div style="background-color: #fafaf9; border-top: 1px solid #e7e5e4; padding: 20px 24px; text-align: center; font-size: 11px; color: #78716c;">
           <p style="margin: 0;">This order email notification was dispatched directly from your virtual e-commerce system.</p>
-          <p style="margin: 4px 0 0 0; font-family: monospace;">Akash Collection Pakistan &bull; Powered by RanginGfx.com</p>
+          <p style="margin: 4px 0 0 0; font-family: monospace;">Akash Collection Wholesale Pakistan &bull; Powered by RanginGfx.com</p>
         </div>
       </div>
     </body>
@@ -232,7 +232,7 @@ app.post("/api/place-order", async (req, res) => {
       
       // Dispatch
       await transporter.sendMail({
-        from: `"Akash Collection E-shop" <${smtpUser}>`,
+        from: `"Akash Collection Wholesale E-shop" <${smtpUser}>`,
         to: recipientEmail,
         subject: `[NEW ORDER] Order ID: ${order.id} - Customer: ${order.customer.firstName} ${order.customer.lastName}`,
         text: `New order ${order.id} received on ${order.date}.\n\n` +

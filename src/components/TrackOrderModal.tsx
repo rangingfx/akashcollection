@@ -52,7 +52,7 @@ export default function TrackOrderModal({ onClose, orders }: TrackOrderModalProp
     if (localMatch) {
       // Create detailed steps based on local order status
       const steps = [
-        { title: 'Order Booking Catalogued', description: 'Order logged into the Akash system from secure browser portal.', time: 'Today, 2:10 PM', done: true, active: false },
+        { title: 'Order Booking Catalogued', description: 'Order logged into the Akash Wholesale system from secure browser portal.', time: 'Today, 2:10 PM', done: true, active: false },
         { title: 'Tailoring & Styling Verification', description: 'Garment dimensions and print quality checked by quality control.', time: 'Today, 4:30 PM', done: true, active: true },
         { title: 'Handed over to Leopards Courier', description: 'Package wrapped in secure brand polybag and dispatched to Lahore dispatch dock.', time: 'Awaiting voice confirmation call', done: false, active: false },
         { title: 'Home Package Handover', description: 'Delivery rider delivers parcel to consumer address.', time: 'Est. 2-3 working days', done: false, active: false }

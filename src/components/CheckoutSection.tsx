@@ -341,7 +341,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
                   <div className="flex items-start gap-2 text-xs text-stone-900 font-mono leading-relaxed">
                     <Building2 size={16} className="text-stone-800 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-bold uppercase tracking-wider mb-2 text-stone-950">Akash Collection official Business Accounts</p>
+                      <p className="font-bold uppercase tracking-wider mb-2 text-stone-950">Akash Collection Wholesale official Business Accounts</p>
                       
                       <div className="space-y-2 border-b border-stone-200 pab-2 mb-2 pb-2">
                         <p><strong>Bank:</strong> Habib Bank Limited (HBL) Lahore Branch</p>
@@ -466,7 +466,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
               Guaranteed Authentic Pakistani Fabrics
             </span>
             <p>
-              Akash Collection sources thread yarns, dye chemical bases, and raw cambric only from certified national spinning mills. We supervise all tailoring under clean, fair, expert design conditions in Lahore. Expect premium excellence.
+              Akash Collection Wholesale sources thread yarns, dye chemical bases, and raw cambric only from certified national spinning mills. We supervise all tailoring under clean, fair, expert design conditions in Lahore. Expect premium excellence.
             </p>
           </div>
         </div>

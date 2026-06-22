@@ -533,7 +533,7 @@ export default function App() {
                   OUR PHILOSOPHY
                 </span>
                 <h2 className="font-serif text-xl sm:text-3xl font-semibold text-stone-900 tracking-wide uppercase">
-                  Akash Collection — Stitching Legacy Since 2012
+                  Akash Collection Wholesale — Stitching Legacy Since 2012
                 </h2>
                 <div className="w-16 h-[1.5px] bg-amber-800 mx-auto" />
                 <p className="text-gray-600 text-xs sm:text-sm leading-relaxed max-w-2xl mx-auto font-serif">
@@ -1144,7 +1144,7 @@ export default function App() {
 
         {/* Footer base credits */}
         <div className="max-w-7xl mx-auto pt-8 border-t border-stone-850 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 font-mono text-center" id="footer-bottom-credit">
-          <p>© 2026 Akash Collection Pakistan. All Rights Reserved. Registration ID NTN 8941258-2.</p>
+          <p>© 2026 Akash Collection Wholesale Pakistan. All Rights Reserved. Registration ID NTN 8941258-2.</p>
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-[10px] uppercase tracking-widest text-gray-500 font-medium">
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
