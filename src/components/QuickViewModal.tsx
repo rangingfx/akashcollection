@@ -4,8 +4,10 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { X, Heart, ShieldCheck, RefreshCcw, Truck, Minus, Plus, ShoppingBag, Ruler, Share2 } from 'lucide-react';
+import { X, Heart, ShieldCheck, RefreshCcw, Truck, Minus, Plus, ShoppingBag, Ruler, Share2, CalendarDays, MapPin } from 'lucide-react';
 import { Product } from '../types';
+import { CITIES_OF_PAKISTAN } from '../data/products';
+import { getEstimatedDeliveryDays, formatDeliveryDateRange } from '../lib/delivery';
 
 interface QuickViewModalProps {
   product: Product;
@@ -20,6 +22,10 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onShareS
   const [mainImage, setMainImage] = useState<string>(product.image);
   const [activeTab, setActiveTab] = useState<'details' | 'fabric' | 'shipping'>('details');
   const [showSizeChart, setShowSizeChart] = useState<boolean>(false);
+  const [deliveryCity, setDeliveryCity] = useState<string>('Lahore');
+
+  const [deliveryMin, deliveryMax] = getEstimatedDeliveryDays(deliveryCity);
+  const estimatedDeliveryRange = formatDeliveryDateRange(deliveryMin, deliveryMax);
 
   const handleShare = async (e?: React.MouseEvent) => {
     if (e) {
@@ -379,6 +385,39 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onShareS
                   Delivery speed ranges between <strong>2 to 4 working days</strong> for Lahore, Islamabad, and Karachi. Rest of Pakistan takes 3 to 5 working days. Cash On Delivery is available nationwide. Unopened items in original state can be exchanged within 14 days of delivery.
                 </p>
               )}
+            </div>
+          </div>
+
+          {/* Delivery Estimator */}
+          <div className="py-4 border-b border-gray-100 bg-amber-50/30 -mx-6 px-6" id="delivery-estimator">
+            <div className="flex items-start gap-3">
+              <CalendarDays className="text-amber-700 mt-0.5 flex-shrink-0" size={18} />
+              <div className="flex-1">
+                <span className="text-xs font-mono text-gray-800 font-bold tracking-wider uppercase block mb-2">Estimated Delivery</span>
+                
+                <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+                  <div className="relative w-full sm:w-auto">
+                    <MapPin className="absolute left-2.5 top-2 text-amber-700/50" size={14} />
+                    <select
+                      value={deliveryCity}
+                      onChange={(e) => setDeliveryCity(e.target.value)}
+                      className="w-full sm:w-36 pl-8 pr-6 py-1.5 bg-white border border-amber-200 rounded text-xs font-mono text-gray-800 outline-none focus:border-amber-400 appearance-none bg-no-repeat bg-right hover:border-amber-400/70"
+                      style={{ backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239C6644%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundSize: '8px', backgroundPosition: 'calc(100% - 8px) center' }}
+                    >
+                      {CITIES_OF_PAKISTAN.map(city => (
+                        <option key={city} value={city}>{city}</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div className="flex bg-white px-3 py-1.5 border border-amber-200 rounded w-full sm:w-auto">
+                    <span className="text-[11px] font-sans font-semibold text-amber-900 tracking-wide">{estimatedDeliveryRange}</span>
+                  </div>
+                </div>
+                <p className="text-[9px] text-amber-700/80 mt-1.5 font-mono">
+                  {deliveryMin}-{deliveryMax} working days for {deliveryCity}
+                </p>
+              </div>
             </div>
           </div>
 

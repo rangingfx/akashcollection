@@ -70,12 +70,12 @@ export default function Header({
           id="brand-logo-container"
         >
           <div className="flex items-center gap-1.5">
-            <BadgeCheck className="text-blue-500 w-6 h-6 sm:w-7 sm:h-7" fill="#1877F2" stroke="white" strokeWidth={1.5} />
             <span className="font-serif text-3xl font-bold tracking-tighter text-[#1a1a1a]">
               AKASH
             </span>
+            <BadgeCheck className="text-blue-500 w-6 h-6 sm:w-7 sm:h-7" fill="#1877F2" stroke="white" strokeWidth={1.5} />
           </div>
-          <span className="text-[9px] uppercase tracking-[0.4em] text-stone-500 font-medium whitespace-nowrap ml-8 sm:ml-9">
+          <span className="text-[9px] uppercase tracking-[0.4em] text-stone-500 font-medium whitespace-nowrap">
             Collection Wholesale
           </span>
         </div>
@@ -197,10 +197,10 @@ export default function Header({
           <div className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white p-6 shadow-xl" id="mobile-nav-drawer">
             <div className="flex items-center justify-between" id="mobile-nav-title-row">
               <div className="flex items-center gap-1.5">
-                <BadgeCheck className="text-blue-500 w-5 h-5 flex-shrink-0" fill="#1877F2" stroke="white" strokeWidth={1.5} />
                 <span className="font-serif text-xl tracking-widest text-[#1c1c1c] font-semibold">
                   AKASH PK
                 </span>
+                <BadgeCheck className="text-blue-500 w-5 h-5 flex-shrink-0" fill="#1877F2" stroke="white" strokeWidth={1.5} />
               </div>
               <button
                 id="close-mobile-menu-btn"

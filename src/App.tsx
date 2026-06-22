@@ -1045,8 +1045,8 @@ export default function App() {
           <div className="space-y-4" id="footer-col-about">
             <div>
               <div className="flex items-center gap-1.5 mb-1">
-                <BadgeCheck className="text-blue-500 w-5 h-5" fill="#1877F2" stroke="#1c1917" strokeWidth={1.5} />
                 <span className="font-serif text-lg tracking-widest text-white uppercase block mt-1">AKASH</span>
+                <BadgeCheck className="text-blue-500 w-5 h-5" fill="#1877F2" stroke="#1c1917" strokeWidth={1.5} />
               </div>
               <span className="text-[9px] font-mono text-gray-500 tracking-[0.4em] block uppercase">COLLECTION.PK</span>
             </div>

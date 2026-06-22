@@ -4,6 +4,9 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { CalendarDays } from 'lucide-react';
+import { getEstimatedDeliveryDays, formatDeliveryDateRange } from '../lib/delivery';
+
 import { ShieldCheck, ShoppingCart, ArrowLeft, Send, Sparkles, Building2, User2, MapPin, PhoneCall } from 'lucide-react';
 import { CartItem, CustomerDetails } from '../types';
 import { CITIES_OF_PAKISTAN } from '../data/products';
@@ -44,6 +47,10 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
   const shippingFee = subtotal >= 2000 ? 0 : 250;
   const discountAmount = Math.round(subtotal * (discountPercent / 100));
   const finalTotal = subtotal - discountAmount + shippingFee;
+
+  // Delivery Estimates
+  const [deliveryMin, deliveryMax] = getEstimatedDeliveryDays(formData.city);
+  const estimatedDeliveryRange = formatDeliveryDateRange(deliveryMin, deliveryMax);
 
   // Handlers
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -456,6 +463,22 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
                 <span>Final Payable:</span>
                 <span className="text-amber-900">Rs. {finalTotal.toLocaleString()}</span>
               </div>
+            </div>
+          </div>
+
+          {/* Delivery Estimator Banner */}
+          <div className="bg-amber-50/50 border border-amber-200/50 p-4 rounded-xl flex items-start gap-3" id="checkout-delivery-estimate">
+            <CalendarDays className="text-amber-700 flex-shrink-0 mt-0.5" size={16} />
+            <div>
+              <p className="text-xs font-mono font-bold text-gray-900 uppercase tracking-widest mb-1">
+                Estimated Delivery to {formData.city}:
+              </p>
+              <p className="text-[13px] font-sans font-bold text-amber-900">
+                {estimatedDeliveryRange}
+              </p>
+              <p className="text-[10px] text-gray-500 font-mono mt-1">
+                ({deliveryMin}-{deliveryMax} working days for {formData.city})
+              </p>
             </div>
           </div>
 
