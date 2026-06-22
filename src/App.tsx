@@ -81,6 +81,51 @@ export default function App() {
     setFavorites(updated);
     localStorage.setItem('akash_collection_favorites', JSON.stringify(updated));
   };
+  
+  // Product Views Tracker
+  const [productViews, setProductViews] = useState<Record<string, number>>(() => {
+    const saved = localStorage.getItem('akash_collection_product_views');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        // Safe fallback
+      }
+    }
+    
+    // Initial deterministic seeds based on popular demand
+    return {
+      'unst-001': 1482,
+      'unst-002': 943,
+      'unst-003': 1120,
+      'unst-004': 652,
+      'rtw-001': 1675,
+      'rtw-002': 823,
+      'rtw-003': 1198,
+      'fest-001': 2490,
+      'fest-002': 1850,
+      'sale-001': 2130,
+      'sale-002': 1340,
+    };
+  });
+
+  const handleQuickView = (product: Product) => {
+    setQuickViewProduct(product);
+    setProductViews(prev => {
+      const currentViews = prev[product.id] || 0;
+      const updatedViews = currentViews + 1;
+      const next = { ...prev, [product.id]: updatedViews };
+      localStorage.setItem('akash_collection_product_views', JSON.stringify(next));
+      
+      const concurrentShoppers = Math.floor(Math.random() * 6) + 3; // 3 to 8 shoppers
+      triggerToast(
+        'Popular Pick', 
+        `${product.title} has reached ${updatedViews.toLocaleString()} views. ${concurrentShoppers} customers are considering this article right now!`, 
+        'success'
+      );
+      return next;
+    });
+  };
 
   // UI Modals Toggles
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -165,6 +210,23 @@ export default function App() {
       setFilters(prev => ({ ...prev, types: [selectedCategory as any] }));
     }
   }, [selectedCategory]);
+
+  // Synchronize URL search params/hash to open quick view directly
+  useEffect(() => {
+    const checkProductParam = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const prId = urlParams.get('product') || window.location.hash.replace('#product-', '');
+      if (prId) {
+        const found = PRODUCTS.find(p => p.id === prId);
+        if (found) {
+          setQuickViewProduct(found);
+        }
+      }
+    };
+    checkProductParam();
+    window.addEventListener('hashchange', checkProductParam);
+    return () => window.removeEventListener('hashchange', checkProductParam);
+  }, []);
 
   // 1. ADD ITEM TO CART logic
   const handleAddToCart = (product: Product, size: string, quantity: number = 1) => {
@@ -697,10 +759,13 @@ export default function App() {
                         <ProductCard
                           key={product.id}
                           product={product}
-                          onQuickView={setQuickViewProduct}
+                          onQuickView={handleQuickView}
                           onAddToCart={handleAddToCart}
                           isFavorite={favorites.includes(product.id)}
                           onToggleFavorite={handleToggleFavorite}
+                          views={productViews[product.id] || 0}
+                          isTrending={(productViews[product.id] || 0) >= 1200}
+                          onShareSuccess={(title, message) => triggerToast(title, message, 'success')}
                         />
                       ))}
                     </div>
@@ -854,6 +919,7 @@ export default function App() {
           product={quickViewProduct}
           onClose={() => setQuickViewProduct(null)}
           onAddToCart={handleAddToCart}
+          onShareSuccess={(title, message) => triggerToast(title, message, 'success')}
         />
       )}
 
@@ -1069,11 +1135,21 @@ export default function App() {
         {/* Footer base credits */}
         <div className="max-w-7xl mx-auto pt-8 border-t border-stone-850 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 font-mono text-center" id="footer-bottom-credit">
           <p>© 2026 Akash Collection Pakistan. All Rights Reserved. Registration ID NTN 8941258-2.</p>
-          <div className="flex items-center gap-6 text-[10px] uppercase tracking-widest text-gray-500 font-medium">
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-[10px] uppercase tracking-widest text-gray-500 font-medium">
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
               <span>Cloud Run Server Deployed</span>
             </span>
+            <span className="hidden sm:inline text-stone-700">|</span>
+            <a 
+              href="https://RanginGfx.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="animate-rainbow-blink font-bold tracking-widest hover:scale-105 active:scale-95 transition-all text-stone-300"
+              id="powered-by-rangingfx"
+            >
+              powered by RanginGfx.com
+            </a>
           </div>
           <div className="flex gap-4">
             <a href="#app-root-layout" className="hover:text-white">Security Policies</a>

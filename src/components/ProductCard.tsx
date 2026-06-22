@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Eye, ShoppingCart, Percent, Heart } from 'lucide-react';
+import { Eye, ShoppingCart, Percent, Heart, Flame, Share2 } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -14,6 +14,9 @@ interface ProductCardProps {
   onAddToCart: (product: Product, size: string, quantity?: number) => void;
   isFavorite?: boolean;
   onToggleFavorite?: (product: Product) => void;
+  views?: number;
+  isTrending?: boolean;
+  onShareSuccess?: (title: string, message: string) => void;
 }
 
 export default function ProductCard({ 
@@ -21,12 +24,70 @@ export default function ProductCard({
   onQuickView, 
   onAddToCart,
   isFavorite = false,
-  onToggleFavorite
+  onToggleFavorite,
+  views = 0,
+  isTrending = false,
+  onShareSuccess
 }: ProductCardProps) {
   const hasDiscount = !!product.originalPrice;
   const discountPercent = hasDiscount
     ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
     : 0;
+
+  const handleShare = async (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    
+    const shareUrl = `${window.location.origin}${window.location.pathname}?product=${product.id}`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: product.title,
+          text: `Check out this gorgeous ${product.title} on Akash Collection!`,
+          url: shareUrl,
+        });
+        if (onShareSuccess) {
+          onShareSuccess('Product Shared', `${product.title} was shared successfully!`);
+        }
+      } catch (err) {
+        if (err instanceof Error && err.name !== 'AbortError') {
+          fallbackCopyToClipboard(shareUrl);
+        }
+      }
+    } else {
+      fallbackCopyToClipboard(shareUrl);
+    }
+  };
+
+  const fallbackCopyToClipboard = (url: string) => {
+    navigator.clipboard.writeText(url).then(
+      () => {
+        if (onShareSuccess) {
+          onShareSuccess('Link Copied', 'Product link copied to your clipboard!');
+        }
+      },
+      () => {
+        const textArea = document.createElement("textarea");
+        textArea.value = url;
+        textArea.style.position = "fixed";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          if (onShareSuccess) {
+            onShareSuccess('Link Copied', 'Product link copied to your clipboard!');
+          }
+        } catch (err) {
+          console.error('Was unable to copy to clipboard', err);
+        }
+        document.body.removeChild(textArea);
+      }
+    );
+  };
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -53,6 +114,12 @@ export default function ProductCard({
 
         {/* Badges Overlay */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 items-start" id={`badges-overlay-${product.id}`}>
+          {isTrending && (
+            <span className="bg-amber-500 text-stone-950 text-[9px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-sm font-bold flex items-center gap-1 shadow-sm border border-amber-400 animate-pulse">
+              <Flame size={10} className="fill-stone-950 text-stone-950" />
+              TRENDING
+            </span>
+          )}
           {product.type === 'festive' && (
             <span className="bg-stone-100 text-stone-900 text-[10px] font-semibold tracking-widest uppercase px-2.5 py-0.5 rounded-sm border border-stone-200/50">
               Luxury Festive
@@ -89,6 +156,19 @@ export default function ProductCard({
           />
         </button>
 
+        {/* Share product button overlay */}
+        <button
+          id={`share-btn-${product.id}`}
+          onClick={handleShare}
+          className="absolute top-12 right-2.5 z-10 bg-white/95 hover:bg-white p-2 rounded-full shadow-sm text-stone-900 transition-all duration-300 backdrop-blur-[2px] border border-stone-100/50 flex items-center justify-center hover:scale-105 active:scale-95"
+          title="Share this product with friends"
+        >
+          <Share2 
+            size={15} 
+            className="text-stone-700 hover:text-stone-950 transition-colors"
+          />
+        </button>
+
         {/* Fabric Type bottom badge */}
         <div className="absolute bottom-2.5 left-2.5" id={`fabric-badge-wrap-${product.id}`}>
           <span className="bg-white/90 text-gray-800 text-[9px] font-mono tracking-widest font-semibold uppercase px-2 py-0.5 rounded-full shadow-sm backdrop-blur-[2px]">
@@ -121,6 +201,15 @@ export default function ProductCard({
           >
             <ShoppingCart size={16} />
           </button>
+
+          <button
+            id={`card-share-action-btn-${product.id}`}
+            onClick={handleShare}
+            className="bg-white p-2.5 rounded-full shadow-md text-gray-800 hover:bg-black hover:text-white transition-colors duration-200"
+            title="Share Product link"
+          >
+            <Share2 size={16} />
+          </button>
         </div>
       </div>
 
@@ -128,9 +217,17 @@ export default function ProductCard({
       <div className="p-4 flex flex-col flex-grow bg-white" id={`product-info-wrap-${product.id}`}>
         {/* Title & SKU */}
         <div className="flex-grow">
-          <span className="text-[10px] font-mono text-gray-400 tracking-wider">
-            SKU: {product.sku}
-          </span>
+          <div className="flex justify-between items-center gap-2">
+            <span className="text-[10px] font-mono text-gray-400 tracking-wider">
+              SKU: {product.sku}
+            </span>
+            {views > 0 && (
+              <span className="text-[10px] font-mono text-stone-500 flex items-center gap-1.5" title="Viewed by shoppers">
+                <Eye size={12} className="text-stone-400" />
+                <span>{views.toLocaleString()}</span>
+              </span>
+            )}
+          </div>
           <h3 className="font-serif text-sm font-medium text-gray-900 group-hover:text-stone-600 transition-colors line-clamp-1 mt-0.5">
             {product.title}
           </h3>

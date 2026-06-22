@@ -4,21 +4,77 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { X, Heart, ShieldCheck, RefreshCcw, Truck, Minus, Plus, ShoppingBag, Ruler } from 'lucide-react';
+import { X, Heart, ShieldCheck, RefreshCcw, Truck, Minus, Plus, ShoppingBag, Ruler, Share2 } from 'lucide-react';
 import { Product } from '../types';
 
 interface QuickViewModalProps {
   product: Product;
   onClose: () => void;
   onAddToCart: (product: Product, size: string, quantity: number) => void;
+  onShareSuccess?: (title: string, message: string) => void;
 }
 
-export default function QuickViewModal({ product, onClose, onAddToCart }: QuickViewModalProps) {
+export default function QuickViewModal({ product, onClose, onAddToCart, onShareSuccess }: QuickViewModalProps) {
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [quantity, setQuantity] = useState<number>(1);
   const [mainImage, setMainImage] = useState<string>(product.image);
   const [activeTab, setActiveTab] = useState<'details' | 'fabric' | 'shipping'>('details');
   const [showSizeChart, setShowSizeChart] = useState<boolean>(false);
+
+  const handleShare = async (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    
+    const shareUrl = `${window.location.origin}${window.location.pathname}?product=${product.id}`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: product.title,
+          text: `Check out this gorgeous ${product.title} on Akash Collection!`,
+          url: shareUrl,
+        });
+        if (onShareSuccess) {
+          onShareSuccess('Product Shared', `${product.title} was shared successfully!`);
+        }
+      } catch (err) {
+        if (err instanceof Error && err.name !== 'AbortError') {
+          fallbackCopyToClipboard(shareUrl);
+        }
+      }
+    } else {
+      fallbackCopyToClipboard(shareUrl);
+    }
+  };
+
+  const fallbackCopyToClipboard = (url: string) => {
+    navigator.clipboard.writeText(url).then(
+      () => {
+        if (onShareSuccess) {
+          onShareSuccess('Link Copied', 'Product link copied to your clipboard!');
+        }
+      },
+      () => {
+        const textArea = document.createElement("textarea");
+        textArea.value = url;
+        textArea.style.position = "fixed";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          if (onShareSuccess) {
+            onShareSuccess('Link Copied', 'Product link copied to your clipboard!');
+          }
+        } catch (err) {
+          console.error('Was unable to copy to clipboard', err);
+        }
+        document.body.removeChild(textArea);
+      }
+    );
+  };
 
   // Initialize size
   useEffect(() => {
@@ -111,9 +167,19 @@ export default function QuickViewModal({ product, onClose, onAddToCart }: QuickV
             <span className="text-xs font-mono text-gray-500 bg-gray-100 py-1 px-2.5 rounded-full uppercase tracking-wider">
               {product.fabric} • {product.pieces}
             </span>
-            <h1 className="font-serif text-xl sm:text-2xl font-semibold text-gray-950 mt-3">
-              {product.title}
-            </h1>
+            <div className="flex justify-between items-start gap-4 mt-3">
+              <h1 className="font-serif text-xl sm:text-2xl font-semibold text-gray-950">
+                {product.title}
+              </h1>
+              <button
+                id={`modal-share-btn-${product.id}`}
+                onClick={handleShare}
+                className="p-2 rounded-full border border-stone-200 text-stone-600 hover:bg-stone-50 hover:text-stone-900 transition-colors flex items-center justify-center flex-shrink-0 shadow-sm"
+                title="Share this product"
+              >
+                <Share2 size={15} />
+              </button>
+            </div>
             <p className="text-xs font-mono text-gray-400 mt-1">SKU: {product.sku}</p>
 
             {/* Price section */}
