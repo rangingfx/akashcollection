@@ -3,15 +3,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
-import { ShoppingBag, Search, HelpCircle, Truck, Menu, X, ArrowRight, Phone, Mail, MapPin, BadgeCheck } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShoppingBag, Search, HelpCircle, Truck, Menu, X, ArrowRight, Phone, Mail, MapPin, BadgeCheck, Heart } from 'lucide-react';
 import { CartItem } from '../types';
 
 interface HeaderProps {
   cart: CartItem[];
+  favoritesCount?: number;
   onOpenCart: () => void;
   onOpenTrack: () => void;
-  onCategorySelect: (category: 'all' | 'unstitched' | 'ready-to-wear' | 'festive' | 'sale') => void;
+  onCategorySelect: (category: 'all' | 'unstitched' | 'ready-to-wear' | 'festive' | 'sale' | 'wishlist') => void;
   selectedCategory: string;
   onSearch: (term: string) => void;
   searchTerm: string;
@@ -19,6 +20,7 @@ interface HeaderProps {
 
 export default function Header({
   cart,
+  favoritesCount = 0,
   onOpenCart,
   onOpenTrack,
   onCategorySelect,
@@ -28,24 +30,47 @@ export default function Header({
 }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isBouncing, setIsBouncing] = useState(false);
 
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  useEffect(() => {
+    if (cartCount > 0) {
+      setIsBouncing(true);
+      const timer = setTimeout(() => setIsBouncing(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [cartCount]);
 
   const navItems = [
     { label: 'All design', value: 'all' },
     { label: 'Unstitched Lawn', value: 'unstitched' },
     { label: 'Ready to Wear', value: 'ready-to-wear' },
     { label: 'Festive Luxury', value: 'festive' },
+    { label: 'Wishlist', value: 'wishlist' },
     { label: 'Sale Flat 30%', value: 'sale', isSale: true }
   ];
 
-  const handleNavClick = (val: 'all' | 'unstitched' | 'ready-to-wear' | 'festive' | 'sale') => {
+  const handleNavClick = (val: 'all' | 'unstitched' | 'ready-to-wear' | 'festive' | 'sale' | 'wishlist') => {
     onCategorySelect(val);
     setIsMobileMenuOpen(false);
   };
 
   return (
     <header className="sticky top-0 z-40 bg-white" id="main-header">
+      {/* 0. Urdu Announcement Bar */}
+      <div className="bg-stone-900 text-white font-urdu text-[11px] md:text-[13px] leading-relaxed shadow-sm w-full overflow-hidden flex relative items-center h-8 md:h-10 border-b border-stone-800" style={{ direction: 'rtl' }} id="urdu-news-bar">
+        <div className="bg-red-600 text-white px-3 md:px-4 py-1 h-full flex items-center justify-center font-bold z-10 shadow-[2px_0_10px_rgba(0,0,0,0.5)] whitespace-nowrap shrink-0 relative">
+           <span className="animate-pulse">اہم خبر</span>
+           <div className="absolute top-0 bottom-0 left-[-10px] w-0 h-0 border-t-[16px] md:border-t-[20px] border-t-transparent border-b-[16px] md:border-b-[20px] border-b-transparent border-r-[10px] border-r-red-600"></div>
+        </div>
+        <div className="flex-1 overflow-hidden h-full flex items-center" style={{ direction: 'rtl' }}>
+          <div className="animate-marquee-rtl whitespace-nowrap min-w-full flex items-center h-full text-amber-500 pr-5">
+            پورے پاکستان میں کیش آن ڈیلیوری دستیاب ہے۔ ڈائریکٹ بینک ٹرانسفر کی صورت میں 10٪ ڈسکاؤنٹ حاصل کریں! مزید اپ ڈیٹس کے لیے ہمارے ساتھ جڑے رہیں ۔
+          </div>
+        </div>
+      </div>
+
       {/* 1. Top Bar Marquee */}
       <div className="bg-[#1a1a1a] text-white py-2.5 px-4 text-[10px] font-semibold tracking-[0.2em] uppercase text-center flex items-center justify-center gap-1 overflow-hidden" id="header-promo-bar">
         <span className="animate-pulse">Free Worldwide Shipping on Orders Above Rs. 5000 | Limited Time Offer</span>
@@ -115,11 +140,26 @@ export default function Header({
             <span>Track Order</span>
           </button>
 
+          {/* Wishlist Utility */}
+          <button
+            id="header-wishlist-btn"
+            onClick={() => onCategorySelect('wishlist')}
+            className="relative flex items-center gap-1.5 text-stone-800 hover:text-red-500 p-1.5 transition-colors focus:outline-none hidden sm:flex"
+            aria-label="Open Wishlist"
+          >
+            <Heart size={21} strokeWidth={1.8} />
+            {favoritesCount > 0 && (
+              <span id="wishlist-badge" className="absolute -top-1 -right-1 bg-red-500 text-white font-mono text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                {favoritesCount}
+              </span>
+            )}
+          </button>
+
           {/* Cart Bag with Badge */}
           <button
             id="header-cart-btn"
             onClick={onOpenCart}
-            className="relative flex items-center gap-1.5 text-stone-800 hover:text-stone-500 p-1.5 transition-colors focus:outline-none"
+            className={`relative flex items-center gap-1.5 text-stone-800 hover:text-stone-500 p-1.5 transition-all duration-300 focus:outline-none ${isBouncing ? '-translate-y-1 scale-110' : 'translate-y-0 scale-100'}`}
             aria-label="Open Shopping Cart"
           >
             <ShoppingBag size={21} strokeWidth={1.8} />

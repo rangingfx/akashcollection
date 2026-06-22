@@ -29,6 +29,18 @@ interface TrackResult {
   }[];
 }
 
+const STAGE_INDEX: Record<string, number> = {
+  'Pending': 0,
+  'Confirmed': 0,
+  'Processing': 1,
+  'Shipped': 2,
+  'Out for Delivery': 2,
+  'Dispatched': 2,
+  'Delivered': 3
+};
+
+const PROGRESS_STAGES = ['Confirmed', 'Processing', 'Dispatched', 'Delivered'];
+
 export default function TrackOrderModal({ onClose, orders }: TrackOrderModalProps) {
   const [searchId, setSearchId] = useState('');
   const [trackResult, setTrackResult] = useState<TrackResult | null>(null);
@@ -172,6 +184,33 @@ export default function TrackOrderModal({ onClose, orders }: TrackOrderModalProp
               <div className="flex justify-between items-start">
                 <span className="text-gray-400">Destination:</span>
                 <span className="text-gray-900 font-bold text-right max-w-[240px] leading-tight line-clamp-1">{trackResult.address}</span>
+              </div>
+            </div>
+
+            {/* Real-time Stage Progress Bar */}
+            <div className="py-2 mb-2 w-full max-w-sm mx-auto" id="tracking-stage-progress">
+              <div className="flex items-center justify-between relative mb-2">
+                {/* Connecting Line background */}
+                <div className="absolute top-3 left-[12.5%] right-[12.5%] h-[2px] bg-gray-200 z-0"></div>
+                {/* Connecting Line foreground active */}
+                <div 
+                  className="absolute top-3 left-[12.5%] h-[2px] bg-emerald-600 z-0 transition-all duration-700 ease-in-out"
+                  style={{ width: `${((STAGE_INDEX[trackResult.status] ?? 0) / 3) * 75}%` }}
+                ></div>
+                {PROGRESS_STAGES.map((stage, i) => {
+                  const currentIdx = STAGE_INDEX[trackResult.status] ?? 0;
+                  const isDone = i <= currentIdx;
+                  return (
+                    <div key={stage} className="flex flex-col items-center relative z-10 w-1/4">
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold border-2 transition-colors duration-500 bg-white ${isDone ? 'border-emerald-600 text-emerald-600' : 'border-gray-200 text-gray-300'}`}>
+                        {isDone ? <Check size={12} strokeWidth={3} /> : (i + 1)}
+                      </div>
+                      <span className={`text-[8px] sm:text-[9px] font-bold font-mono tracking-wide mt-2 uppercase text-center ${isDone ? 'text-emerald-700' : 'text-gray-400'}`}>
+                        {stage}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
