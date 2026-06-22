@@ -314,7 +314,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
                 <label 
                   className={`flex flex-col p-4 border rounded-xl cursor-pointer transition-all ${
                     formData.paymentMethod === 'bank_transfer'
-                      ? 'border-[#854D0E] bg-amber-50/20 ring-1 ring-[#854D0E]'
+                      ? 'border-stone-900 bg-stone-50/35 ring-1 ring-stone-900'
                       : 'border-gray-200 hover:border-gray-400 bg-white'
                   }`}
                 >
@@ -325,7 +325,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
                       value="bank_transfer"
                       checked={formData.paymentMethod === 'bank_transfer'}
                       onChange={() => setFormData(p => ({ ...p, paymentMethod: 'bank_transfer' }))}
-                      className="accent-amber-800 focus:ring-0"
+                      className="accent-stone-900 focus:ring-0"
                     />
                     <span className="font-serif text-sm font-bold text-gray-900">Direct Bank Transfer</span>
                   </div>
@@ -337,13 +337,13 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
 
               {/* Bank detailed box */}
               {formData.paymentMethod === 'bank_transfer' && (
-                <div className="bg-[#FEF5E7] border border-[#F6DDCC] p-4 rounded-xl space-y-4 animate-fadeIn" id="bank-accounts-info">
-                  <div className="flex items-start gap-2 text-xs text-amber-900 font-mono leading-relaxed">
-                    <Building2 size={16} className="text-amber-800 flex-shrink-0 mt-0.5" />
+                <div className="bg-stone-50 border border-stone-200 p-4 rounded-xl space-y-4 animate-fadeIn" id="bank-accounts-info">
+                  <div className="flex items-start gap-2 text-xs text-stone-900 font-mono leading-relaxed">
+                    <Building2 size={16} className="text-stone-800 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-bold uppercase tracking-wider mb-2">Akash Collection official Business Accounts</p>
+                      <p className="font-bold uppercase tracking-wider mb-2 text-stone-950">Akash Collection official Business Accounts</p>
                       
-                      <div className="space-y-2 border-b border-amber-200 pab-2 mb-2 pb-2">
+                      <div className="space-y-2 border-b border-stone-200 pab-2 mb-2 pb-2">
                         <p><strong>Bank:</strong> Habib Bank Limited (HBL) Lahore Branch</p>
                         <p><strong>Account Title:</strong> AKASH COLLECTION PRIVATE LTD</p>
                         <p><strong>Account No:</strong> 5082-1004929312</p>
@@ -360,11 +360,11 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
 
                   {/* Attachment upload */}
                   <div className="pt-2">
-                    <label className="text-[10px] font-mono font-bold text-amber-900 block mb-2 uppercase">
+                    <label className="text-[10px] font-mono font-bold text-stone-900 block mb-2 uppercase">
                       Upload receipt snapshot (Optional - speeds up checkout validation)
                     </label>
                     <div className="flex items-center gap-3">
-                      <label className="bg-white border border-dashed border-amber-300 rounded-lg px-4 py-2 text-xs font-semibold text-amber-900 hover:bg-amber-100/50 cursor-pointer transition-colors max-w-fit">
+                      <label className="bg-white border border-dashed border-stone-300 rounded-lg px-4 py-2 text-xs font-semibold text-stone-900 hover:bg-stone-50 cursor-pointer transition-colors max-w-fit">
                         <span>Select Receipt File</span>
                         <input
                           type="file"
@@ -373,7 +373,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
                           className="hidden"
                         />
                       </label>
-                      <span className="text-[11px] font-mono text-amber-800">
+                      <span className="text-[11px] font-mono text-stone-700">
                         {fileSelectedName ? fileSelectedName : 'No file selected'}
                       </span>
                     </div>
@@ -387,7 +387,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
               <button
                 id="place-order-submit-btn"
                 type="submit"
-                className="w-full bg-amber-800 hover:bg-amber-900 text-white font-mono font-bold tracking-widest text-sm py-4 rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-md focus:ring-2 focus:ring-amber-500/20"
+                className="w-full bg-stone-900 hover:bg-stone-800 text-white font-sans font-bold tracking-[0.15em] text-sm py-4 rounded-md flex items-center justify-center gap-2.5 transition-all shadow-md focus:ring-2 focus:ring-stone-500/20"
               >
                 <Send size={15} />
                 <span>CONFIRM & PLACE ORDER — RS. {finalTotal.toLocaleString()}</span>

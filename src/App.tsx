@@ -15,7 +15,12 @@ import {
   Truck, 
   Clock, 
   ChevronRight,
-  Heart
+  Heart,
+  Facebook,
+  Youtube,
+  Mail,
+  MapPin,
+  Phone
 } from 'lucide-react';
 
 import Header from './components/Header';
@@ -25,6 +30,7 @@ import CartDrawer from './components/CartDrawer';
 import CheckoutSection from './components/CheckoutSection';
 import OrderSuccessModal from './components/OrderSuccessModal';
 import TrackOrderModal from './components/TrackOrderModal';
+import NewsletterSubscription from './components/NewsletterSubscription';
 
 import { PRODUCTS, MOCK_REVIEWS } from './data/products';
 import { Product, CartItem, FilterState, Order, CustomerDetails } from './types';
@@ -43,6 +49,38 @@ export default function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [placedOrders, setPlacedOrders] = useState<Order[]>([]);
   const [latestOrder, setLatestOrder] = useState<Order | null>(null);
+
+  // Favorites & Toasts State
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const [toasts, setToasts] = useState<{
+    id: string;
+    title: string;
+    message: string;
+    type: 'favorite' | 'unfavorite' | 'success';
+  }[]>([]);
+
+  // Toast dispatch helper
+  const triggerToast = (title: string, message: string, type: 'favorite' | 'unfavorite' | 'success') => {
+    const id = Date.now().toString() + Math.random().toString().substr(2, 5);
+    setToasts(prev => [...prev, { id, title, message, type }]);
+    setTimeout(() => {
+      setToasts(prev => prev.filter(t => t.id !== id));
+    }, 4500);
+  };
+
+  const handleToggleFavorite = (product: Product) => {
+    const isFav = favorites.includes(product.id);
+    let updated: number[];
+    if (isFav) {
+      updated = favorites.filter(id => id !== product.id);
+      triggerToast('Removed from Wishlist', `${product.title} has been removed.`, 'unfavorite');
+    } else {
+      updated = [...favorites, product.id];
+      triggerToast('Added to Wishlist', `${product.title} has been added to your favorites!`, 'favorite');
+    }
+    setFavorites(updated);
+    localStorage.setItem('akash_collection_favorites', JSON.stringify(updated));
+  };
 
   // UI Modals Toggles
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -81,6 +119,15 @@ export default function App() {
         setPlacedOrders(JSON.parse(savedOrders));
       } catch (e) {
         console.error('Error parsing orders from localStorage', e);
+      }
+    }
+
+    const savedFavorites = localStorage.getItem('akash_collection_favorites');
+    if (savedFavorites) {
+      try {
+        setFavorites(JSON.parse(savedFavorites));
+      } catch (e) {
+        console.error('Error parsing favorites from localStorage', e);
       }
     }
   }, []);
@@ -350,15 +397,15 @@ export default function App() {
                     className="w-full h-full object-cover object-center"
                   />
                   {/* Left aligned high contrast content drawer */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent flex items-center p-6 sm:p-12 md:p-16">
-                    <div className="max-w-md md:max-w-lg text-white space-y-1 sm:space-y-4 pr-4">
-                      <span className="font-mono text-[9px] sm:text-xs text-amber-300 font-bold tracking-[0.3em] uppercase block">
+                  <div className="absolute inset-0 bg-gradient-to-r from-stone-950/75 via-stone-900/40 to-transparent flex items-center p-6 sm:p-12 md:p-20">
+                    <div className="max-w-md md:max-w-xl text-white space-y-2 sm:space-y-4 pr-4">
+                      <span className="font-sans text-[9px] sm:text-xs text-stone-300 font-semibold tracking-[0.3em] uppercase block">
                         {item.subtitle}
                       </span>
-                      <h1 className="font-serif text-lg sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-none text-white drop-shadow-sm uppercase">
+                      <h1 className="font-serif text-2xl sm:text-5xl md:text-6xl font-normal tracking-tight leading-tight text-white">
                         {item.title}
                       </h1>
-                      <p className="hidden sm:block text-xs sm:text-sm text-gray-200 leading-relaxed font-sans font-medium opacity-90">
+                      <p className="hidden sm:block text-xs sm:text-sm text-stone-200 leading-relaxed font-sans font-light opacity-90 max-w-md">
                         {item.desc}
                       </p>
                       <button
@@ -368,7 +415,7 @@ export default function App() {
                           const el = document.getElementById('collection-anchor');
                           if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
-                        className="bg-white hover:bg-amber-800 text-black hover:text-white transition-all font-mono text-[9px] sm:text-xs font-bold py-1.5 sm:py-3 px-4 sm:px-6 rounded-md hover:shadow-lg flex items-center gap-1 mt-2 tracking-widest"
+                        className="bg-stone-900 hover:bg-stone-800 border border-stone-800 text-white transition-all text-[10px] uppercase font-semibold py-3 px-8 tracking-[0.2em] hover:shadow-xl flex items-center gap-1.5 mt-4 transition-all duration-300"
                       >
                         <span>{item.cta}</span>
                         <ChevronRight size={14} />
@@ -652,6 +699,8 @@ export default function App() {
                           product={product}
                           onQuickView={setQuickViewProduct}
                           onAddToCart={handleAddToCart}
+                          isFavorite={favorites.includes(product.id)}
+                          onToggleFavorite={handleToggleFavorite}
                         />
                       ))}
                     </div>
@@ -732,6 +781,9 @@ export default function App() {
                 </div>
               </div>
             </section>
+
+            {/* NEWSLETTER SUBSCRIPTION SECTION */}
+            <NewsletterSubscription />
 
           </div>
         )}
@@ -913,12 +965,47 @@ export default function App() {
       <footer className="bg-stone-900 text-gray-400 text-xs py-12 px-4 sm:px-6 lg:px-8 border-t border-stone-850" id="main-footer">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8" id="footer-links-grid">
           
-          <div className="space-y-3" id="footer-col-about">
-            <span className="font-serif text-lg tracking-widest text-white uppercase block">AKASH</span>
-            <span className="text-[9px] font-mono text-gray-500 tracking-[0.4em] block uppercase -mt-2">COLLECTION.PK</span>
+          <div className="space-y-4" id="footer-col-about">
+            <div>
+              <span className="font-serif text-lg tracking-widest text-white uppercase block">AKASH</span>
+              <span className="text-[9px] font-mono text-gray-500 tracking-[0.4em] block uppercase -mt-2">COLLECTION.PK</span>
+            </div>
             <p className="text-[11px] text-gray-500 leading-relaxed font-sans pr-2">
-              Premium clothing brand catering to custom prints and unstitched lawn catalog articles. Crafted meticulously in Lahore since 2012.
+              Premium clothing brand catering to exquisite custom prints and unstitched lawn catalog articles. Crafted meticulously with luxury fabrics, serving Islamabad and nationwide.
             </p>
+            
+            {/* Social Channels Row */}
+            <div className="flex items-center gap-3 pt-2" id="footer-social-icons">
+              <a 
+                href="https://www.facebook.com/akashcollection.pk/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
+                title="Follow us on Facebook"
+              >
+                <Facebook size={13} />
+              </a>
+              <a 
+                href="https://www.youtube.com/@akashcollection.pk/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
+                title="Subscribe on YouTube"
+              >
+                <Youtube size={13} />
+              </a>
+              <a 
+                href="https://www.tiktok.com/@akashcollection.pk/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
+                title="Follow us on TikTok"
+              >
+                <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.09-1.47-.29-.21-.57-.44-.82-.69-.01 3.64.02 7.28-.01 10.92-.09 1.95-.91 3.86-2.5 5.01-1.9 1.42-4.52 1.79-6.75 1.01-2.45-.82-4.32-3.08-4.75-5.63-.56-3.13 1.04-6.49 3.93-7.75.92-.41 1.93-.6 2.94-.57l.02 4.09c-1.12-.13-2.3.26-3.01 1.14-.65.78-.69 2-.15 2.89.58.98 1.83 1.45 2.92 1.14 1-.26 1.69-1.21 1.7-2.25l-.01-17.31z"/>
+                </svg>
+              </a>
+            </div>
           </div>
 
           <div className="space-y-3" id="footer-col-help">
@@ -941,17 +1028,40 @@ export default function App() {
             </ul>
           </div>
 
-          <div className="space-y-3 font-mono text-[11px]" id="footer-col-contact">
-            <h4 className="font-serif text-sm font-bold text-gray-100 uppercase tracking-widest">Business coordinates</h4>
-            <p className="flex items-start gap-1">
-              <span>Retail Outlet: Shop #14, Ground Floor, Liberty Plaza, Gulberg III, Lahore, Pakistan.</span>
-            </p>
-            <p className="flex items-center gap-1.5 mt-1.5">
-              <span>Customer HelpDesk: +92 300 8123456</span>
-            </p>
-            <p className="flex items-center gap-1.5">
-              <span>Email Booking: support@akashcollection.pk</span>
-            </p>
+          <div className="space-y-3 font-sans text-[11px]" id="footer-col-contact">
+            <h4 className="font-serif text-sm font-bold text-gray-100 uppercase tracking-widest">Connect with Us</h4>
+            
+            <div className="flex items-start gap-2 text-gray-400">
+              <MapPin size={13} className="text-gray-300 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-gray-200">Retail Headquarters</p>
+                <p>Akashcollection.pk, Sohan, Islamabad, Pakistan</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-2 text-gray-400 pt-1">
+              <Phone size={13} className="text-gray-300 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-gray-200">WhatsApp & Support</p>
+                <p className="font-mono">
+                  <a href="https://wa.me/923495645773" target="_blank" rel="noopener noreferrer" className="hover:text-white underline">
+                    +92 349 5645773
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-2 text-gray-400 pt-1">
+              <Mail size={13} className="text-gray-300 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-gray-200">Corporate Email</p>
+                <p className="font-mono">
+                  <a href="mailto:info@akashcollection.pk" className="hover:text-white underline text-stone-300">
+                    info@akashcollection.pk
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -959,15 +1069,78 @@ export default function App() {
         {/* Footer base credits */}
         <div className="max-w-7xl mx-auto pt-8 border-t border-stone-850 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 font-mono text-center" id="footer-bottom-credit">
           <p>© 2026 Akash Collection Pakistan. All Rights Reserved. Registration ID NTN 8941258-2.</p>
+          <div className="flex items-center gap-6 text-[10px] uppercase tracking-widest text-gray-500 font-medium">
+            <span className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span>Cloud Run Server Deployed</span>
+            </span>
+          </div>
           <div className="flex gap-4">
             <a href="#app-root-layout" className="hover:text-white">Security Policies</a>
             <span>•</span>
             <a href="#app-root-layout" className="hover:text-white">Usage Regulations</a>
-            <span>•</span>
-            <a href="#app-root-layout" className="hover:text-white opacity-20">Designed by Gulberg Studios</a>
           </div>
         </div>
       </footer>
+
+      {/* Toast Notifications Overlay */}
+      <div 
+        className="fixed top-6 right-6 z-[9999] flex flex-col gap-3 max-w-sm w-full pointer-events-none px-4 sm:px-0" 
+        id="global-toast-notification-container"
+      >
+        {toasts.map(toast => (
+          <div
+            key={toast.id}
+            className="bg-white border border-stone-200 shadow-2xl p-4 rounded-md flex items-start gap-3 pointer-events-auto animate-slide-down select-none relative overflow-hidden"
+            id={`toast-${toast.id}`}
+          >
+            <div className="absolute top-0 left-0 bottom-0 w-[3px] bg-stone-900" />
+            <div className="flex-shrink-0 mt-0.5" id={`toast-icon-${toast.id}`}>
+              {toast.type === 'favorite' ? (
+                <Heart size={16} className="fill-red-600 text-red-600 animate-pulse" />
+              ) : toast.type === 'unfavorite' ? (
+                <Heart size={16} className="text-stone-400" />
+              ) : (
+                <Sparkles size={16} className="text-stone-900" />
+              )}
+            </div>
+            <div className="flex-grow space-y-0.5" id={`toast-content-${toast.id}`}>
+              <h4 className="font-serif text-xs font-semibold text-stone-900 leading-tight">
+                {toast.title}
+              </h4>
+              <p className="text-stone-500 text-[11px] leading-normal font-sans">
+                {toast.message}
+              </p>
+            </div>
+            <button
+              onClick={() => setToasts(prev => prev.filter(t => t.id !== toast.id))}
+              className="text-stone-400 hover:text-stone-700 transition-colors p-0.5 ml-2 flex-shrink-0"
+              aria-label="Dismiss Notification"
+              id={`toast-dismiss-${toast.id}`}
+            >
+              <X size={13} />
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Floating Elegant WhatsApp Button */}
+      <a 
+        href="https://wa.me/923495645773" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="fixed bottom-6 left-6 z-[999] bg-stone-900 border border-stone-800 text-white shadow-2xl rounded-full p-3.5 flex items-center justify-center hover:bg-stone-800 hover:scale-110 active:scale-95 transition-all duration-300 group cursor-pointer pointer-events-auto"
+        id="floating-whatsapp-widget"
+        title="Chat with us on WhatsApp"
+      >
+        <div className="absolute left-full ml-3 bg-stone-900 border border-stone-800 text-white font-sans text-[10px] font-bold tracking-widest py-2 px-3 rounded-md shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none uppercase">
+          Support WhatsApp
+        </div>
+        <svg className="w-5 h-5 fill-current text-emerald-400" viewBox="0 0 24 24">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.456L0 24zm12.008-21.75c-5.412 0-9.82 4.409-9.825 9.822-.002 1.802.469 3.562 1.365 5.123l.299.52-1.01 3.69 3.774-.99.505.299c1.498.887 3.202 1.354 4.902 1.355 5.41.002 9.818-4.407 9.824-9.822.003-2.623-1.018-5.088-2.879-6.953-1.859-1.865-4.322-2.894-6.946-2.894zm5.372 13.06c-.294-.147-1.74-.86-2.012-.958-.27-.099-.469-.147-.666.147-.196.294-.761.958-.934 1.155-.171.196-.343.221-.637.074-.294-.147-1.241-.457-2.364-1.46-.874-.78-1.464-1.744-1.636-2.038-.172-.294-.018-.453.129-.6.133-.133.294-.343.441-.515.147-.171.196-.294.294-.49.098-.196.05-.367-.025-.515-.074-.148-.666-1.606-.913-2.197-.24-.578-.48-.5-.666-.51-.173-.008-.367-.01-.563-.01-.196 0-.515.073-.784.367-.27.294-1.029 1.005-1.029 2.451s1.054 2.843 1.201 3.039c.147.196 2.074 3.167 5.025 4.444.70.304 1.249.486 1.677.622.705.224 1.345.193 1.853.117.566-.084 1.741-.711 1.986-1.396.246-.686.246-1.274.172-1.396-.073-.122-.27-.196-.564-.343z"/>
+        </svg>
+      </a>
+
     </div>
   );
 }

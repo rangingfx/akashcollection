@@ -244,7 +244,7 @@ export default function CartDrawer({
                 </span>
               </div>
               {shippingFee > 0 && (
-                <p className="text-[10px] font-mono text-amber-700 italic">
+                <p className="text-[10px] font-mono text-stone-600 italic">
                   *Add Rs. {(2000 - subtotal).toLocaleString()} more value to qualify for FREE Shipping!
                 </p>
               )}
@@ -260,7 +260,7 @@ export default function CartDrawer({
               <button
                 id="drawer-proceed-btn"
                 onClick={handleCheckoutClick}
-                className="w-full bg-amber-800 hover:bg-amber-900 text-white font-mono font-bold tracking-widest text-xs py-3.5 rounded-lg flex items-center justify-center gap-2 transition-all shadow-md focus:ring-2 focus:ring-amber-500/20"
+                className="w-full bg-stone-900 hover:bg-stone-800 text-white font-sans font-semibold tracking-[0.15em] text-xs py-4 rounded-md flex items-center justify-center gap-2 transition-all shadow-md focus:ring-2 focus:ring-stone-500/20"
               >
                 <span>PROCEED TO CHECKOUT</span>
               </button>

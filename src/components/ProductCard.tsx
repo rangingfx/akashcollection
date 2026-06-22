@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Eye, ShoppingCart, Percent } from 'lucide-react';
+import { Eye, ShoppingCart, Percent, Heart } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -12,9 +12,17 @@ interface ProductCardProps {
   product: Product;
   onQuickView: (product: Product) => void;
   onAddToCart: (product: Product, size: string, quantity?: number) => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: (product: Product) => void;
 }
 
-export default function ProductCard({ product, onQuickView, onAddToCart }: ProductCardProps) {
+export default function ProductCard({ 
+  product, 
+  onQuickView, 
+  onAddToCart,
+  isFavorite = false,
+  onToggleFavorite
+}: ProductCardProps) {
   const hasDiscount = !!product.originalPrice;
   const discountPercent = hasDiscount
     ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
@@ -46,20 +54,40 @@ export default function ProductCard({ product, onQuickView, onAddToCart }: Produ
         {/* Badges Overlay */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 items-start" id={`badges-overlay-${product.id}`}>
           {product.type === 'festive' && (
-            <span className="bg-amber-100 text-amber-900 text-[10px] font-mono tracking-widest uppercase px-2.5 py-0.5 rounded-sm font-semibold border border-amber-200/50">
+            <span className="bg-stone-100 text-stone-900 text-[10px] font-semibold tracking-widest uppercase px-2.5 py-0.5 rounded-sm border border-stone-200/50">
               Luxury Festive
             </span>
           )}
           {hasDiscount && (
-            <span className="bg-[#B91C1C] text-white text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-sm font-bold flex items-center gap-1">
+            <span className="bg-red-600 text-white text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-sm font-bold flex items-center gap-1">
               <Percent size={11} />
               SAVE {discountPercent}%
             </span>
           )}
-          <span className="bg-black/75 text-white text-[9px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-sm">
+          <span className="bg-stone-900/95 text-white text-[9px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-sm">
             {product.pieces}
           </span>
         </div>
+
+        {/* Favorite wishlist Heart button overlay */}
+        <button
+          id={`favorite-btn-${product.id}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (onToggleFavorite) onToggleFavorite(product);
+          }}
+          className="absolute top-2.5 right-2.5 z-10 bg-white/95 hover:bg-white p-2 rounded-full shadow-sm text-stone-900 transition-all duration-300 backdrop-blur-[2px] border border-stone-100/50 flex items-center justify-center hover:scale-105 active:scale-95"
+          title={isFavorite ? 'Remove from wishlist' : 'Add to wishlist'}
+        >
+          <Heart 
+            size={15} 
+            className={`transition-all duration-300 ${
+              isFavorite 
+                ? 'fill-red-600 text-red-600 scale-110' 
+                : 'text-stone-700 hover:text-red-500'
+            }`} 
+          />
+        </button>
 
         {/* Fabric Type bottom badge */}
         <div className="absolute bottom-2.5 left-2.5" id={`fabric-badge-wrap-${product.id}`}>
@@ -103,7 +131,7 @@ export default function ProductCard({ product, onQuickView, onAddToCart }: Produ
           <span className="text-[10px] font-mono text-gray-400 tracking-wider">
             SKU: {product.sku}
           </span>
-          <h3 className="font-serif text-sm font-medium text-gray-900 group-hover:text-amber-800 transition-colors line-clamp-1 mt-0.5">
+          <h3 className="font-serif text-sm font-medium text-gray-900 group-hover:text-stone-600 transition-colors line-clamp-1 mt-0.5">
             {product.title}
           </h3>
           <p className="text-gray-500 text-xs mt-1 line-clamp-2 leading-relaxed">
@@ -142,7 +170,7 @@ export default function ProductCard({ product, onQuickView, onAddToCart }: Produ
           <button
             id={`card-add-btn-${product.id}`}
             onClick={handleQuickAdd}
-            className="bg-black hover:bg-neutral-800 text-white font-mono text-[10px] font-bold py-1.5 px-3.5 rounded-full transition-all tracking-wider md:opacity-0 md:group-hover:opacity-100 shadow-sm"
+            className="bg-stone-900 hover:bg-stone-800 text-white font-sans text-[10px] font-semibold py-2 px-4 rounded-md transition-all tracking-[0.1em] uppercase md:opacity-0 md:group-hover:opacity-100 shadow-sm"
           >
             {product.type === 'unstitched' ? 'ADD FABRIC' : 'QUICK ADD'}
           </button>
