@@ -1,0 +1,6 @@
+{
+  "name": "Akash Collection",
+  "description": "High-fidelity e-commerce experience for Akash Collection Pakistan, featuring luxurious unstitched and ready-to-wear clothing inspired by premium brands like Libas-e-Asghar, Gul Ahmed, and Ideas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
