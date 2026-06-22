@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { ShoppingBag, Search, HelpCircle, Truck, Menu, X, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
+import { ShoppingBag, Search, HelpCircle, Truck, Menu, X, ArrowRight, Phone, Mail, MapPin, BadgeCheck } from 'lucide-react';
 import { CartItem } from '../types';
 
 interface HeaderProps {
@@ -69,10 +69,13 @@ export default function Header({
           onClick={() => handleNavClick('all')}
           id="brand-logo-container"
         >
-          <span className="font-serif text-3xl font-bold tracking-tighter text-[#1a1a1a]">
-            AKASH
-          </span>
-          <span className="text-[9px] uppercase tracking-[0.4em] -mt-1 text-stone-500 font-medium whitespace-nowrap">
+          <div className="flex items-center gap-1.5">
+            <BadgeCheck className="text-blue-500 w-6 h-6 sm:w-7 sm:h-7" fill="#1877F2" stroke="white" strokeWidth={1.5} />
+            <span className="font-serif text-3xl font-bold tracking-tighter text-[#1a1a1a]">
+              AKASH
+            </span>
+          </div>
+          <span className="text-[9px] uppercase tracking-[0.4em] text-stone-500 font-medium whitespace-nowrap ml-8 sm:ml-9">
             Collection Wholesale
           </span>
         </div>
@@ -193,9 +196,12 @@ export default function Header({
           {/* Content container */}
           <div className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white p-6 shadow-xl" id="mobile-nav-drawer">
             <div className="flex items-center justify-between" id="mobile-nav-title-row">
-              <span className="font-serif text-xl tracking-widest text-[#1c1c1c] font-semibold">
-                AKASH PK
-              </span>
+              <div className="flex items-center gap-1.5">
+                <BadgeCheck className="text-blue-500 w-5 h-5 flex-shrink-0" fill="#1877F2" stroke="white" strokeWidth={1.5} />
+                <span className="font-serif text-xl tracking-widest text-[#1c1c1c] font-semibold">
+                  AKASH PK
+                </span>
+              </div>
               <button
                 id="close-mobile-menu-btn"
                 className="text-gray-500 hover:text-black p-1"

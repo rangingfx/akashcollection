@@ -20,7 +20,8 @@ import {
   Youtube,
   Mail,
   MapPin,
-  Phone
+  Phone,
+  BadgeCheck
 } from 'lucide-react';
 
 import Header from './components/Header';
@@ -1043,8 +1044,11 @@ export default function App() {
           
           <div className="space-y-4" id="footer-col-about">
             <div>
-              <span className="font-serif text-lg tracking-widest text-white uppercase block">AKASH</span>
-              <span className="text-[9px] font-mono text-gray-500 tracking-[0.4em] block uppercase -mt-2">COLLECTION.PK</span>
+              <div className="flex items-center gap-1.5 mb-1">
+                <BadgeCheck className="text-blue-500 w-5 h-5" fill="#1877F2" stroke="#1c1917" strokeWidth={1.5} />
+                <span className="font-serif text-lg tracking-widest text-white uppercase block mt-1">AKASH</span>
+              </div>
+              <span className="text-[9px] font-mono text-gray-500 tracking-[0.4em] block uppercase">COLLECTION.PK</span>
             </div>
             <p className="text-[11px] text-gray-500 leading-relaxed font-sans pr-2">
               Premium clothing brand catering to exquisite custom prints and unstitched lawn catalog articles. Crafted meticulously with luxury fabrics, serving Islamabad and nationwide.
