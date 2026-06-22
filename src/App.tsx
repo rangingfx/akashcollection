@@ -817,7 +817,7 @@ export default function App() {
                   </div>
                   <h3 className="font-serif text-base font-bold text-gray-100 uppercase tracking-wider">24/7 Customer WhatsApp</h3>
                   <p className="text-xs text-gray-400 leading-relaxed font-sans max-w-xs">
-                    Need help tailoring sizes or checking stock? Out of hours? Send a quick text on WhatsApp: +92 300 8123456. Friendly, instant support.
+                    Need help tailoring sizes or checking stock? Out of hours? Send a quick text on WhatsApp: +92 349 5645773. Friendly, instant support.
                   </p>
                 </div>
 
@@ -923,20 +923,6 @@ export default function App() {
         />
       )}
 
-      {/* Floating WhatsApp Action Button for Easy Pakistan Support */}
-      <a
-        id="floating-pk-whatsapp-cta"
-        href="https://wa.me/923008123456"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-[#25D366] hover:bg-[#20BA5A] text-white p-3.5 rounded-full shadow-2xl z-30 transition-transform duration-300 hover:scale-110 flex items-center justify-center group focus:outline-none"
-        title="WhatsApp Support / order clothes"
-      >
-        <MessageSquare size={22} className="relative z-10" />
-        <span className="absolute right-12 bg-black text-white text-[10px] font-mono px-3 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md selection:bg-transparent">
-          WhatsApp Order Assistant
-        </span>
-      </a>
 
       {quickViewProduct && (
         <QuickViewModal
@@ -1229,12 +1215,12 @@ export default function App() {
         href="https://wa.me/923495645773" 
         target="_blank" 
         rel="noopener noreferrer" 
-        className="fixed bottom-6 left-6 z-[999] bg-stone-900 border border-stone-800 text-white shadow-2xl rounded-full p-3.5 flex items-center justify-center hover:bg-stone-800 hover:scale-110 active:scale-95 transition-all duration-300 group cursor-pointer pointer-events-auto"
+        className="fixed bottom-6 right-6 z-[999] bg-stone-900 border border-stone-800 text-white shadow-2xl rounded-full p-3.5 flex items-center justify-center hover:bg-stone-800 hover:scale-110 active:scale-95 transition-all duration-300 group cursor-pointer pointer-events-auto"
         id="floating-whatsapp-widget"
-        title="Chat with us on WhatsApp"
+        title="WhatsApp Order Assistant"
       >
-        <div className="absolute left-full ml-3 bg-stone-900 border border-stone-800 text-white font-sans text-[10px] font-bold tracking-widest py-2 px-3 rounded-md shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none uppercase">
-          Support WhatsApp
+        <div className="absolute right-full mr-3 bg-stone-900 border border-stone-800 text-white font-sans text-[10px] font-bold tracking-widest py-2 px-3 rounded-md shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none uppercase">
+          WhatsApp Order Assistant
         </div>
         <svg className="w-5 h-5 fill-current text-emerald-400" viewBox="0 0 24 24">
           <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.456L0 24zm12.008-21.75c-5.412 0-9.82 4.409-9.825 9.822-.002 1.802.469 3.562 1.365 5.123l.299.52-1.01 3.69 3.774-.99.505.299c1.498.887 3.202 1.354 4.902 1.355 5.41.002 9.818-4.407 9.824-9.822.003-2.623-1.018-5.088-2.879-6.953-1.859-1.865-4.322-2.894-6.946-2.894zm5.372 13.06c-.294-.147-1.74-.86-2.012-.958-.27-.099-.469-.147-.666.147-.196.294-.761.958-.934 1.155-.171.196-.343.221-.637.074-.294-.147-1.241-.457-2.364-1.46-.874-.78-1.464-1.744-1.636-2.038-.172-.294-.018-.453.129-.6.133-.133.294-.343.441-.515.147-.171.196-.294.294-.49.098-.196.05-.367-.025-.515-.074-.148-.666-1.606-.913-2.197-.24-.578-.48-.5-.666-.51-.173-.008-.367-.01-.563-.01-.196 0-.515.073-.784.367-.27.294-1.029 1.005-1.029 2.451s1.054 2.843 1.201 3.039c.147.196 2.074 3.167 5.025 4.444.70.304 1.249.486 1.677.622.705.224 1.345.193 1.853.117.566-.084 1.741-.711 1.986-1.396.246-.686.246-1.274.172-1.396-.073-.122-.27-.196-.564-.343z"/>
