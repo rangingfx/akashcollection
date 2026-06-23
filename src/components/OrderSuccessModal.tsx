@@ -16,10 +16,14 @@ export default function OrderSuccessModal({ order, onContinueShopping }: OrderSu
   const deliveryDays = order.customer.city === 'Lahore' ? '1 to 2' : (['Karachi', 'Islamabad', 'Rawalpindi'].includes(order.customer.city) ? '2 to 3' : '3 to 5');
 
   const handlePrint = () => {
-    const originalTitle = document.title;
-    document.title = `Order_Receipt_${order.id}`;
-    window.print();
-    document.title = originalTitle;
+    try {
+      const originalTitle = document.title;
+      document.title = `Order_Receipt_${order.id}`;
+      window.print();
+      document.title = originalTitle;
+    } catch (e) {
+      console.warn('Printing is not allowed in this environment:', e);
+    }
   };
 
   return (

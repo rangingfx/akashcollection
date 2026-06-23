@@ -54,7 +54,7 @@ export default function App() {
   const [latestOrder, setLatestOrder] = useState<Order | null>(null);
 
   // Favorites & Toasts State
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [toasts, setToasts] = useState<{
     id: string;
     title: string;
@@ -73,7 +73,7 @@ export default function App() {
 
   const handleToggleFavorite = (product: Product) => {
     const isFav = favorites.includes(product.id);
-    let updated: number[];
+    let updated: string[];
     if (isFav) {
       updated = favorites.filter(id => id !== product.id);
       triggerToast('Removed from Wishlist', `${product.title} has been removed.`, 'unfavorite');
@@ -229,7 +229,7 @@ export default function App() {
       
       const sharedWishlist = urlParams.get('wishlist');
       if (sharedWishlist) {
-        const sharedIds = sharedWishlist.split(',').map(Number).filter(n => !isNaN(n));
+        const sharedIds = sharedWishlist.split(',').map(s => s.trim()).filter(id => id.length > 0);
         if (sharedIds.length > 0) {
           setFavorites(sharedIds);
           setSelectedCategory('wishlist');

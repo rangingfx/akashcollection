@@ -125,7 +125,12 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
     const message = `*New Order Application*%0A%0A${customerInfo}*Order Items:*%0A${itemsText}%0A%0A*Summary:*%0ASubtotal: Rs. ${subtotal.toLocaleString()}%0ADiscount: - Rs. ${discountAmount.toLocaleString()}%0AShipping: Rs. ${shippingFee.toLocaleString()}%0A*Total: Rs. ${finalTotal.toLocaleString()}*`;
     
     const whatsappUrl = `https://wa.me/923347272246?text=${message}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    try {
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    } catch (e) {
+      console.warn('Popup blocked, trying direct redirection:', e);
+      window.location.href = whatsappUrl;
+    }
   };
 
   return (

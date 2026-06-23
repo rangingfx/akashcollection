@@ -271,7 +271,12 @@ export default function CartDrawer({
                 onClick={() => {
                   const itemsText = cart.map((item, index) => `${index + 1}. ${item.product.title} (SKU: ${item.product.sku}) - Size: ${item.selectedSize} - Qty: ${item.quantity} x Rs. ${item.product.price}`).join('%0A');
                   const message = `*New Order Inquiry*%0A%0A*Order Items:*%0A${itemsText}%0A%0A*Summary:*%0ASubtotal: Rs. ${subtotal.toLocaleString()}%0ADiscount: - Rs. ${discountAmount.toLocaleString()}%0AShipping: Rs. ${shippingFee.toLocaleString()}%0A*Total: Rs. ${finalTotal.toLocaleString()}*`;
-                  window.open(`https://wa.me/923347272246?text=${message}`, '_blank', 'noopener,noreferrer');
+                  try {
+                    window.open(`https://wa.me/923347272246?text=${message}`, '_blank', 'noopener,noreferrer');
+                  } catch (e) {
+                    console.warn('Popup blocked, trying direct redirection:', e);
+                    window.location.href = `https://wa.me/923347272246?text=${message}`;
+                  }
                 }}
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-sans font-semibold tracking-[0.15em] text-xs py-4 rounded-md flex items-center justify-center gap-2 transition-all shadow-md focus:ring-2 focus:ring-emerald-500/20"
               >
