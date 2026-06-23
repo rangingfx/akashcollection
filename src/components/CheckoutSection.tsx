@@ -111,16 +111,14 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
 
   const handleWhatsAppOrder = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (!handleValidation()) {
+      return;
+    }
     
-    // We can gather what user typed even if not fully valid, or require basic fields.
-    // Given the prompt "send directly details form with Whatsapp", we format everything inside.
     const itemsText = cart.map((item, index) => `${index + 1}. ${item.product.title} (SKU: ${item.product.sku}) - Size: ${item.selectedSize} - Qty: ${item.quantity} x Rs. ${item.product.price}`).join('%0A');
     
-    // Using formData to populate info (works even if partially filled)
-    let customerInfo = '';
-    if (formData.firstName || formData.lastName || formData.phone) {
-      customerInfo = `*Customer Info:*%0AName: ${formData.firstName} ${formData.lastName}%0APhone: ${formData.phone}%0AEmail: ${formData.email || 'N/A'}%0AAddress: ${formData.address}, ${formData.city}%0APayment Method: ${formData.paymentMethod === 'bank' ? 'Bank Transfer' : 'Cash on Delivery (COD)'}%0A%0A`;
-    }
+    // Using formData to populate info since validation passed
+    const customerInfo = `*Customer Info:*%0AName: ${formData.firstName} ${formData.lastName}%0APhone: ${formData.phone}%0AEmail: ${formData.email || 'N/A'}%0AAddress: ${formData.address}, ${formData.city}%0APayment Method: ${formData.paymentMethod === 'bank' ? 'Bank Transfer' : 'Cash on Delivery (COD)'}%0A%0A`;
     
     const message = `*New Order Application*%0A%0A${customerInfo}*Order Items:*%0A${itemsText}%0A%0A*Summary:*%0ASubtotal: Rs. ${subtotal.toLocaleString()}%0ADiscount: - Rs. ${discountAmount.toLocaleString()}%0AShipping: Rs. ${shippingFee.toLocaleString()}%0A*Total: Rs. ${finalTotal.toLocaleString()}*`;
     

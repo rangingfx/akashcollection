@@ -26,7 +26,7 @@ app.post("/api/test-email", async (req, res) => {
     const smtpPort = parseInt(process.env.SMTP_PORT || "587", 10);
     const smtpUser = process.env.SMTP_USER ? process.env.SMTP_USER.trim() : "";
     const smtpPass = process.env.SMTP_PASS ? process.env.SMTP_PASS.trim().replace(/\s/g, "") : "";
-    const adminEmail = (process.env.ADMIN_EMAIL || "akashcollection.pk@gmail.com").trim();
+    const adminEmail = (process.env.ADMIN_EMAIL || smtpUser || "akashcollection.pk@gmail.com").trim();
 
     if (!smtpUser || !smtpPass) {
       return res.status(400).json({
@@ -141,7 +141,7 @@ app.get("/api/smtp-status", (req, res) => {
   const host = (process.env.SMTP_HOST || "smtp.gmail.com").trim();
   const port = (process.env.SMTP_PORT || "587").trim();
   const user = process.env.SMTP_USER ? process.env.SMTP_USER.trim() : "";
-  const adminEmail = (process.env.ADMIN_EMAIL || "akashcollection.pk@gmail.com").trim();
+  const adminEmail = (process.env.ADMIN_EMAIL || user || "akashcollection.pk@gmail.com").trim();
 
   // Safe masking for user secrets
   let maskedUser = "Not Mocked / Not Configured";

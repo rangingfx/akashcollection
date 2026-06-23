@@ -47,10 +47,17 @@ export default function SmtpDiagnosticModal({ onClose }: SmtpDiagnosticModalProp
     setLoadingConfig(true);
     try {
       const res = await fetch('/api/smtp-status');
+      if (!res.ok) {
+        throw new Error(`Server returned status ${res.status}`);
+      }
       const data = await res.json();
       setConfig(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to query SMTP configs status:', err);
+      // Fallback config so it doesn't crash
+      setConfig({
+        configured: false, host: '...', port: '...', user: 'Error fetching', adminEmail: '...', hasSmtpUser: false, hasSmtpPass: false
+      });
     } finally {
       setLoadingConfig(false);
     }
@@ -70,9 +77,15 @@ export default function SmtpDiagnosticModal({ onClose }: SmtpDiagnosticModalProp
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
-      const data = await res.json();
       
-      if (res.ok && data.success) {
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        throw new Error(`Server did not return valid JSON. Status: ${res.status}`);
+      }
+
+      if (res.ok && data?.success) {
         setTestState('success');
         setTestResult({
           message: data.message,
