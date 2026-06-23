@@ -26,7 +26,7 @@ app.post("/api/test-email", async (req, res) => {
     const smtpPort = parseInt(process.env.SMTP_PORT || "587", 10);
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
-    const adminEmail = process.env.ADMIN_EMAIL || "rangingfx@gmail.com";
+    const adminEmail = process.env.ADMIN_EMAIL || "akashcollection.pk@gmail.com";
 
     if (!smtpUser || !smtpPass) {
       return res.status(400).json({
@@ -326,7 +326,7 @@ app.post("/api/place-order", async (req, res) => {
     }
 
     // Set recipient email
-    const recipientEmail = process.env.ADMIN_EMAIL || "rangingfx@gmail.com";
+    const recipientEmail = process.env.ADMIN_EMAIL || "akashcollection.pk@gmail.com";
 
     // Set up SMTP configuration
     // Attempt to read custom SMTP transport details from variables if present
