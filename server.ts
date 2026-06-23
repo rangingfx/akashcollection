@@ -19,6 +19,154 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+// API test-email diagnostic endpoint
+app.post("/api/test-email", async (req, res) => {
+  try {
+    const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
+    const smtpPort = parseInt(process.env.SMTP_PORT || "587", 10);
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+    const adminEmail = process.env.ADMIN_EMAIL || "rangingfx@gmail.com";
+
+    if (!smtpUser || !smtpPass) {
+      return res.status(400).json({
+        success: false,
+        message: "SMTP user/password is missing from .env details. Please configure SMTP_USER and SMTP_PASS variables to enable email notifications.",
+        diagnostics: { smtpHost, smtpPort, smtpUserExists: !!smtpUser, smtpPassExists: !!smtpPass }
+      });
+    }
+
+    console.log(`Setting up test SMTP server connection to ${smtpHost}:${smtpPort}...`);
+
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpPort === 465,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass
+      },
+      connectionTimeout: 10000 // 10s connection timeout
+    });
+
+    // Verify SMTP connection
+    await transporter.verify();
+
+    // Try sending a lovely diagnostic email
+    console.log(`Sending diagnostic mail verification to standard administrator account: ${adminEmail}`);
+    const info = await transporter.sendMail({
+      from: `"Akash Collection SMTP Diagnostics" <${smtpUser}>`,
+      to: adminEmail,
+      subject: "🚀 Gmail/SMTP Mail Server Verification Successful!",
+      text: `Hello Admin,\n\nWe are pleased to report that your direct Gmail SMTP Connection test was fully successful!\n\n` +
+            `Environment details:\n- Host: ${smtpHost}\n- Port: ${smtpPort}\n- User: ${smtpUser}\n- Target Admin Inbox: ${adminEmail}\n\n` +
+            `Timestamp: ${new Date().toISOString()}`,
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e7e5e4; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); background-color: #ffffff;">
+          <div style="background-color: #16a34a; color: #ffffff; padding: 24px; text-align: center;">
+            <h1 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;">Connection Verified</h1>
+            <p style="margin: 6px 0 0 0; color: #dcfce7; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-family: monospace;">SMTP Mail Server Diagnostic Tool</p>
+          </div>
+          <div style="padding: 24px; color: #44403c; line-height: 1.6;">
+            <p style="margin-top: 0; font-size: 15px;">Hello!</p>
+            <p style="font-size: 14px;">This diagnostic message confirms that your direct <strong>Gmail/SMTP server configurations</strong> are fully authorized and operational inside the <strong>Akash Collection Wholesale</strong> back-office systems.</p>
+            
+            <div style="background-color: #fafaf9; border: 1px solid #e7e5e4; padding: 18px; border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; margin: 20px 0; color: #57534e;">
+              <strong style="color: #1c1917; display: block; margin-bottom: 8px; font-size: 13px; font-family: sans-serif;">🔒 Diagnostic Details:</strong>
+              • SMTP Connection Security: Verified/Active<br>
+              • Incoming SMTP Host: ${smtpHost}<br>
+              • Incoming SMTP Port: ${smtpPort}<br>
+              • Registered SMTP User: ${smtpUser}<br>
+              • Designated Admin Inbox: ${adminEmail}<br>
+              • Verified Date/Time: ${new Date().toLocaleString('en-US', { timeZoneName: 'short' })}
+            </div>
+            
+            <p style="font-size: 13px; color: #78716c; margin-bottom: 0;">Order invoice summaries, direct bank transfer snapshots, and tracking updates will now be delivered smoothly to your verified mailbox.</p>
+          </div>
+          <div style="background-color: #fafaf9; border-top: 1px solid #e7e5e4; padding: 15px 24px; text-align: center; font-size: 11px; color: #78716c; font-family: monospace;">
+            Akash Collection Wholesale Pakistan &bull; Powered by RanginGfx.com
+          </div>
+        </div>
+      `
+    });
+
+    return res.json({
+      success: true,
+      message: "Direct SMTP Server Diagnostic is 100% Successful!",
+      recipient: adminEmail,
+      info: {
+        messageId: info.messageId,
+        envelope: info.envelope,
+        accepted: info.accepted
+      }
+    });
+
+  } catch (err: any) {
+    console.error("SMTP Direct Diagnostic Failure:", err);
+    
+    // Provide super helpful diagnostic explanations for common SMTP authorization errors
+    let explanation = err.message || "Unknown mail server connection error";
+    let recommendations = "Please verify your server SMTP credentials under Workspace settings.";
+    
+    const lowerMsg = (err.message || "").toLowerCase();
+    const lowerCode = (err.code || "").toLowerCase();
+    
+    if (lowerMsg.includes("invalid login") || err.code === "EAUTH" || lowerMsg.includes("username and password not accepted")) {
+      explanation = "Authentication credentials rejected by Gmail SMTP servers.";
+      recommendations = "Gmail requires an App Password! Since May 2022, regular Google account passwords do not work. To solve this, log into Gmail Account settings -> Security -> Turn on '2-Step Verification' -> search for 'App Passwords', choose 'Other' and copy the 16-character code into your SMTP_PASS variable.";
+    } else if (err.code === "ESOCKET" || err.code === "ETIMEDOUT") {
+      explanation = "Network connection timeout or unreachable host port.";
+      recommendations = "Verify your SMTP_HOST and SMTP_PORT are correct. Ensure that you have specified 'smtp.gmail.com' for Gmail or your custom mail-server configurations.";
+    }
+
+    return res.status(500).json({
+      success: false,
+      message: explanation,
+      errorDetails: err.message,
+      errorCode: err.code || "N/A",
+      recommendations: recommendations,
+      diagnostics: {
+        host: process.env.SMTP_HOST || "smtp.gmail.com",
+        port: process.env.SMTP_PORT || "587"
+      }
+    });
+  }
+});
+
+// API SMTP status configuration helper
+app.get("/api/smtp-status", (req, res) => {
+  const host = process.env.SMTP_HOST || "smtp.gmail.com";
+  const port = process.env.SMTP_PORT || "587";
+  const user = process.env.SMTP_USER || "";
+  const adminEmail = process.env.ADMIN_EMAIL || "rangingfx@gmail.com";
+
+  // Safe masking for user secrets
+  let maskedUser = "Not Mocked / Not Configured";
+  if (user) {
+    const parts = user.split("@");
+    if (parts.length === 2) {
+      const name = parts[0];
+      const domain = parts[1];
+      const obscuredName = name.length > 2 
+        ? name.substring(0, 2) + "•••••" + name.substring(name.length - 1)
+        : "•••••";
+      maskedUser = `${obscuredName}@${domain}`;
+    } else {
+      maskedUser = user.substring(0, Math.min(3, user.length)) + "•••••";
+    }
+  }
+
+  return res.json({
+    configured: !!(user && process.env.SMTP_PASS),
+    host,
+    port,
+    user: maskedUser,
+    adminEmail,
+    hasSmtpUser: !!user,
+    hasSmtpPass: !!process.env.SMTP_PASS
+  });
+});
+
 // Helper function to build beautiful HTML for the order email
 function generateOrderHtml(order: any): string {
   const { id, date, customer, items, subtotal, shippingFee, total } = order;

@@ -33,6 +33,7 @@ import CheckoutSection from './components/CheckoutSection';
 import OrderSuccessModal from './components/OrderSuccessModal';
 import TrackOrderModal from './components/TrackOrderModal';
 import NewsletterSubscription from './components/NewsletterSubscription';
+import SmtpDiagnosticModal from './components/SmtpDiagnosticModal';
 
 import { PRODUCTS, MOCK_REVIEWS } from './data/products';
 import { Product, CartItem, FilterState, Order, CustomerDetails } from './types';
@@ -132,6 +133,7 @@ export default function App() {
   // UI Modals Toggles
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isTrackOpen, setIsTrackOpen] = useState(false);
+  const [isDiagnosticOpen, setIsDiagnosticOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
@@ -1031,6 +1033,12 @@ export default function App() {
         />
       )}
 
+      {isDiagnosticOpen && (
+        <SmtpDiagnosticModal
+          onClose={() => setIsDiagnosticOpen(false)}
+        />
+      )}
+
 
       {quickViewProduct && (
         <QuickViewModal
@@ -1213,6 +1221,7 @@ export default function App() {
               <li><a href="#collection-anchor" className="hover:text-white footer-link">Lawn stitching guide</a></li>
               <li><a href="#collection-anchor" className="hover:text-white footer-link">Returns & cancellations policies</a></li>
               <li><a href="#collection-anchor" className="hover:text-white footer-link">Frequent Queries (FAQs)</a></li>
+              <li><button onClick={() => setIsDiagnosticOpen(true)} className="text-amber-500 hover:text-amber-400 footer-link focus:outline-none font-bold">Diagnostics: Test SMTP mailer</button></li>
             </ul>
           </div>
 
