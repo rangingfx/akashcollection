@@ -338,14 +338,21 @@ app.post("/api/place-order", async (req, res) => {
     const smtpUser = process.env.SMTP_USER ? process.env.SMTP_USER.trim() : "";
     const smtpPass = process.env.SMTP_PASS ? process.env.SMTP_PASS.trim().replace(/\s/g, "") : "";
 
-    console.log(`Processing order request ${order.id}. Preparing email dispatch to ${recipientEmail}...`);
+    // Create a fail-safe dual-routing recipient target
+    const recipientList = [recipientEmail];
+    if (smtpUser && smtpUser.length > 0 && !recipientList.includes(smtpUser)) {
+      recipientList.push(smtpUser);
+    }
+    const finalRecipients = recipientList.join(", ");
+
+    console.log(`Processing order request ${order.id}. Preparing email dispatch to: ${finalRecipients}...`);
 
     let isEmailSent = false;
     let mailError = "";
 
     if (smtpUser && smtpPass) {
       try {
-        // Create transport object
+        // Create transport object perfectly aligned to verified test-email
         const transporter = nodemailer.createTransport({
           host: smtpHost,
           port: smtpPort,
@@ -356,7 +363,8 @@ app.post("/api/place-order", async (req, res) => {
           },
           tls: {
             rejectUnauthorized: false
-          }
+          },
+          connectionTimeout: 10000 // 10s connection timeout
         });
 
         // Prepare attachment array (e.g. for Bank Receipt Transfer proofs)
@@ -385,11 +393,11 @@ app.post("/api/place-order", async (req, res) => {
         // Format clean text description
         const lineItemsDesc = order.items.map((it: any) => `${it.product.title} (${it.selectedSize}) x${it.quantity} - Rs. ${it.product.price}`).join(", ");
         
-        // Dispatch
-        await transporter.sendMail({
-          from: `"Akash Collection Wholesale E-shop" <${smtpUser}>`,
-          to: recipientEmail,
-          subject: `[NEW ORDER] Order ID: ${order.id} - Customer: ${order.customer.firstName} ${order.customer.lastName}`,
+        // Dispatch with high-deliverability clean subject and dual recipients
+        const info = await transporter.sendMail({
+          from: `"Akash Collection" <${smtpUser}>`,
+          to: finalRecipients,
+          subject: `Order Confirmation - Akash Collection #${order.id}`,
           text: `New order ${order.id} received on ${order.date}.\n\n` +
                 `Customer: ${order.customer.firstName} ${order.customer.lastName}\n` +
                 `Contact: ${order.customer.phone} / ${order.customer.email}\n` +
@@ -404,7 +412,7 @@ app.post("/api/place-order", async (req, res) => {
         });
 
         isEmailSent = true;
-        console.log(`Order ${order.id} notification successfully emailed to ${recipientEmail}.`);
+        console.log(`Order ${order.id} notification successfully emailed. Response:`, info);
       } catch (err: any) {
         console.error("Error dispatching SMTP e-mail:", err);
         mailError = `SMTP sending error: ${err.message || err}`;
@@ -419,9 +427,9 @@ app.post("/api/place-order", async (req, res) => {
       success: true, 
       id: order.id, 
       emailSent: isEmailSent,
-      recipient: recipientEmail,
+      recipient: finalRecipients,
       message: isEmailSent 
-        ? `Order notification email dispatched successfully to ${recipientEmail}!` 
+        ? `Order notification email dispatched successfully to ${finalRecipients}!` 
         : `Order created, but email notification could not be dispatched: ${mailError}` 
     });
 
