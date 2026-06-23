@@ -99,7 +99,7 @@ export default function SmtpDiagnosticModal({ onClose }: SmtpDiagnosticModalProp
   };
 
   return (
-    <div className="fixed inset-0 z-55 flex items-center justify-center p-4 bg-stone-900/80 backdrop-blur-sm" id="smtp-diagnostic-overlay">
+    <div className="fixed inset-0 z-[55] flex items-center justify-center p-4 bg-stone-900/80 backdrop-blur-sm" id="smtp-diagnostic-overlay">
       <div className="bg-white border border-stone-200 rounded-2xl shadow-2xl w-full max-w-xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200" id="smtp-diagnostic-dialog">
         
         {/* Header decoration */}
@@ -173,7 +173,7 @@ export default function SmtpDiagnosticModal({ onClose }: SmtpDiagnosticModalProp
                     <tr className="hover:bg-stone-50 transition-colors">
                       <td className="px-4 py-2.5 font-bold text-stone-900">SMTP_PASS</td>
                       <td className="px-4 py-2.5">
-                        <div className="flex items-center justify-betweenWidth w-full flex-row">
+                        <div className="flex items-center justify-between w-full flex-row">
                           <span className="tracking-widest text-[11px] text-stone-400">••••••••••••••••</span>
                           {config?.hasSmtpPass ? (
                             <span className="bg-emerald-50 text-emerald-700 text-[9px] font-bold uppercase px-1.5 py-0.5 rounded border border-emerald-200 ml-auto">Detected</span>
