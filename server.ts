@@ -338,10 +338,16 @@ app.post("/api/place-order", async (req, res) => {
     const smtpUser = process.env.SMTP_USER ? process.env.SMTP_USER.trim() : "";
     const smtpPass = process.env.SMTP_PASS ? process.env.SMTP_PASS.trim().replace(/\s/g, "") : "";
 
-    // Create a fail-safe dual-routing recipient target
+    // Create a fail-safe dual-routing recipient target including the customer's inbox!
     const recipientList = [recipientEmail];
     if (smtpUser && smtpUser.length > 0 && !recipientList.includes(smtpUser)) {
       recipientList.push(smtpUser);
+    }
+    if (order.customer && order.customer.email) {
+      const custEmail = order.customer.email.trim();
+      if (custEmail.length > 0 && !recipientList.includes(custEmail)) {
+        recipientList.push(custEmail);
+      }
     }
     const finalRecipients = recipientList.join(", ");
 
