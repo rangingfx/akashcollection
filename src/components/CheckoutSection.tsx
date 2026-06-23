@@ -124,7 +124,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
     
     const message = `*New Order Application*%0A%0A${customerInfo}*Order Items:*%0A${itemsText}%0A%0A*Summary:*%0ASubtotal: Rs. ${subtotal.toLocaleString()}%0ADiscount: - Rs. ${discountAmount.toLocaleString()}%0AShipping: Rs. ${shippingFee.toLocaleString()}%0A*Total: Rs. ${finalTotal.toLocaleString()}*`;
     
-    const whatsappUrl = `https://wa.me/923495645773?text=${message}`;
+    const whatsappUrl = `https://wa.me/923347272246?text=${message}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 

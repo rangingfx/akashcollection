@@ -932,7 +932,7 @@ export default function App() {
                   </div>
                   <h3 className="font-serif text-base font-bold text-gray-100 uppercase tracking-wider">24/7 Customer WhatsApp</h3>
                   <p className="text-xs text-gray-400 leading-relaxed font-sans max-w-xs">
-                    Need help tailoring sizes or checking stock? Out of hours? Send a quick text on WhatsApp: +92 349 5645773. Friendly, instant support.
+                    Need help tailoring sizes or checking stock? Out of hours? Send a quick text on WhatsApp: +92 334 7272246. Friendly, instant support.
                   </p>
                 </div>
 
@@ -1256,8 +1256,8 @@ export default function App() {
               <div>
                 <p className="font-semibold text-gray-200">WhatsApp & Support</p>
                 <p className="font-mono">
-                  <a href="https://wa.me/923495645773" target="_blank" rel="noopener noreferrer" className="hover:text-white underline">
-                    +92 349 5645773
+                  <a href="https://wa.me/923347272246" target="_blank" rel="noopener noreferrer" className="hover:text-white underline">
+                    +92 334 7272246
                   </a>
                 </p>
               </div>
@@ -1343,7 +1343,7 @@ export default function App() {
 
       {/* Floating Elegant WhatsApp Button */}
       <a 
-        href="https://wa.me/923495645773" 
+        href="https://wa.me/923347272246" 
         target="_blank" 
         rel="noopener noreferrer" 
         className="fixed bottom-6 right-6 z-[999] bg-stone-900 border border-stone-800 text-white shadow-2xl rounded-full p-3.5 flex items-center justify-center hover:bg-stone-800 hover:scale-110 active:scale-95 transition-all duration-300 group cursor-pointer pointer-events-auto"

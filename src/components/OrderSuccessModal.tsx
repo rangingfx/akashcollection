@@ -203,7 +203,7 @@ export default function OrderSuccessModal({ order, onContinueShopping }: OrderSu
 
         {/* Small support note */}
         <div className="text-center text-[10px] text-gray-400 font-mono pt-4 border-t border-gray-100" id="receipt-help-foot">
-          <p>For editing sizes or cancelling bookings, contact us at **info@akashcollection.pk** or WhatsApp **+92 349 5645773**.</p>
+          <p>For editing sizes or cancelling bookings, contact us at **info@akashcollection.pk** or WhatsApp **+92 334 7272246**.</p>
           <p className="mt-1">Akash Collection PK is a register business under FBR Pakistan NTN: 8941258-2.</p>
         </div>
       </div>
