@@ -341,63 +341,68 @@ app.post("/api/place-order", async (req, res) => {
     let mailError = "";
 
     if (smtpUser && smtpPass) {
-      // Create transport object
-      const transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: smtpPort,
-        secure: smtpPort === 465, // True for 465, false for 587
-        auth: {
-          user: smtpUser,
-          pass: smtpPass
-        }
-      });
+      try {
+        // Create transport object
+        const transporter = nodemailer.createTransport({
+          host: smtpHost,
+          port: smtpPort,
+          secure: smtpPort === 465, // True for 465, false for 587
+          auth: {
+            user: smtpUser,
+            pass: smtpPass
+          }
+        });
 
-      // Prepare attachment array (e.g. for Bank Receipt Transfer proofs)
-      const attachments = [];
-      const hasBase64Receipt = order.customer.bankReceiptImage && order.customer.bankReceiptImage.startsWith("data:");
-      
-      if (hasBase64Receipt) {
-        try {
-          // Extract format/mime & actual content
-          const parts = order.customer.bankReceiptImage.split(",");
-          const content = parts[1];
-          const mimePart = parts[0].match(/:(.*?);/);
-          const mimeType = mimePart ? mimePart[1] : "image/png";
-          const extension = mimeType.split("/")[1] || "png";
+        // Prepare attachment array (e.g. for Bank Receipt Transfer proofs)
+        const attachments = [];
+        const hasBase64Receipt = order.customer.bankReceiptImage && order.customer.bankReceiptImage.startsWith("data:");
+        
+        if (hasBase64Receipt) {
+          try {
+            // Extract format/mime & actual content
+            const parts = order.customer.bankReceiptImage.split(",");
+            const content = parts[1];
+            const mimePart = parts[0].match(/:(.*?);/);
+            const mimeType = mimePart ? mimePart[1] : "image/png";
+            const extension = mimeType.split("/")[1] || "png";
 
-          attachments.push({
-            filename: `bank_receipt_${order.id}.${extension}`,
-            content: Buffer.from(content, "base64"),
-            contentType: mimeType
-          });
-        } catch (attachErr: any) {
-          console.error("Failed to compile base64 bank receipt into attachment:", attachErr);
+            attachments.push({
+              filename: `bank_receipt_${order.id}.${extension}`,
+              content: Buffer.from(content, "base64"),
+              contentType: mimeType
+            });
+          } catch (attachErr: any) {
+            console.error("Failed to compile base64 bank receipt into attachment:", attachErr);
+          }
         }
+
+        // Format clean text description
+        const lineItemsDesc = order.items.map((it: any) => `${it.product.title} (${it.selectedSize}) x${it.quantity} - Rs. ${it.product.price}`).join(", ");
+        
+        // Dispatch
+        await transporter.sendMail({
+          from: `"Akash Collection Wholesale E-shop" <${smtpUser}>`,
+          to: recipientEmail,
+          subject: `[NEW ORDER] Order ID: ${order.id} - Customer: ${order.customer.firstName} ${order.customer.lastName}`,
+          text: `New order ${order.id} received on ${order.date}.\n\n` +
+                `Customer: ${order.customer.firstName} ${order.customer.lastName}\n` +
+                `Contact: ${order.customer.phone} / ${order.customer.email}\n` +
+                `Delivery Address: ${order.customer.address}, ${order.customer.city}, ${order.customer.province}\n` +
+                `Payment Method: ${order.customer.paymentMethod === 'bank_transfer' ? 'Bank Transfer' : 'Cash on Delivery (COD)'}\n\n` +
+                `Items: ${lineItemsDesc}\n\n` +
+                `Subtotal: Rs. ${order.subtotal}\n` +
+                `Shipping: Rs. ${order.shippingFee}\n` +
+                `Total: Rs. ${order.total}\n`,
+          html: generateOrderHtml(order),
+          attachments: attachments
+        });
+
+        isEmailSent = true;
+        console.log(`Order ${order.id} notification successfully emailed to ${recipientEmail}.`);
+      } catch (err: any) {
+        console.error("Error dispatching SMTP e-mail:", err);
+        mailError = `SMTP sending error: ${err.message || err}`;
       }
-
-      // Format clean text description
-      const lineItemsDesc = order.items.map((it: any) => `${it.product.title} (${it.selectedSize}) x${it.quantity} - Rs. ${it.product.price}`).join(", ");
-      
-      // Dispatch
-      await transporter.sendMail({
-        from: `"Akash Collection Wholesale E-shop" <${smtpUser}>`,
-        to: recipientEmail,
-        subject: `[NEW ORDER] Order ID: ${order.id} - Customer: ${order.customer.firstName} ${order.customer.lastName}`,
-        text: `New order ${order.id} received on ${order.date}.\n\n` +
-              `Customer: ${order.customer.firstName} ${order.customer.lastName}\n` +
-              `Contact: ${order.customer.phone} / ${order.customer.email}\n` +
-              `Delivery Address: ${order.customer.address}, ${order.customer.city}, ${order.customer.province}\n` +
-              `Payment Method: ${order.customer.paymentMethod === 'bank_transfer' ? 'Bank Transfer' : 'Cash on Delivery (COD)'}\n\n` +
-              `Items: ${lineItemsDesc}\n\n` +
-              `Subtotal: Rs. ${order.subtotal}\n` +
-              `Shipping: Rs. ${order.shippingFee}\n` +
-              `Total: Rs. ${order.total}\n`,
-        html: generateOrderHtml(order),
-        attachments: attachments
-      });
-
-      isEmailSent = true;
-      console.log(`Order ${order.id} notification successfully emailed to ${recipientEmail}.`);
     } else {
       console.warn("SMTP_USER and/or SMTP_PASS are missing from environment settings. Email not sent.");
       mailError = "SMTP credentials missing. Please set SMTP_USER and SMTP_PASS variables in the environment to enable direct notification emails.";

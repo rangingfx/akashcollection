@@ -376,11 +376,16 @@ export default function App() {
       .then((data) => {
         if (data.success) {
           if (data.emailSent) {
-            triggerToast('Order Submitted', `Order placed! Notification email sent to ${data.recipient || 'your inbox'}.`, 'success');
+            triggerToast('Order Submitted', `Order placed! Notification email successfully delivered to ${data.recipient || 'your inbox'}.`, 'success');
           } else {
             console.warn(data.message);
-            // Non-disruptive feedback for the development/config process
-            triggerToast('Order Submitted', 'Order received locally! Setup SMTP email credentials to receive direct notifications.', 'success');
+            // Help the user understand if they had configured SMTP but it failed versus if it wasn't set up yet
+            const isConfiguredAttempt = data.message && (data.message.includes('sending error') || data.message.includes('failed') || data.message.includes('rejected'));
+            if (isConfiguredAttempt) {
+              triggerToast('⚠️ SMTP Mailer Warning', `Order placed, but email could not be delivered: ${data.message}. Test credentials using the Diagnostics link in the footer!`, 'success');
+            } else {
+              triggerToast('Order Submitted', 'Order received! Configure SMTP/Gmail credentials via setting variables to enable automated inbox notifications.', 'success');
+            }
           }
         }
       })
