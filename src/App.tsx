@@ -1293,6 +1293,8 @@ export default function App() {
             </a>
           </div>
           <div className="flex gap-4">
+            <a href="/sitemap.html" className="hover:text-white">Sitemap</a>
+            <span>•</span>
             <a href="#app-root-layout" className="hover:text-white">Security Policies</a>
             <span>•</span>
             <a href="#app-root-layout" className="hover:text-white">Usage Regulations</a>

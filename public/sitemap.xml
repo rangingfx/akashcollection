@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home Page -->
+  <url>
+    <loc>https://akashcollection.pk/</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Main Shop Page -->
+  <url>
+    <loc>https://akashcollection.pk/shop</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Categories -->
+  <url>
+    <loc>https://akashcollection.pk/category/summer-collection</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://akashcollection.pk/category/new-arrivals</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://akashcollection.pk/category/men</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://akashcollection.pk/category/women</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Info & Policies -->
+  <url>
+    <loc>https://akashcollection.pk/about</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://akashcollection.pk/contact</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://akashcollection.pk/shipping-policy</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://akashcollection.pk/returns</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://akashcollection.pk/privacy</loc>
+    <lastmod>2023-10-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>

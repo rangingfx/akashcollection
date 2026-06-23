@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sitemap - Akash Collection Wholesale</title>
+  <style>
+    :root {
+      --bg-color: #fcfcfc;
+      --text-main: #1c1917;
+      --text-muted: #78716c;
+      --border-color: #e7e5e4;
+      --accent-color: #d97706;
+      --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+      --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    header h1 {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      font-weight: 500;
+      margin: 0 0 10px 0;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .sitemap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+    }
+
+    .sitemap-section h2 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sitemap-section h2::after {
+      content: "";
+      height: 1px;
+      background-color: var(--border-color);
+      flex-grow: 1;
+    }
+
+    .sitemap-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sitemap-section li {
+      margin-bottom: 12px;
+    }
+
+    .sitemap-section a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .sitemap-section a:hover {
+      color: var(--accent-color);
+    }
+
+    .footer-link {
+      text-align: center;
+      margin-top: 80px;
+    }
+
+    .footer-link a {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: var(--text-main);
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+
+    .footer-link a:hover {
+      background-color: #000;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .container {
+        padding: 40px 20px;
+      }
+      .sitemap-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Site Directory</h1>
+      <p>Akash Collection Wholesale</p>
+    </header>
+
+    <div class="sitemap-grid">
+      <!-- Main Content -->
+      <div class="sitemap-section">
+        <h2>Main Pages</h2>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/shop">Shop All Collections</a></li>
+          <li><a href="/about">Our Story</a></li>
+          <li><a href="/contact">Contact Us / Wholesale Inquiry</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div class="sitemap-section">
+        <h2>Collections</h2>
+        <ul>
+          <li><a href="/category/new-arrivals">New Arrivals</a></li>
+          <li><a href="/category/summer-collection">Summer Collection</a></li>
+          <li><a href="/category/men">Men's Unstitched</a></li>
+          <li><a href="/category/women">Women's Ready-to-Wear</a></li>
+        </ul>
+      </div>
+
+      <!-- Support & Legal -->
+      <div class="sitemap-section">
+        <h2>Support & Legal</h2>
+        <ul>
+          <li><a href="/shipping-policy">Shipping Policy</a></li>
+          <li><a href="/returns">Returns & Exchanges</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-link">
+      <a href="/">Return to Store</a>
+    </div>
+  </div>
+
+</body>
+</html>
