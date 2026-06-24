@@ -1254,7 +1254,7 @@ export default function App() {
               <MapPin size={13} className="text-gray-300 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-semibold text-gray-200">Retail Headquarters</p>
-                <p>Akashcollection.pk, Sohan, Islamabad, Pakistan</p>
+                <p>Abbasi Rd, near darbar, Sohan, 45740, Pakistan</p>
               </div>
             </div>
 
@@ -1265,6 +1265,18 @@ export default function App() {
                 <p className="font-mono">
                   <a href="https://wa.me/923347272246" target="_blank" rel="noopener noreferrer" className="hover:text-white underline">
                     +92 334 7272246
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-2 text-gray-400 pt-1">
+              <Mail size={13} className="text-gray-300 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-gray-200">Email Inquiries</p>
+                <p className="font-mono">
+                  <a href="mailto:akashcollection.pk@gmail.com" className="hover:text-white underline">
+                    akashcollection.pk@gmail.com
                   </a>
                 </p>
               </div>
