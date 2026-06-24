@@ -372,8 +372,15 @@ export default function App() {
       },
       body: JSON.stringify({ order: newOrder }),
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (res.status === 404 || res.status === 405) {
+          triggerToast('Order Saved', 'Order saved locally! (Email notifications disabled on static hosting like GitHub Pages).', 'success');
+          return null; // Return null to skip next block
+        }
+        return res.json();
+      })
       .then((data) => {
+        if (!data) return;
         if (data.success) {
           if (data.emailSent) {
             triggerToast('Order Submitted', `Order placed! Notification email successfully delivered to ${data.recipient || 'your inbox'}.`, 'success');

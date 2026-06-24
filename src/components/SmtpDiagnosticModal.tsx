@@ -48,9 +48,28 @@ export default function SmtpDiagnosticModal({ onClose }: SmtpDiagnosticModalProp
     try {
       const res = await fetch('/api/smtp-status');
       if (!res.ok) {
+        if (res.status === 404 || res.status === 405) {
+          setConfig({
+            configured: false, host: 'Static Hosting Mode', port: 'N/A', user: 'Backend disabled (GitHub Pages)', adminEmail: 'N/A', hasSmtpUser: false, hasSmtpPass: false
+          });
+          return;
+        }
         throw new Error(`Server returned status ${res.status}`);
       }
-      const data = await res.json();
+      
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        if (res.status === 404 || res.status === 405) {
+          setConfig({
+            configured: false, host: 'Static Hosting Mode', port: 'N/A', user: 'Backend disabled (GitHub Pages)', adminEmail: 'N/A', hasSmtpUser: false, hasSmtpPass: false
+          });
+          return;
+        }
+        throw new Error(`Server did not return valid JSON. Status: ${res.status}`);
+      }
+      
       setConfig(data);
     } catch (err: any) {
       console.error('Failed to query SMTP configs status:', err);
@@ -82,6 +101,9 @@ export default function SmtpDiagnosticModal({ onClose }: SmtpDiagnosticModalProp
       try {
         data = await res.json();
       } catch (e) {
+        if (res.status === 404 || res.status === 405) {
+          throw new Error(`Static Hosting Detected (Status: ${res.status})`);
+        }
         throw new Error(`Server did not return valid JSON. Status: ${res.status}`);
       }
 
@@ -104,9 +126,12 @@ export default function SmtpDiagnosticModal({ onClose }: SmtpDiagnosticModalProp
       }
     } catch (err: any) {
       setTestState('failed');
+      const isStaticErr = err.message.includes('Static Hosting Detected');
       setTestResult({
-        message: err.message || 'Verification client network exception',
-        recommendations: 'Are you sure the backend web application has booted completely? Ensure the container server is healthy.'
+        message: isStaticErr ? 'Backend API unavailable on static hosting.' : err.message || 'Verification client network exception',
+        recommendations: isStaticErr 
+          ? 'You are running this application on a static host (like GitHub Pages or Cloudflare) where the Node.js backend cannot run. Dynamic API endpoints like SMTP email are disabled. Please use the WhatsApp checkout method instead.' 
+          : 'Are you sure the backend web application has booted completely? Ensure the container server is healthy.'
       });
     }
   };
