@@ -42,6 +42,9 @@ import { Product, CartItem, FilterState, Order, CustomerDetails } from './types'
 // Banners generated with timestamps
 const unstitchedBannerImg = '/src/assets/images/unstitched_banner_1782097511336.jpg';
 const rtwBannerImg = '/src/assets/images/ready_to_wear_banner_1782097529638.jpg';
+const festiveBannerImg = '/src/assets/images/festive_wear_banner_1782297158989.jpg';
+const luxuryLawnBannerImg = '/src/assets/images/luxury_lawn_banner_1782297175560.jpg';
+const pretBannerImg = '/src/assets/images/pret_wear_banner_1782297192141.jpg';
 
 export default function App() {
   // Navigation & Page State
@@ -529,11 +532,35 @@ export default function App() {
       category: 'unstitched'
     },
     {
+      img: festiveBannerImg,
+      subtitle: 'WEDDING & FESTIVE',
+      title: 'Opulent Embroidered Chiffon',
+      desc: 'Rich crimson and gold festive wear designed to make you the center of attention.',
+      cta: 'DISCOVER FESTIVE',
+      category: 'unstitched'
+    },
+    {
       img: rtwBannerImg,
       subtitle: 'EASY NO-FUSS ELEGANCE',
       title: 'Ready to Wear Co-ords',
       desc: 'Sleek, minimalist matching top-to-bottom coordinates in pure satin silk and breathable cotton linen.',
       cta: 'EXPLORE READY WEAR',
+      category: 'ready-to-wear'
+    },
+    {
+      img: luxuryLawnBannerImg,
+      subtitle: 'SUMMER BREEZE',
+      title: 'Pastel Garden Collection',
+      desc: 'Beat the heat in our softest pastel printed lawns with delicate outdoor aesthetics.',
+      cta: 'VIEW COLLECTION',
+      category: 'unstitched'
+    },
+    {
+      img: pretBannerImg,
+      subtitle: 'EVERYDAY CHIC',
+      title: 'Modern Prêt-à-Porter',
+      desc: 'Vibrant colors and modern cuts tailored perfectly for your daily wardrobe.',
+      cta: 'SHOP PRÊT',
       category: 'ready-to-wear'
     }
   ];
@@ -573,6 +600,8 @@ export default function App() {
                     alt={item.title}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-center"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : "auto"}
                   />
                   {/* Left aligned high contrast content drawer */}
                   <div className="absolute inset-0 bg-gradient-to-r from-stone-950/75 via-stone-900/40 to-transparent flex items-center p-6 sm:p-12 md:p-20">
