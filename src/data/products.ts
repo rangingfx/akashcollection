@@ -4,6 +4,12 @@
  */
 
 import { Product, Review } from '../types';
+import imgBlue from '../assets/images/bareeze_lawn_blue_1782304418726.jpg';
+import imgPink from '../assets/images/bareeze_lawn_pink_1782304438185.jpg';
+import imgRust from '../assets/images/bareeze_lawn_rust_1782304454309.jpg';
+import imgBlack from '../assets/images/bareeze_lawn_black_1782304473285.jpg';
+import imgPlum from '../assets/images/bareeze_lawn_plum_1782304488588.jpg';
+import imgModel from '../assets/images/bareeze_lawn_model_1782304501635.jpg';
 
 export const FABRICS = [
   'Lawn',
@@ -34,6 +40,132 @@ export const CITIES_OF_PAKISTAN = [
 ];
 
 export const PRODUCTS: Product[] = [
+  {
+    id: 'bareeze-summer-1',
+    title: 'Bareeze Lawn 3 Piece Suit Summer Collection - Light Blue',
+    description: 'Elegant light blue Pakistani unstitched lawn 3 piece suit featuring delicate white floral embroidery. Premium quality summer collection by Akash Collection.',
+    price: 3500,
+    originalPrice: 4500,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '3 Piece',
+    image: imgBlue,
+    gallery: [imgBlue],
+    sizes: ['Unstitched'],
+    stock: 50,
+    sku: 'AK-BRZ-BLU-1',
+    details: [
+      'Pure Summer Lawn Fabric',
+      'Intricate White Floral Embroidery',
+      'Includes Shirt, Trouser, and Dupatta',
+      'Fast delivery across Pakistan'
+    ]
+  },
+  {
+    id: 'bareeze-summer-2',
+    title: 'Bareeze Lawn 3 Piece Suit Summer Collection - Pastel Pink',
+    description: 'Beautiful pastel pink Pakistani unstitched lawn 3 piece suit featuring exquisite white floral embroidery. Perfect for the summer season.',
+    price: 3500,
+    originalPrice: 4500,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '3 Piece',
+    image: imgPink,
+    gallery: [imgPink],
+    sizes: ['Unstitched'],
+    stock: 45,
+    sku: 'AK-BRZ-PNK-2',
+    details: [
+      'Pure Summer Lawn Fabric',
+      'Exquisite White Floral Embroidery',
+      'Includes Shirt, Trouser, and Dupatta',
+      'Fast delivery across Pakistan'
+    ]
+  },
+  {
+    id: 'bareeze-summer-3',
+    title: 'Bareeze Lawn 3 Piece Suit Summer Collection - Rust Orange',
+    description: 'Vibrant rust orange Pakistani unstitched lawn 3 piece suit featuring geometric white embroidery. Premium summer collection.',
+    price: 3500,
+    originalPrice: 4500,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '3 Piece',
+    image: imgRust,
+    gallery: [imgRust],
+    sizes: ['Unstitched'],
+    stock: 30,
+    sku: 'AK-BRZ-RST-3',
+    details: [
+      'Pure Summer Lawn Fabric',
+      'Geometric White Embroidery',
+      'Includes Shirt, Trouser, and Dupatta',
+      'Fast delivery across Pakistan'
+    ]
+  },
+  {
+    id: 'bareeze-summer-4',
+    title: 'Bareeze Lawn 3 Piece Suit Summer Collection - Midnight Black',
+    description: 'Classic midnight black Pakistani unstitched lawn 3 piece suit featuring colorful floral embroidery. Elegance for summer evenings.',
+    price: 3500,
+    originalPrice: 4500,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '3 Piece',
+    image: imgBlack,
+    gallery: [imgBlack],
+    sizes: ['Unstitched'],
+    stock: 25,
+    sku: 'AK-BRZ-BLK-4',
+    details: [
+      'Pure Summer Lawn Fabric',
+      'Colorful Floral Embroidery',
+      'Includes Shirt, Trouser, and Dupatta',
+      'Fast delivery across Pakistan'
+    ]
+  },
+  {
+    id: 'bareeze-summer-5',
+    title: 'Bareeze Lawn 3 Piece Suit Summer Collection - Plum Purple',
+    description: 'Rich plum purple Pakistani unstitched lawn 3 piece suit featuring large white floral embroidery patterns.',
+    price: 3500,
+    originalPrice: 4500,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '3 Piece',
+    image: imgPlum,
+    gallery: [imgPlum],
+    sizes: ['Unstitched'],
+    stock: 40,
+    sku: 'AK-BRZ-PLM-5',
+    details: [
+      'Pure Summer Lawn Fabric',
+      'Large White Floral Embroidery',
+      'Includes Shirt, Trouser, and Dupatta',
+      'Fast delivery across Pakistan'
+    ]
+  },
+  {
+    id: 'bareeze-summer-6',
+    title: 'Bareeze Lawn 3 Piece Suit Summer Collection - Exclusive Model Edit',
+    description: 'Exclusive designer summer lawn 3 piece suit in pastel tones. Stay cool and elegant with this premium Akash Collection exclusive.',
+    price: 3500,
+    originalPrice: 4500,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '3 Piece',
+    image: imgModel,
+    gallery: [imgModel],
+    sizes: ['Unstitched'],
+    stock: 20,
+    sku: 'AK-BRZ-MDL-6',
+    details: [
+      'Designer Summer Lawn Fabric',
+      'Pastel Floral Prints',
+      'Includes Shirt, Trouser, and Dupatta',
+      'Fast delivery across Pakistan'
+    ]
+  },
   {
     id: 'zouq-1',
     title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
