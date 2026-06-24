@@ -34,6 +34,7 @@ import OrderSuccessModal from './components/OrderSuccessModal';
 import TrackOrderModal from './components/TrackOrderModal';
 import NewsletterSubscription from './components/NewsletterSubscription';
 import SmtpDiagnosticModal from './components/SmtpDiagnosticModal';
+import { PrivacyPolicyModal, RefundPolicyModal, ShippingPolicyModal, TermsConditionsModal } from './components/PolicyModals';
 
 import { PRODUCTS, MOCK_REVIEWS } from './data/products';
 import { Product, CartItem, FilterState, Order, CustomerDetails } from './types';
@@ -134,6 +135,10 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isTrackOpen, setIsTrackOpen] = useState(false);
   const [isDiagnosticOpen, setIsDiagnosticOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isRefundOpen, setIsRefundOpen] = useState(false);
+  const [isShippingOpen, setIsShippingOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
@@ -1167,9 +1172,9 @@ export default function App() {
 
       {/* 4. Elegant footer */}
       <footer className="bg-stone-900 text-gray-400 text-xs py-12 px-4 sm:px-6 lg:px-8 border-t border-stone-850" id="main-footer">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8" id="footer-links-grid">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-8" id="footer-links-grid">
           
-          <div className="space-y-4" id="footer-col-about">
+          <div className="space-y-4 lg:col-span-1" id="footer-col-about">
             <div>
               <div className="flex items-center gap-1.5 mb-1">
                 <span className="font-serif text-lg tracking-widest text-white uppercase block mt-1">AKASH</span>
@@ -1231,9 +1236,18 @@ export default function App() {
             <ul className="space-y-1.5 font-mono text-[11px]">
               <li><button onClick={() => setIsTrackOpen(true)} className="hover:text-white footer-link focus:outline-none">Shipment tracking status</button></li>
               <li><a href="#collection-anchor" className="hover:text-white footer-link">Lawn stitching guide</a></li>
-              <li><a href="#collection-anchor" className="hover:text-white footer-link">Returns & cancellations policies</a></li>
               <li><a href="#collection-anchor" className="hover:text-white footer-link">Frequent Queries (FAQs)</a></li>
               <li><button onClick={() => setIsDiagnosticOpen(true)} className="text-amber-500 hover:text-amber-400 footer-link focus:outline-none font-bold">Diagnostics: Test SMTP mailer</button></li>
+            </ul>
+          </div>
+
+          <div className="space-y-3" id="footer-col-policies">
+            <h4 className="font-serif text-sm font-bold text-gray-100 uppercase tracking-widest">Policies</h4>
+            <ul className="space-y-1.5 font-mono text-[11px]">
+              <li><button onClick={() => setIsShippingOpen(true)} className="hover:text-white footer-link focus:outline-none">Shipping & Service Policy</button></li>
+              <li><button onClick={() => setIsRefundOpen(true)} className="hover:text-white footer-link focus:outline-none">Return & Refund Policy</button></li>
+              <li><button onClick={() => setIsPrivacyOpen(true)} className="hover:text-white footer-link focus:outline-none">Privacy Policy</button></li>
+              <li><button onClick={() => setIsTermsOpen(true)} className="hover:text-white footer-link focus:outline-none">Terms & Conditions</button></li>
             </ul>
           </div>
 
@@ -1378,6 +1392,12 @@ export default function App() {
           <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.456L0 24zm12.008-21.75c-5.412 0-9.82 4.409-9.825 9.822-.002 1.802.469 3.562 1.365 5.123l.299.52-1.01 3.69 3.774-.99.505.299c1.498.887 3.202 1.354 4.902 1.355 5.41.002 9.818-4.407 9.824-9.822.003-2.623-1.018-5.088-2.879-6.953-1.859-1.865-4.322-2.894-6.946-2.894zm5.372 13.06c-.294-.147-1.74-.86-2.012-.958-.27-.099-.469-.147-.666.147-.196.294-.761.958-.934 1.155-.171.196-.343.221-.637.074-.294-.147-1.241-.457-2.364-1.46-.874-.78-1.464-1.744-1.636-2.038-.172-.294-.018-.453.129-.6.133-.133.294-.343.441-.515.147-.171.196-.294.294-.49.098-.196.05-.367-.025-.515-.074-.148-.666-1.606-.913-2.197-.24-.578-.48-.5-.666-.51-.173-.008-.367-.01-.563-.01-.196 0-.515.073-.784.367-.27.294-1.029 1.005-1.029 2.451s1.054 2.843 1.201 3.039c.147.196 2.074 3.167 5.025 4.444.70.304 1.249.486 1.677.622.705.224 1.345.193 1.853.117.566-.084 1.741-.711 1.986-1.396.246-.686.246-1.274.172-1.396-.073-.122-.27-.196-.564-.343z"/>
         </svg>
       </a>
+
+      {/* Policy Modals */}
+      <PrivacyPolicyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
+      <RefundPolicyModal isOpen={isRefundOpen} onClose={() => setIsRefundOpen(false)} />
+      <ShippingPolicyModal isOpen={isShippingOpen} onClose={() => setIsShippingOpen(false)} />
+      <TermsConditionsModal isOpen={isTermsOpen} onClose={() => setIsTermsOpen(false)} />
 
     </div>
   );
