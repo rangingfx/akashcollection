@@ -373,16 +373,17 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
                       <p className="font-bold uppercase tracking-wider mb-2 text-stone-950">Akash Collection Wholesale official Business Accounts</p>
                       
                       <div className="space-y-2 border-b border-stone-200 pab-2 mb-2 pb-2">
-                        <p><strong>Bank:</strong> Habib Bank Limited (HBL) Lahore Branch</p>
-                        <p><strong>Account Title:</strong> AKASH COLLECTION PRIVATE LTD</p>
-                        <p><strong>Account No:</strong> 5082-1004929312</p>
-                        <p><strong>IBAN PK:</strong> PK65HABB0050821004929312</p>
+                        <p><strong>Bank:</strong> UBL</p>
+                        <p><strong>Account Title:</strong> Tahir Nawaz</p>
+                        <p><strong>Account No:</strong> 0306279546128</p>
+                        <p><strong>IBAN:</strong> PK77UNIL0109000279546128</p>
                       </div>
 
                       <div className="space-y-1">
-                        <p><strong>Alternative (Easypaisa/Jazzcash):</strong></p>
-                        <p><strong>Easypaisa Merchant Name:</strong> Akash Collection PK</p>
-                        <p><strong>Easypaisa Till ID:</strong> 482591</p>
+                        <p><strong>Alternative (Easypaisa):</strong></p>
+                        <p><strong>Account Title:</strong> Tahir Nawaz</p>
+                        <p><strong>Account No:</strong> 03495645773</p>
+                        <p><strong>IBAN:</strong> PK26TMFB0000000022995853</p>
                       </div>
                     </div>
                   </div>
