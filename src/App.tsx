@@ -346,7 +346,7 @@ export default function App() {
     const discountPercentStr = localStorage.getItem('akash_cart_discount_percent');
     const discountPercent = discountPercentStr ? JSON.parse(discountPercentStr) : 0;
     const discountAmount = Math.round(subtotal * (discountPercent / 100));
-    const shippingFee = subtotal >= 2000 ? 0 : 250;
+    const shippingFee = subtotal >= 2500 ? 0 : 250;
     const total = subtotal - discountAmount + shippingFee;
 
     const newOrder: Order = {

@@ -44,7 +44,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
   }, []);
 
   const subtotal = cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
-  const shippingFee = subtotal >= 2000 ? 0 : 250;
+  const shippingFee = subtotal >= 2500 ? 0 : 250;
   const discountAmount = Math.round(subtotal * (discountPercent / 100));
   const finalTotal = subtotal - discountAmount + shippingFee;
 

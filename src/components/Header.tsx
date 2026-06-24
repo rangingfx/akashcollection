@@ -73,7 +73,7 @@ export default function Header({
 
       {/* 1. Top Bar Marquee */}
       <div className="bg-[#1a1a1a] text-white py-2.5 px-4 text-[10px] font-semibold tracking-[0.2em] uppercase text-center flex items-center justify-center gap-1 overflow-hidden" id="header-promo-bar">
-        <span className="animate-pulse">Free Worldwide Shipping on Orders Above Rs. 5000 | Limited Time Offer</span>
+        <span className="animate-pulse">Free Delivery on Orders Above Rs. 2500 | Limited Time Offer</span>
       </div>
 
       {/* 2. Main Branding Bar */}

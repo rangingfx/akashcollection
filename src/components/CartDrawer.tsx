@@ -33,8 +33,8 @@ export default function CartDrawer({
 
   const subtotal = cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
   
-  // Shipping rule: Free for orders above Rs. 2,000; otherwise Rs. 250
-  const shippingFee = subtotal === 0 ? 0 : (subtotal >= 2000 ? 0 : 250);
+  // Shipping rule: Free for orders above Rs. 2,500; otherwise Rs. 250
+  const shippingFee = subtotal === 0 ? 0 : (subtotal >= 2500 ? 0 : 250);
   
   // Discount
   const discountAmount = Math.round(subtotal * (discountPercent / 100));
@@ -245,7 +245,7 @@ export default function CartDrawer({
               </div>
               {shippingFee > 0 && (
                 <p className="text-[10px] font-mono text-stone-600 italic">
-                  *Add Rs. {(2000 - subtotal).toLocaleString()} more value to qualify for FREE Shipping!
+                  *Add Rs. {(2500 - subtotal).toLocaleString()} more value to qualify for FREE Shipping!
                 </p>
               )}
             </div>
