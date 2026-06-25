@@ -1417,6 +1417,11 @@ export default function App() {
         className="fixed bottom-6 right-6 z-[999] bg-stone-900 border border-stone-800 text-white shadow-2xl rounded-full p-4 sm:p-5 flex items-center justify-center hover:bg-stone-800 hover:scale-110 active:scale-95 transition-all duration-300 group cursor-pointer pointer-events-auto"
         id="floating-whatsapp-widget"
         title="WhatsApp Order Assistant"
+        onClick={() => {
+          if (typeof window !== 'undefined' && (window as any).fbq) {
+            (window as any).fbq('track', 'Contact');
+          }
+        }}
       >
         <div className="absolute right-full mr-3 bg-stone-900 border border-stone-800 text-white font-sans text-[10px] font-bold tracking-widest py-2 px-3 rounded-md shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none uppercase">
           WhatsApp Order Assistant

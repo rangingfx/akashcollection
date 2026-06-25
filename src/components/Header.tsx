@@ -59,13 +59,13 @@ export default function Header({
   return (
     <header className="sticky top-0 z-40 bg-white" id="main-header">
       {/* 0. Urdu Announcement Bar */}
-      <div className="bg-stone-900 text-white font-urdu text-[11px] md:text-[13px] leading-relaxed shadow-sm w-full overflow-hidden flex relative items-center h-8 md:h-10 border-b border-stone-800" style={{ direction: 'rtl' }} id="urdu-news-bar">
-        <div className="bg-red-600 text-white px-3 md:px-4 py-1 h-full flex items-center justify-center font-bold z-10 shadow-[2px_0_10px_rgba(0,0,0,0.5)] whitespace-nowrap shrink-0 relative">
-           <span className="animate-pulse">اہم خبر</span>
-           <div className="absolute top-0 bottom-0 left-[-10px] w-0 h-0 border-t-[16px] md:border-t-[20px] border-t-transparent border-b-[16px] md:border-b-[20px] border-b-transparent border-r-[10px] border-r-red-600"></div>
+      <div className="bg-stone-900 text-white font-urdu text-[14px] md:text-[16px] leading-loose shadow-sm w-full overflow-hidden flex relative items-center h-10 md:h-12 border-b border-stone-800" style={{ direction: 'rtl' }} id="urdu-news-bar">
+        <div className="bg-red-600 text-white px-3 md:px-4 py-1 h-full flex items-center justify-center font-bold z-10 shadow-[2px_0_10px_rgba(0,0,0,0.5)] whitespace-nowrap shrink-0 relative text-[14px] md:text-[16px]">
+           <span className="animate-pulse pb-1">اہم خبر</span>
+           <div className="absolute top-0 bottom-0 left-[-10px] w-0 h-0 border-t-[20px] md:border-t-[24px] border-t-transparent border-b-[20px] md:border-b-[24px] border-b-transparent border-r-[10px] border-r-red-600"></div>
         </div>
         <div className="flex-1 overflow-hidden h-full flex items-center" style={{ direction: 'rtl' }}>
-          <div className="animate-marquee-rtl whitespace-nowrap min-w-full flex items-center h-full text-amber-500 pr-5">
+          <div className="animate-marquee-rtl whitespace-nowrap min-w-full flex items-center h-full text-amber-500 pr-5 pb-1">
             پورے پاکستان میں کیش آن ڈیلیوری دستیاب ہے۔ ڈائریکٹ بینک ٹرانسفر کی صورت میں 10٪ ڈسکاؤنٹ حاصل کریں! مزید اپ ڈیٹس کے لیے ہمارے ساتھ جڑے رہیں ۔
           </div>
         </div>
