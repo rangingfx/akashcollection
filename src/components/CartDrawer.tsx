@@ -46,7 +46,7 @@ export default function CartDrawer({
     setCouponSuccess('');
     
     const code = couponCode.trim().toUpperCase();
-    if (code === 'WELCOME10' || code === 'AKASH10') {
+    if (code === 'WELCOME10' || code === 'AKASH10' || code === 'RANGINGFX.COM') {
       setDiscountPercent(10);
       setCouponSuccess('10% Discount applied successfully!');
     } else if (code === 'EID30') {
@@ -55,7 +55,7 @@ export default function CartDrawer({
     } else if (code === '') {
       setCouponError('Please enter a coupon code.');
     } else {
-      setCouponError('Invalid coupon code. Try WELCOME10 or EID30.');
+      setCouponError('Invalid coupon code. Try RANGINGFX.COM.');
     }
   };
 
@@ -198,12 +198,12 @@ export default function CartDrawer({
           <div className="border-t border-gray-100 p-5 bg-gray-50" id="cart-drawer-footer">
             {/* Promo Code Form */}
             <form onSubmit={handleApplyCoupon} className="mb-4" id="coupon-form">
-              <label htmlFor="promo-input" className="text-[9px] font-mono text-gray-500 tracking-wider block mb-1 uppercase">Have a promo code? (try WELCOME10 or EID30)</label>
+              <label htmlFor="promo-input" className="text-[9px] font-mono text-gray-500 tracking-wider block mb-1 uppercase">Have a promo code? (try RANGINGFX.COM)</label>
               <div className="flex gap-2">
                 <input
                   id="promo-input"
                   type="text"
-                  placeholder="WELCOME10"
+                  placeholder="RANGINGFX.COM"
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
                   className="bg-white border border-gray-200 rounded-md px-3 py-1.5 text-xs flex-grow outline-none focus:ring-1 focus:ring-black uppercase font-mono"
