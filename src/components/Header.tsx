@@ -288,7 +288,6 @@ export default function Header({
                   <Phone size={14} className="text-stone-400 mt-0.5 flex-shrink-0" />
                   <div className="space-y-1">
                     <p className="font-semibold text-stone-800 text-[11px]">WhatsApp & Call</p>
-                    <a href="https://wa.me/923347272246" target="_blank" rel="noopener noreferrer" className="block text-stone-500 font-mono hover:text-stone-900">+92 334 7272246</a>
                     <a href="https://wa.me/923115930237" target="_blank" rel="noopener noreferrer" className="block text-stone-500 font-mono hover:text-stone-900">+92 311 5930237</a>
                   </div>
                 </div>

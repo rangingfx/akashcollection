@@ -44,12 +44,11 @@ import { PrivacyPolicyModal, RefundPolicyModal, ShippingPolicyModal, TermsCondit
 import { PRODUCTS, MOCK_REVIEWS } from './data/products';
 import { Product, CartItem, FilterState, Order, CustomerDetails } from './types';
 
-// Banners generated with timestamps
-const unstitchedBannerImg = '/src/assets/images/unstitched_banner_1782097511336.jpg';
-const rtwBannerImg = '/src/assets/images/ready_to_wear_banner_1782097529638.jpg';
-const festiveBannerImg = '/src/assets/images/festive_wear_banner_1782297158989.jpg';
-const luxuryLawnBannerImg = '/src/assets/images/luxury_lawn_banner_1782297175560.jpg';
-const pretBannerImg = '/src/assets/images/pret_wear_banner_1782297192141.jpg';
+import unstitchedBannerImg from './assets/images/unstitched_banner_1782097511336.jpg';
+import rtwBannerImg from './assets/images/ready_to_wear_banner_1782097529638.jpg';
+import festiveBannerImg from './assets/images/festive_wear_banner_1782297158989.jpg';
+import luxuryLawnBannerImg from './assets/images/luxury_lawn_banner_1782297175560.jpg';
+import pretBannerImg from './assets/images/pret_wear_banner_1782297192141.jpg';
 
 export default function App() {
   // Navigation & Page State
@@ -1344,51 +1343,47 @@ export default function App() {
           <div className="space-y-3 font-sans text-[11px]" id="footer-col-contact">
             <h4 className="font-serif text-sm font-bold text-gray-100 uppercase tracking-widest">Connect with Us</h4>
             
-            <div className="flex items-start gap-2 text-gray-400">
-              <MapPin size={13} className="text-gray-300 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 text-gray-400">
+              <div className="bg-stone-800 p-1.5 rounded-full text-stone-300 mt-0.5">
+                <MapPin size={14} className="flex-shrink-0" />
+              </div>
               <div>
-                <p className="font-semibold text-gray-200">Retail Headquarters</p>
-                <p>Abbasi Rd, near darbar, Sohan, 45740, Pakistan</p>
+                <p className="font-semibold text-gray-200 text-xs uppercase tracking-wider mb-1">Retail Headquarters</p>
+                <p className="text-[13px] leading-relaxed">Abbasi Rd, near darbar, Sohan, 45740, Pakistan</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-2 text-gray-400 pt-1">
-              <Phone size={13} className="text-gray-300 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 text-gray-400 pt-1">
+              <div className="bg-stone-800 p-1.5 rounded-full text-emerald-400 mt-0.5">
+                <Phone size={14} className="flex-shrink-0" />
+              </div>
               <div>
-                <p className="font-semibold text-gray-200">WhatsApp & Support</p>
-                <p className="font-mono">
-                  <a href="https://wa.me/923347272246" target="_blank" rel="noopener noreferrer" className="hover:text-white underline">
-                    +92 334 7272246
+                <p className="font-semibold text-gray-200 text-xs uppercase tracking-wider mb-1.5">WhatsApp & Support</p>
+                <div className="flex flex-col gap-1.5">
+                  <a href="https://wa.me/923115930237" target="_blank" rel="noopener noreferrer" className="inline-block group">
+                    <span className="font-mono text-[13px] bg-stone-800/80 px-2.5 py-1 rounded border border-stone-700/50 group-hover:border-emerald-500/50 group-hover:bg-stone-800 group-hover:text-emerald-400 transition-all">+92 311 5930237</span>
                   </a>
-                  <br />
-                  <a href="https://wa.me/923115930237" target="_blank" rel="noopener noreferrer" className="hover:text-white underline mt-1 inline-block">
-                    +92 311 5930237
+                  <a href="https://wa.me/923347272246" target="_blank" rel="noopener noreferrer" className="inline-block group">
+                    <span className="font-mono text-[13px] bg-stone-800/80 px-2.5 py-1 rounded border border-stone-700/50 group-hover:border-emerald-500/50 group-hover:bg-stone-800 group-hover:text-emerald-400 transition-all">+92 334 7272246</span>
                   </a>
-                </p>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-start gap-2 text-gray-400 pt-1">
-              <Mail size={13} className="text-gray-300 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-semibold text-gray-200">Email Inquiries</p>
-                <p className="font-mono">
-                  <a href="mailto:akashcollection.pk@gmail.com" className="hover:text-white underline">
-                    akashcollection.pk@gmail.com
-                  </a>
-                </p>
+            <div className="flex items-start gap-3 text-gray-400 pt-1">
+              <div className="bg-stone-800 p-1.5 rounded-full text-blue-400 mt-0.5">
+                <Mail size={14} className="flex-shrink-0" />
               </div>
-            </div>
-
-            <div className="flex items-start gap-2 text-gray-400 pt-1">
-              <Mail size={13} className="text-gray-300 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-semibold text-gray-200">Corporate Email</p>
-                <p className="font-mono">
-                  <a href="mailto:info@akashcollection.pk" className="hover:text-white underline text-stone-300">
-                    info@akashcollection.pk
+                <p className="font-semibold text-gray-200 text-xs uppercase tracking-wider mb-1.5">Email Support</p>
+                <div className="flex flex-col gap-1.5">
+                  <a href="mailto:info@akashcollection.pk" className="inline-block group">
+                    <span className="font-mono text-[12px] bg-stone-800/80 px-2.5 py-1 rounded border border-stone-700/50 group-hover:border-blue-500/50 group-hover:bg-stone-800 group-hover:text-blue-400 transition-all">info@akashcollection.pk</span>
                   </a>
-                </p>
+                  <a href="mailto:akashcollection.pk@gmail.com" className="inline-block group">
+                    <span className="font-mono text-[12px] bg-stone-800/80 px-2.5 py-1 rounded border border-stone-700/50 group-hover:border-blue-500/50 group-hover:bg-stone-800 group-hover:text-blue-400 transition-all text-stone-500">akashcollection.pk@gmail.com</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -1397,17 +1392,28 @@ export default function App() {
 
         {/* Footer base credits */}
         <div className="max-w-7xl mx-auto pt-8 border-t border-stone-850 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 font-mono text-center" id="footer-bottom-credit">
-          <p>© 2026 Akash Collection Wholesale Pakistan. All Rights Reserved. Registration ID NTN 8941258-2.</p>
+          <p>© 2026 Akash Collection Wholesale Pakistan. All Rights Reserved. Registered with FBR Pakistan.</p>
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-[10px] uppercase tracking-widest text-gray-500 font-medium">
-            <a 
-              href="https://RanginGfx.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="animate-rainbow-blink font-bold tracking-widest hover:scale-105 active:scale-95 transition-all text-stone-300"
-              id="powered-by-rangingfx"
-            >
-              powered by RanginGfx.com
-            </a>
+            <div className="flex items-center gap-2">
+              <a 
+                href="https://wa.me/923121700872" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-emerald-400 transition-colors bg-stone-900/50 p-1.5 rounded-full border border-stone-800 hover:border-emerald-500/50"
+                title="Webmaster WhatsApp"
+              >
+                <MessageCircle size={14} />
+              </a>
+              <a 
+                href="https://RanginGfx.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="animate-rainbow-blink font-bold tracking-widest hover:scale-105 active:scale-95 transition-all text-stone-300 font-sans"
+                id="powered-by-rangingfx"
+              >
+                Powered by RanginGfx.com
+              </a>
+            </div>
           </div>
           <div className="flex gap-4">
             <a href="/sitemap.html" className="hover:text-white">Sitemap</a>
@@ -1504,26 +1510,6 @@ export default function App() {
                 <div>
                   <p className="font-semibold text-[13px] text-stone-900">Sales</p>
                   <p className="text-[11px] text-stone-500 font-mono">+92 311 5930237</p>
-                </div>
-              </a>
-              <a 
-                href="https://wa.me/923347272246"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                  setIsWhatsAppMenuOpen(false);
-                  if (typeof window !== 'undefined' && (window as any).fbq) {
-                    (window as any).fbq('track', 'Contact');
-                  }
-                }}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors border border-stone-100 hover:border-stone-200 group/wa"
-              >
-                <div className="bg-emerald-50 text-emerald-500 p-2 rounded-full group-hover/wa:bg-emerald-500 group-hover/wa:text-white transition-colors">
-                  <Phone size={16} />
-                </div>
-                <div>
-                  <p className="font-semibold text-[13px] text-stone-900">Support</p>
-                  <p className="text-[11px] text-stone-500 font-mono">+92 334 7272246</p>
                 </div>
               </a>
             </div>

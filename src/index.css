@@ -24,34 +24,24 @@
 
   @keyframes rainbow-blink {
     0%, 100% {
-      color: #ef4444; /* red */
+      color: #38bdf8; /* light blue */
       opacity: 1;
-      text-shadow: 0 0 4px rgba(239, 68, 68, 0.4);
+      text-shadow: 0 0 6px rgba(56, 189, 248, 0.6);
     }
-    16% {
-      color: #f97316; /* orange */
-      opacity: 0.3;
-      text-shadow: 0 0 2px rgba(249, 115, 22, 0.2);
-    }
-    33% {
-      color: #eab308; /* yellow */
-      opacity: 1;
-      text-shadow: 0 0 4px rgba(234, 179, 8, 0.4);
+    25% {
+      color: #818cf8; /* indigo */
+      opacity: 0.8;
+      text-shadow: 0 0 4px rgba(129, 140, 248, 0.4);
     }
     50% {
-      color: #22c55e; /* green */
-      opacity: 0.3;
-      text-shadow: 0 0 2px rgba(34, 197, 94, 0.2);
-    }
-    66% {
-      color: #3b82f6; /* blue */
+      color: #c084fc; /* purple */
       opacity: 1;
-      text-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
+      text-shadow: 0 0 6px rgba(192, 132, 252, 0.6);
     }
-    83% {
-      color: #a855f7; /* purple */
-      opacity: 0.3;
-      text-shadow: 0 0 2px rgba(168, 85, 247, 0.2);
+    75% {
+      color: #f472b6; /* pink */
+      opacity: 0.8;
+      text-shadow: 0 0 4px rgba(244, 114, 182, 0.4);
     }
   }
 
