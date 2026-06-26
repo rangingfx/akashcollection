@@ -89,9 +89,9 @@ export default function Header({
         </button>
 
         {/* Brand Name with Elegant Serif styling */}
-        <div 
-          className="cursor-pointer text-center md:text-left flex flex-col items-center md:items-start select-none" 
-          onClick={() => handleNavClick('all')}
+        <a 
+          href="https://akashcollection.pk/"
+          className="cursor-pointer text-center md:text-left flex flex-col items-center md:items-start select-none no-underline" 
           id="brand-logo-container"
         >
           <div className="flex items-center gap-1.5">
@@ -103,7 +103,7 @@ export default function Header({
           <span className="text-[9px] uppercase tracking-[0.4em] text-stone-500 font-medium whitespace-nowrap">
             Collection Wholesale
           </span>
-        </div>
+        </a>
 
         {/* Desktop Search Bar */}
         <div className="hidden md:flex items-center max-w-sm w-full relative mx-4" id="desktop-search-container">
@@ -236,12 +236,12 @@ export default function Header({
           {/* Content container */}
           <div className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white p-6 shadow-xl" id="mobile-nav-drawer">
             <div className="flex items-center justify-between" id="mobile-nav-title-row">
-              <div className="flex items-center gap-1.5">
+              <a href="https://akashcollection.pk/" className="flex items-center gap-1.5 no-underline hover:opacity-80 transition-opacity">
                 <span className="font-serif text-xl tracking-widest text-[#1c1c1c] font-semibold">
                   AKASH PK
                 </span>
                 <BadgeCheck className="text-blue-500 w-5 h-5 flex-shrink-0" fill="#1877F2" stroke="white" strokeWidth={1.5} />
-              </div>
+              </a>
               <button
                 id="close-mobile-menu-btn"
                 className="text-gray-500 hover:text-black p-1"

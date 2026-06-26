@@ -19,10 +19,15 @@ import {
   Facebook,
   Youtube,
   Instagram,
+  Twitter,
+  Users,
+  MessageCircle,
+  Globe,
   Mail,
   MapPin,
   Phone,
-  BadgeCheck
+  BadgeCheck,
+  ShoppingBag
 } from 'lucide-react';
 
 import Header from './components/Header';
@@ -1205,27 +1210,45 @@ export default function App() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-8" id="footer-links-grid">
           
           <div className="space-y-4 lg:col-span-1" id="footer-col-about">
-            <div>
+            <a href="https://akashcollection.pk/" className="block hover:opacity-80 transition-opacity">
               <div className="flex items-center gap-1.5 mb-1">
                 <span className="font-serif text-lg tracking-widest text-white uppercase block mt-1">AKASH</span>
                 <BadgeCheck className="text-blue-500 w-5 h-5" fill="#1877F2" stroke="#1c1917" strokeWidth={1.5} />
               </div>
               <span className="text-[9px] font-mono text-gray-500 tracking-[0.4em] block uppercase">COLLECTION.PK</span>
-            </div>
+            </a>
             <p className="text-[11px] text-gray-500 leading-relaxed font-sans pr-2">
               Premium clothing brand catering to exquisite custom prints and unstitched lawn catalog articles. Crafted meticulously with luxury fabrics, serving Islamabad and nationwide.
             </p>
             
             {/* Social Channels Row */}
-            <div className="flex items-center gap-3 pt-2" id="footer-social-icons">
+            <div className="flex flex-wrap items-center gap-3 pt-2" id="footer-social-icons">
               <a 
-                href="https://www.facebook.com/akashcollection.pk/" 
+                href="https://akashcollection.pk/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
+                title="Visit our Website"
+              >
+                <Globe size={13} />
+              </a>
+              <a 
+                href="https://www.facebook.com/akashcollection.pk" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
                 title="Follow us on Facebook"
               >
                 <Facebook size={13} />
+              </a>
+              <a 
+                href="https://www.facebook.com/groups/akashcollection.pk" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
+                title="Join our Facebook Group"
+              >
+                <Users size={13} />
               </a>
               <a 
                 href="https://www.instagram.com/akashcollection.pk/" 
@@ -1257,6 +1280,33 @@ export default function App() {
                 <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                   <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.09-1.47-.29-.21-.57-.44-.82-.69-.01 3.64.02 7.28-.01 10.92-.09 1.95-.91 3.86-2.5 5.01-1.9 1.42-4.52 1.79-6.75 1.01-2.45-.82-4.32-3.08-4.75-5.63-.56-3.13 1.04-6.49 3.93-7.75.92-.41 1.93-.6 2.94-.57l.02 4.09c-1.12-.13-2.3.26-3.01 1.14-.65.78-.69 2-.15 2.89.58.98 1.83 1.45 2.92 1.14 1-.26 1.69-1.21 1.7-2.25l-.01-17.31z"/>
                 </svg>
+              </a>
+              <a 
+                href="https://www.youtube.com/@AkashCollectionpk" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
+                title="Subscribe to our YouTube channel"
+              >
+                <Youtube size={14} />
+              </a>
+              <a 
+                href="https://x.com/AkashCollec" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
+                title="Follow us on X (Twitter)"
+              >
+                <Twitter size={13} />
+              </a>
+              <a 
+                href="https://wa.me/akashcollection.pk" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
+                title="Contact us on WhatsApp"
+              >
+                <MessageCircle size={13} />
               </a>
             </div>
           </div>
@@ -1416,6 +1466,26 @@ export default function App() {
           <div className="mb-4 bg-white border border-stone-200 shadow-2xl rounded-xl p-4 w-64 overflow-hidden origin-bottom-right transition-all animate-in fade-in zoom-in-95 duration-200">
             <h4 className="font-serif font-bold text-stone-900 mb-3 border-b border-stone-100 pb-2">How can we help?</h4>
             <div className="space-y-2">
+              <a 
+                href="https://wa.me/akashcollection.pk"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  setIsWhatsAppMenuOpen(false);
+                  if (typeof window !== 'undefined' && (window as any).fbq) {
+                    (window as any).fbq('track', 'Contact');
+                  }
+                }}
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors border border-stone-100 hover:border-stone-200 group/wa"
+              >
+                <div className="bg-emerald-50 text-emerald-500 p-2 rounded-full group-hover/wa:bg-emerald-500 group-hover/wa:text-white transition-colors">
+                  <ShoppingBag size={16} />
+                </div>
+                <div>
+                  <p className="font-semibold text-[13px] text-stone-900">View Catalog</p>
+                  <p className="text-[11px] text-stone-500 font-mono">Browse our collection</p>
+                </div>
+              </a>
               <a 
                 href="https://wa.me/923115930237"
                 target="_blank"
