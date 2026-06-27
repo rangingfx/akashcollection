@@ -67,464 +67,629 @@ export const PRODUCTS: Product[] = [
     brand: 'Akash Collection'
   },
   {
-    id: 'zouq-1',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-1',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/07/103D742C-37DF-40DB-B8D0-D717FB93F504-500x750.jpeg',
+    image: '/lawn-1.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/07/103D742C-37DF-40DB-B8D0-D717FB93F504-500x750.jpeg'
+      '/lawn-1.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-1',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-1',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-2',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-2',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/05/55887C05-1912-472B-AE8F-9F0A7EF66F5B-scaled-1-500x750.jpeg',
+    image: '/lawn-2.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/05/55887C05-1912-472B-AE8F-9F0A7EF66F5B-scaled-1-500x750.jpeg'
+      '/lawn-2.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-2',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-2',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-3',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-3',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2024/05/WhatsApp-Image-2024-05-13-at-3.21.32-PM-500x750.jpeg',
+    image: '/lawn-3.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2024/05/WhatsApp-Image-2024-05-13-at-3.21.32-PM-500x750.jpeg'
+      '/lawn-3.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-3',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-3',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-4',
-    title: 'Akash Collection Wholesale - Lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-4',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/07/WhatsApp-Image-2023-07-20-at-12.06.48-AM-1-500x750.jpeg',
+    image: '/lawn-4.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/07/WhatsApp-Image-2023-07-20-at-12.06.48-AM-1-500x750.jpeg'
+      '/lawn-4.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-4',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-4',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-5',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-5',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/07/CE634416-E3B1-4C77-81A2-DCD6BC92C32F-500x750.jpeg',
+    image: '/lawn-5.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/07/CE634416-E3B1-4C77-81A2-DCD6BC92C32F-500x750.jpeg'
+      '/lawn-5.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-5',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-5',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-6',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-6',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/07/WhatsApp-Image-2023-07-20-at-12.07.02-AM-1-500x750.jpeg',
+    image: '/lawn-6.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/07/WhatsApp-Image-2023-07-20-at-12.07.02-AM-1-500x750.jpeg'
+      '/lawn-6.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-6',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-6',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-7',
-    title: 'Akash Collection Wholesale - BAREEZE lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-7',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2025/10/Bareeze-Lawn-2-piece-suit-3-500x750.jpeg',
+    image: '/lawn-7.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2025/10/Bareeze-Lawn-2-piece-suit-3-500x750.jpeg'
+      '/lawn-7.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-7',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-7',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-8',
-    title: 'Akash Collection Wholesale - BAREEZE lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-8',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-24-at-1.21.04-AM-2-500x750.jpeg',
+    image: '/lawn-8.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-24-at-1.21.04-AM-2-500x750.jpeg'
+      '/lawn-8.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-8',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-8',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-9',
-    title: 'Akash Collection Wholesale - BAREEZE lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-9',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2025/01/WhatsApp-Image-2025-01-12-at-1.44.48-AM-5-500x750.jpeg',
+    image: '/lawn-9.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2025/01/WhatsApp-Image-2025-01-12-at-1.44.48-AM-5-500x750.jpeg'
+      '/lawn-9.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-9',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-9',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-10',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-10',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/07/WhatsApp-Image-2023-07-20-at-12.07.02-AM-500x750.jpeg',
+    image: '/lawn-10.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/07/WhatsApp-Image-2023-07-20-at-12.07.02-AM-500x750.jpeg'
+      '/lawn-10.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-10',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-10',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-11',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-11',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/07/WhatsApp-Image-2023-07-10-at-11.40.10-AM-500x750.jpeg',
+    image: '/lawn-11.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/07/WhatsApp-Image-2023-07-10-at-11.40.10-AM-500x750.jpeg'
+      '/lawn-11.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-11',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-11',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-12',
-    title: 'Akash Collection Wholesale - BAREEZE lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-12',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2025/01/WhatsApp-Image-2025-01-07-at-11.58.36-PM-1-500x750.jpeg',
+    image: '/lawn-12.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2025/01/WhatsApp-Image-2025-01-07-at-11.58.36-PM-1-500x750.jpeg'
+      '/lawn-12.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-12',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-12',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-13',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-13',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/07/C4CD50AE-1352-4FC5-B4DF-D96FDF26BA0F-500x750.jpeg',
+    image: '/lawn-13.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/07/C4CD50AE-1352-4FC5-B4DF-D96FDF26BA0F-500x750.jpeg'
+      '/lawn-13.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-13',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-13',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-14',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-14',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-24-at-22.48.51-500x750.jpeg',
+    image: '/lawn-14.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-24-at-22.48.51-500x750.jpeg'
+      '/lawn-14.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-14',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-14',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-15',
-    title: 'Akash Collection Wholesale - BAREEZE lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-15',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2025/01/WhatsApp-Image-2025-01-12-at-1.44.49-AM-10-500x750.jpeg',
+    image: '/lawn-15.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2025/01/WhatsApp-Image-2025-01-12-at-1.44.49-AM-10-500x750.jpeg'
+      '/lawn-15.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-15',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-15',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-16',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-16',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2025/05/WhatsApp-Image-2025-05-05-at-1.20.17-PM-2-500x750.jpeg',
+    image: '/lawn-16.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2025/05/WhatsApp-Image-2025-05-05-at-1.20.17-PM-2-500x750.jpeg'
+      '/lawn-16.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-16',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-16',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-17',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-17',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2023/07/DCE4E4C5-294E-44CD-B6D5-7E6115F0BDA2-scaled-500x750.jpeg',
+    image: '/lawn-17.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2023/07/DCE4E4C5-294E-44CD-B6D5-7E6115F0BDA2-scaled-500x750.jpeg'
+      '/lawn-17.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-17',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-17',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-18',
-    title: 'Akash Collection Wholesale - BAREEZE lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-18',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2025/10/Bareeze-Lawn-2-piece-suit-2-500x750.jpeg',
+    image: '/lawn-18.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2025/10/Bareeze-Lawn-2-piece-suit-2-500x750.jpeg'
+      '/lawn-18.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-18',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-18',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-19',
-    title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-19',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2025/01/WhatsApp-Image-2025-01-03-at-2.05.12-AM-500x750.jpeg',
+    image: '/lawn-19.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2025/01/WhatsApp-Image-2025-01-03-at-2.05.12-AM-500x750.jpeg'
+      '/lawn-19.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-19',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-19',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   },
   {
-    id: 'zouq-20',
-    title: 'Akash Collection Wholesale - Lawn 2 piece',
-    description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
+    id: 'akash-2pc-lawn-20',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
     price: 2750,
-    originalPrice: 3000,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
-    image: 'https://zouq.pk/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-01-at-2.46.12-PM-1-500x750.jpeg',
+    image: '/lawn-20.jpeg',
     gallery: [
-      'https://zouq.pk/wp-content/uploads/2024/03/WhatsApp-Image-2024-03-01-at-2.46.12-PM-1-500x750.jpeg'
+      '/lawn-20.jpeg'
     ],
-    sizes: ['Unstitched', 'S', 'M', 'L'],
-    stock: 50,
-    sku: 'AK-ZOUQ-20',
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-20',
     details: [
-      'Premium Fabric',
+      'Premium Embroidered Lawn',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
-    ]
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
+  },
+  {
+    id: 'akash-2pc-lawn-21',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
+    price: 2750,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '2 Piece',
+    image: '/lawn-21.jpeg',
+    gallery: [
+      '/lawn-21.jpeg'
+    ],
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-21',
+    details: [
+      'Premium Embroidered Lawn',
+      'Original Colors',
+      'Wholesale bulk pricing',
+      'Fast delivery across Pakistan'
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
+  },
+  {
+    id: 'akash-2pc-lawn-22',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
+    price: 2750,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '2 Piece',
+    image: '/lawn-22.jpeg',
+    gallery: [
+      '/lawn-22.jpeg'
+    ],
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-22',
+    details: [
+      'Premium Embroidered Lawn',
+      'Original Colors',
+      'Wholesale bulk pricing',
+      'Fast delivery across Pakistan'
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
+  },
+  {
+    id: 'akash-2pc-lawn-23',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
+    price: 2750,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '2 Piece',
+    image: '/lawn-23.jpeg',
+    gallery: [
+      '/lawn-23.jpeg'
+    ],
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-23',
+    details: [
+      'Premium Embroidered Lawn',
+      'Original Colors',
+      'Wholesale bulk pricing',
+      'Fast delivery across Pakistan'
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
+  },
+  {
+    id: 'akash-2pc-lawn-24',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
+    price: 2750,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '2 Piece',
+    image: '/lawn-24.jpeg',
+    gallery: [
+      '/lawn-24.jpeg'
+    ],
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-24',
+    details: [
+      'Premium Embroidered Lawn',
+      'Original Colors',
+      'Wholesale bulk pricing',
+      'Fast delivery across Pakistan'
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
+  },
+  {
+    id: 'akash-2pc-lawn-25',
+    title: '2 Piece - Embroidered Lawn Suit',
+    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
+    price: 2750,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '2 Piece',
+    image: '/lawn-25.jpeg',
+    gallery: [
+      '/lawn-25.jpeg'
+    ],
+    sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-2PC-25',
+    details: [
+      'Premium Embroidered Lawn',
+      'Original Colors',
+      'Wholesale bulk pricing',
+      'Fast delivery across Pakistan'
+    ],
+    isNew: true,
+    colors: ['Red', 'Blue', 'Green'],
+    brand: 'Akash Collection'
   }
 ];
 
