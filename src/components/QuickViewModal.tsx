@@ -208,7 +208,7 @@ export default function QuickViewModal({ product, onClose, onAddToCart, onShareS
 
           {/* Description */}
           <div className="py-4 border-b border-gray-100">
-            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed whitespace-pre-line">
               {product.description}
             </p>
           </div>

@@ -231,7 +231,7 @@ export default function ProductCard({
           <h3 className="font-serif text-sm font-medium text-gray-900 group-hover:text-stone-600 transition-colors line-clamp-1 mt-0.5">
             {product.title}
           </h3>
-          <p className="text-gray-500 text-xs mt-1 line-clamp-2 leading-relaxed">
+          <p className="text-gray-500 text-xs mt-1 line-clamp-2 leading-relaxed whitespace-pre-line">
             {product.description}
           </p>
         </div>

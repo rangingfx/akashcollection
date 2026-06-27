@@ -37,7 +37,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'akash-3pc-lawn-1',
     title: 'Unstitched 3 Piece Lawn Suit',
-    description: 'Component Details (3 Piece) Measurement\nDigital Printed Embroidered Front On Lawn 1.15m\nDigital Printed Back On Lawn 1.15m\nDigital Printed Sleeves On Lawn 0.65m\nEmbroidered Border On Organza 01m\nEmbroidered Patti On Organza 1.5m\nEmbroidered Woven Net Dupatta 2.5m\nEmbroidered Pallu For Dupatta On Organza 02m\nDyed Cotton Pants 1.80m',
+    description: 'Component Details (3 Piece) Measurement:\n• Digital Printed Embroidered Front On Lawn: 1.15m\n• Digital Printed Back On Lawn: 1.15m\n• Digital Printed Sleeves On Lawn: 0.65m\n• Embroidered Border On Organza: 1m\n• Embroidered Patti On Organza: 1.5m\n• Embroidered Woven Net Dupatta: 2.5m\n• Embroidered Pallu For Dupatta On Organza: 2m\n• Dyed Cotton Pants: 1.80m',
     price: 4499,
     fabric: 'Lawn',
     type: 'unstitched',
