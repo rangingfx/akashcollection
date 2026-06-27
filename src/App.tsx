@@ -42,7 +42,7 @@ import SmtpDiagnosticModal from './components/SmtpDiagnosticModal';
 import { PrivacyPolicyModal, RefundPolicyModal, ShippingPolicyModal, TermsConditionsModal } from './components/PolicyModals';
 
 import { PRODUCTS, MOCK_REVIEWS } from './data/products';
-import { Product, CartItem, FilterState, Order, CustomerDetails } from './types';
+import { Product, CartItem, FilterState, Order, CustomerDetails, Review } from './types';
 
 import unstitchedBannerImg from './assets/images/unstitched_banner_1782097511336.jpg';
 import rtwBannerImg from './assets/images/ready_to_wear_banner_1782097529638.jpg';
@@ -149,9 +149,15 @@ export default function App() {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [isWhatsAppMenuOpen, setIsWhatsAppMenuOpen] = useState(false);
+  const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+  const [reviewFilter, setReviewFilter] = useState<number | null>(null);
 
   // Banner Slideshow State
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+
+  const filteredReviews = reviewFilter === null 
+    ? MOCK_REVIEWS 
+    : MOCK_REVIEWS.filter(r => r.rating === reviewFilter);
 
   // Advanced Filters State
   const [filters, setFilters] = useState<FilterState>({
@@ -997,37 +1003,71 @@ export default function App() {
             {/* TESTIMONIAL REVIEW CAROUSEL */}
             <section className="bg-stone-50 py-16 px-4 sm:px-6 lg:px-8" id="testimonials-carousel-box">
               <div className="max-w-5xl mx-auto space-y-8">
-                <div className="text-center space-y-1.5">
-                  <span className="font-mono text-[10px] text-amber-800 tracking-[0.2em] font-bold uppercase block">HAPPY CLIENTS REVIEWED</span>
-                  <h2 className="font-serif text-2xl font-bold text-stone-900 uppercase">Verifiable Feedback From Pakistani Buyers</h2>
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                  <div className="space-y-1.5 text-left">
+                    <span className="font-mono text-[10px] text-amber-800 tracking-[0.2em] font-bold uppercase block">HAPPY CLIENTS REVIEWED</span>
+                    <h2 className="font-serif text-2xl font-bold text-stone-900 uppercase">Verifiable Feedback From Pakistani Buyers</h2>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono text-stone-500 uppercase">Filter:</span>
+                    <div className="flex flex-wrap gap-2">
+                      <button 
+                        onClick={() => setReviewFilter(null)}
+                        className={`px-3 py-1 text-xs border rounded-full transition-colors ${reviewFilter === null ? 'bg-stone-900 text-white border-stone-900' : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'}`}
+                      >
+                        All
+                      </button>
+                      {[5, 4, 3].map(rating => (
+                        <button 
+                          key={rating}
+                          onClick={() => setReviewFilter(rating)}
+                          className={`px-3 py-1 text-xs border rounded-full transition-colors flex items-center gap-1 ${reviewFilter === rating ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-stone-600 border-stone-200 hover:border-amber-300'}`}
+                        >
+                          <span>{rating}</span>
+                          <span className={reviewFilter === rating ? 'text-white' : 'text-amber-500'}>★</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="testimonials-cards-grid">
-                  {MOCK_REVIEWS.map(rev => (
-                    <div key={rev.id} className="bg-white p-5 rounded-xl border border-stone-150 hover:shadow-md transition-shadow flex flex-col justify-between" id={`review-card-${rev.id}`}>
-                      <div>
-                        {/* Rating stars */}
-                        <div className="flex gap-0.5 text-amber-500 mb-2.5">
-                          {Array.from({ length: rev.rating }).map((_, i) => (
-                            <span key={i} className="text-sm font-bold">★</span>
-                          ))}
-                        </div>
-                        <p className="text-xs text-gray-600 italic leading-relaxed font-serif">
-                          "{rev.comment}"
-                        </p>
-                      </div>
-
-                      <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[10px] font-mono text-gray-400">
-                        <div>
-                          <p className="font-sans font-bold text-stone-800 text-[11px] block text-left leading-none mb-0.5">{rev.customerName}</p>
-                          <span>{rev.date}</span>
-                        </div>
-                        {rev.verified && (
-                          <span className="text-emerald-700 bg-emerald-50 px-1 rounded-sm text-[9px] font-bold">✓ VERIFIED</span>
-                        )}
-                      </div>
+                  {filteredReviews.length === 0 ? (
+                    <div className="col-span-full py-12 text-center text-stone-500">
+                      No reviews found for this rating yet.
                     </div>
-                  ))}
+                  ) : (
+                    filteredReviews.map(rev => (
+                      <div 
+                        key={rev.id} 
+                        onClick={() => setSelectedReview(rev)}
+                        className="bg-white p-5 rounded-xl border border-stone-150 hover:shadow-lg transition-all cursor-pointer flex flex-col justify-between hover:-translate-y-1 group" 
+                        id={`review-card-${rev.id}`}
+                      >
+                        <div>
+                          {/* Rating stars */}
+                          <div className="flex gap-0.5 text-amber-500 mb-2.5">
+                            {Array.from({ length: rev.rating }).map((_, i) => (
+                              <span key={i} className="text-sm font-bold">★</span>
+                            ))}
+                          </div>
+                          <p className="text-xs text-gray-600 italic leading-relaxed font-serif line-clamp-4 group-hover:text-stone-900 transition-colors">
+                            "{rev.comment}"
+                          </p>
+                        </div>
+
+                        <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[10px] font-mono text-gray-400">
+                          <div>
+                            <p className="font-sans font-bold text-stone-800 text-[11px] block text-left leading-none mb-0.5">{rev.customerName}</p>
+                            <span>{rev.date}</span>
+                          </div>
+                          {rev.verified && (
+                            <span className="text-emerald-700 bg-emerald-50 px-1 rounded-sm text-[9px] font-bold">✓ VERIFIED</span>
+                          )}
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </section>
@@ -1542,6 +1582,58 @@ export default function App() {
       <RefundPolicyModal isOpen={isRefundOpen} onClose={() => setIsRefundOpen(false)} />
       <ShippingPolicyModal isOpen={isShippingOpen} onClose={() => setIsShippingOpen(false)} />
       <TermsConditionsModal isOpen={isTermsOpen} onClose={() => setIsTermsOpen(false)} />
+
+      {/* Selected Review Modal */}
+      {selectedReview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-stone-900/40 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-xl max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden relative">
+            <button
+              onClick={() => setSelectedReview(null)}
+              className="absolute top-4 right-4 p-2 bg-stone-100 hover:bg-stone-200 rounded-full transition-colors z-10"
+            >
+              <X size={18} className="text-stone-600" />
+            </button>
+            <div className="p-6 sm:p-8 overflow-y-auto">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 font-serif text-xl border border-stone-200">
+                  {selectedReview.customerName.charAt(0)}
+                </div>
+                <div>
+                  <h3 className="font-sans font-bold text-lg text-stone-900">{selectedReview.customerName}</h3>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-stone-500 font-mono">{selectedReview.date}</span>
+                    {selectedReview.verified && (
+                      <span className="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+                        ✓ Verified Buyer
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-1 text-amber-500 mb-4">
+                {Array.from({ length: selectedReview.rating }).map((_, i) => (
+                  <span key={i} className="text-lg">★</span>
+                ))}
+              </div>
+
+              <div className="prose prose-stone prose-sm">
+                <p className="text-stone-700 italic font-serif leading-relaxed text-base">
+                  "{selectedReview.comment}"
+                </p>
+              </div>
+            </div>
+            <div className="bg-stone-50 p-4 border-t border-stone-100 flex justify-end">
+              <button
+                onClick={() => setSelectedReview(null)}
+                className="px-6 py-2 bg-stone-900 text-white text-sm font-medium rounded-lg hover:bg-stone-800 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
