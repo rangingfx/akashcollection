@@ -34,11 +34,13 @@ import Header from './components/Header';
 import ProductCard from './components/ProductCard';
 import QuickViewModal from './components/QuickViewModal';
 import CartDrawer from './components/CartDrawer';
-import CheckoutSection from './components/CheckoutSection';
-import OrderSuccessModal from './components/OrderSuccessModal';
-import TrackOrderModal from './components/TrackOrderModal';
-import NewsletterSubscription from './components/NewsletterSubscription';
-import SmtpDiagnosticModal from './components/SmtpDiagnosticModal';
+
+// Lazy loaded modals to optimize bundle size
+const CheckoutSection = React.lazy(() => import('./components/CheckoutSection'));
+const OrderSuccessModal = React.lazy(() => import('./components/OrderSuccessModal'));
+const TrackOrderModal = React.lazy(() => import('./components/TrackOrderModal'));
+const SmtpDiagnosticModal = React.lazy(() => import('./components/SmtpDiagnosticModal'));
+const NewsletterSubscription = React.lazy(() => import('./components/NewsletterSubscription'));
 import { PrivacyPolicyModal, RefundPolicyModal, ShippingPolicyModal, TermsConditionsModal } from './components/PolicyModals';
 
 import { PRODUCTS, MOCK_REVIEWS } from './data/products';
@@ -293,6 +295,36 @@ export default function App() {
       url.searchParams.set('product', quickViewProduct.id.toString());
       window.history.pushState({}, '', url.toString());
 
+      // Add or update JSON-LD Product Schema
+      let script = document.querySelector('script[id="product-schema"]');
+      if (!script) {
+        script = document.createElement('script');
+        script.setAttribute('type', 'application/ld+json');
+        script.setAttribute('id', 'product-schema');
+        document.head.appendChild(script);
+      }
+      const schemaData = {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": quickViewProduct.title,
+        "image": window.location.origin + quickViewProduct.image,
+        "description": quickViewProduct.description,
+        "sku": quickViewProduct.sku,
+        "brand": {
+          "@type": "Brand",
+          "name": quickViewProduct.brand || "Akash Collection"
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": url.toString(),
+          "priceCurrency": "PKR",
+          "price": quickViewProduct.price.toString(),
+          "availability": quickViewProduct.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+          "itemCondition": "https://schema.org/NewCondition"
+        }
+      };
+      script.textContent = JSON.stringify(schemaData);
+
     } else {
       // Revert to default
       const defaultTitle = "Akash Collection Wholesale Pakistan | Premium Unstitched Lawn & Ready-to-Wear";
@@ -313,6 +345,12 @@ export default function App() {
       if (url.searchParams.has('product')) {
         url.searchParams.delete('product');
         window.history.pushState({}, '', url.toString());
+      }
+
+      // Remove product schema
+      const script = document.querySelector('script[id="product-schema"]');
+      if (script) {
+        script.remove();
       }
     }
   }, [quickViewProduct]);
@@ -1073,33 +1111,39 @@ export default function App() {
             </section>
 
             {/* NEWSLETTER SUBSCRIPTION SECTION */}
-            <NewsletterSubscription />
+            <React.Suspense fallback={null}>
+        <NewsletterSubscription />
+      </React.Suspense>
 
           </div>
         )}
 
         {/* B. Checkout Form View */}
         {currentView === 'checkout' && (
-          <CheckoutSection
-            cart={cart}
-            onBackToCart={() => {
-              setCurrentView('store');
-              window.scrollTo({ top: 0, behavior: 'instant' });
-            }}
-            onSubmitOrder={handlePlaceOrder}
-          />
+          <React.Suspense fallback={<div className="p-8 text-center"><div className="w-8 h-8 mx-auto border-4 border-stone-200 border-t-stone-800 rounded-full animate-spin"></div></div>}>
+            <CheckoutSection
+              cart={cart}
+              onBackToCart={() => {
+                setCurrentView('store');
+                window.scrollTo({ top: 0, behavior: 'instant' });
+              }}
+              onSubmitOrder={handlePlaceOrder}
+            />
+          </React.Suspense>
         )}
 
         {/* C. Order confirmed success View */}
         {currentView === 'success' && latestOrder && (
-          <OrderSuccessModal
-            order={latestOrder}
-            onContinueShopping={() => {
-              setCurrentView('store');
-              setSelectedCategory('all');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          />
+          <React.Suspense fallback={<div className="p-8 text-center"><div className="w-8 h-8 mx-auto border-4 border-stone-200 border-t-stone-800 rounded-full animate-spin"></div></div>}>
+            <OrderSuccessModal
+              order={latestOrder}
+              onContinueShopping={() => {
+                setCurrentView('store');
+                setSelectedCategory('all');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+          </React.Suspense>
         )}
       </main>
 
@@ -1117,18 +1161,22 @@ export default function App() {
         }}
       />
 
-      {isTrackOpen && (
-        <TrackOrderModal
-          onClose={() => setIsTrackOpen(false)}
-          orders={placedOrders}
-        />
-      )}
+      <React.Suspense fallback={null}>
+        {isTrackOpen && (
+          <TrackOrderModal
+            onClose={() => setIsTrackOpen(false)}
+            orders={placedOrders}
+          />
+        )}
+      </React.Suspense>
 
-      {isDiagnosticOpen && (
-        <SmtpDiagnosticModal
-          onClose={() => setIsDiagnosticOpen(false)}
-        />
-      )}
+      <React.Suspense fallback={null}>
+        {isDiagnosticOpen && (
+          <SmtpDiagnosticModal
+            onClose={() => setIsDiagnosticOpen(false)}
+          />
+        )}
+      </React.Suspense>
 
 
       {quickViewProduct && (

@@ -108,6 +108,7 @@ export default function ProductCard({
           id={`product-img-${product.id}`}
           src={product.image}
           alt={product.title}
+          loading="lazy"
           referrerPolicy="no-referrer"
           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
         />
