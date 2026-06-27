@@ -35,6 +35,30 @@ export const CITIES_OF_PAKISTAN = [
 
 export const PRODUCTS: Product[] = [
   {
+    id: 'akash-3pc-lawn-1',
+    title: 'Unstitched 3 Piece Lawn Suit',
+    description: 'Component Details (3 Piece) Measurement\nDigital Printed Embroidered Front On Lawn 1.15m\nDigital Printed Back On Lawn 1.15m\nDigital Printed Sleeves On Lawn 0.65m\nEmbroidered Border On Organza 01m\nEmbroidered Patti On Organza 1.5m\nEmbroidered Woven Net Dupatta 2.5m\nEmbroidered Pallu For Dupatta On Organza 02m\nDyed Cotton Pants 1.80m',
+    price: 4499,
+    fabric: 'Lawn',
+    type: 'unstitched',
+    pieces: '3 Piece',
+    image: '/lawn-1.jpeg',
+    gallery: [
+      '/lawn-1.jpeg',
+      '/lawn-2.jpeg',
+      '/lawn-3.jpeg',
+      '/lawn-4.jpeg',
+      '/lawn-5.jpeg',
+      '/lawn-6.jpeg',
+      '/lawn-7.jpeg',
+      '/lawn-8.jpeg'
+    ],
+    sizes: ['Unstitched'],
+    isNew: true,
+    colors: ['Purple', 'Pink', 'Orange', 'Cream', 'Teal', 'Peach', 'Lilac', 'Aqua'],
+    brand: 'Akash Collection'
+  },
+  {
     id: 'zouq-1',
     title: 'Akash Collection Wholesale - Bareeze lawn 2 piece',
     description: 'A stellar stitched and unstitched ensemble featuring premium prints and embroidery, sourced directly to give you the best wholesale prices in Pakistan.',
