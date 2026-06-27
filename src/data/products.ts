@@ -54,6 +54,14 @@ export const PRODUCTS: Product[] = [
       '/lawn-8.jpeg'
     ],
     sizes: ['Unstitched'],
+    stock: 100,
+    sku: 'AK-LAWN-3PC-1',
+    details: [
+      'Premium Lawn Fabric',
+      'Original Colors',
+      'Wholesale bulk pricing',
+      'Fast delivery across Pakistan'
+    ],
     isNew: true,
     colors: ['Purple', 'Pink', 'Orange', 'Cream', 'Teal', 'Peach', 'Lilac', 'Aqua'],
     brand: 'Akash Collection'
