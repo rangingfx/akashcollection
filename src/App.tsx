@@ -1387,7 +1387,7 @@ export default function App() {
                 <Twitter size={13} />
               </a>
               <a 
-                href="https://wa.me/akashcollection.pk" 
+                href="https://wa.me/923347272246" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
@@ -1561,7 +1561,7 @@ export default function App() {
             <h4 className="font-serif font-bold text-stone-900 mb-3 border-b border-stone-100 pb-2">How can we help?</h4>
             <div className="space-y-2">
               <a 
-                href="https://wa.me/akashcollection.pk"
+                href="https://wa.me/923347272246"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {

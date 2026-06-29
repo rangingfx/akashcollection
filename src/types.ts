@@ -18,6 +18,9 @@ export interface Product {
   stock: number;
   sku: string;
   details: string[];
+  isNew?: boolean;
+  colors?: string[];
+  brand?: string;
 }
 
 export interface CartItem {
