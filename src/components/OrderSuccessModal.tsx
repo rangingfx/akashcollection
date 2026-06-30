@@ -116,7 +116,13 @@ export default function OrderSuccessModal({ order, onContinueShopping }: OrderSu
               {order.trackingNo ? (
                 <p>
                   <span className="text-gray-400">Tracking Number:</span>{' '}
-                  <strong className="text-gray-900 font-bold bg-gray-100 px-2 py-0.5 rounded">{order.trackingNo}</strong>
+                  {order.trackingUrl ? (
+                    <a href={order.trackingUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-700 font-bold bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded transition-colors inline-flex items-center gap-1">
+                      {order.trackingNo}
+                    </a>
+                  ) : (
+                    <strong className="text-gray-900 font-bold bg-gray-100 px-2 py-0.5 rounded">{order.trackingNo}</strong>
+                  )}
                 </p>
               ) : null}
               <p>
@@ -126,10 +132,13 @@ export default function OrderSuccessModal({ order, onContinueShopping }: OrderSu
                 </strong>
               </p>
               <p className="text-[10px] text-gray-500 italic leading-relaxed pt-2">
-                {order.trackingNo ? 
-                  `*You can track your parcel using the tracking number above. A confirmation email has also been sent to ${order.customer.email}.` :
+                {order.trackingUrl ? (
+                  <>*You can track your parcel via <a href={order.trackingUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">PostEx Tracking</a>. A confirmation email has also been sent to <strong>{order.customer.email}</strong>.</>
+                ) : order.trackingNo ? (
+                  `*You can track your parcel using the tracking number above. A confirmation email has also been sent to ${order.customer.email}.`
+                ) : (
                   `*A customized tracking link from postex.pk will be sent to your email ${order.customer.email} as soon as the courier rider picks up the parcel.`
-                }
+                )}
               </p>
             </div>
           </div>

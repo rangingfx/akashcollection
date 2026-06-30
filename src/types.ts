@@ -71,5 +71,6 @@ export interface Order {
   total: number;
   status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
   trackingNo?: string;
+  trackingUrl?: string;
   carrier?: string;
 }

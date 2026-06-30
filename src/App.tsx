@@ -427,6 +427,7 @@ export default function App() {
       const postExResponse = await createPostExOrder(orderId, cart, total, customer);
       if (postExResponse?.statusCode === "200" && postExResponse.dist?.trackingNumber) {
         newOrder.trackingNo = postExResponse.dist.trackingNumber;
+        newOrder.trackingUrl = `https://merchant.postex.pk/tracking?tracking_number=${postExResponse.dist.trackingNumber}`;
         newOrder.carrier = 'PostEx Courier';
         newOrder.status = 'Shipped';
       }
