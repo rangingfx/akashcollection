@@ -40,6 +40,7 @@ const CheckoutSection = React.lazy(() => import('./components/CheckoutSection'))
 const OrderSuccessModal = React.lazy(() => import('./components/OrderSuccessModal'));
 const TrackOrderModal = React.lazy(() => import('./components/TrackOrderModal'));
 const SmtpDiagnosticModal = React.lazy(() => import('./components/SmtpDiagnosticModal'));
+const PostExPortalModal = React.lazy(() => import('./components/PostExPortalModal'));
 const NewsletterSubscription = React.lazy(() => import('./components/NewsletterSubscription'));
 import { PrivacyPolicyModal, RefundPolicyModal, ShippingPolicyModal, TermsConditionsModal } from './components/PolicyModals';
 
@@ -144,6 +145,7 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isTrackOpen, setIsTrackOpen] = useState(false);
   const [isDiagnosticOpen, setIsDiagnosticOpen] = useState(false);
+  const [isPostExOpen, setIsPostExOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isRefundOpen, setIsRefundOpen] = useState(false);
   const [isShippingOpen, setIsShippingOpen] = useState(false);
@@ -1178,6 +1180,19 @@ export default function App() {
         )}
       </React.Suspense>
 
+      <React.Suspense fallback={null}>
+        {isPostExOpen && (
+          <PostExPortalModal
+            onClose={() => setIsPostExOpen(false)}
+            orders={placedOrders}
+            onOrderUpdate={(updated) => {
+              setPlacedOrders(updated);
+              saveOrdersToStorage(updated);
+            }}
+          />
+        )}
+      </React.Suspense>
+
 
       {quickViewProduct && (
         <QuickViewModal
@@ -1404,6 +1419,7 @@ export default function App() {
               <li><button onClick={() => setIsTrackOpen(true)} className="hover:text-white footer-link focus:outline-none">Shipment tracking status</button></li>
               <li><a href="#collection-anchor" className="hover:text-white footer-link">Lawn stitching guide</a></li>
               <li><a href="#collection-anchor" className="hover:text-white footer-link">Frequent Queries (FAQs)</a></li>
+              <li><button onClick={() => setIsPostExOpen(true)} className="text-blue-500 hover:text-blue-400 footer-link focus:outline-none font-bold">PostEx Courier Backoffice</button></li>
               <li><button onClick={() => setIsDiagnosticOpen(true)} className="text-amber-500 hover:text-amber-400 footer-link focus:outline-none font-bold">Diagnostics: Test SMTP mailer</button></li>
             </ul>
           </div>

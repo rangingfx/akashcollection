@@ -70,4 +70,6 @@ export interface Order {
   shippingFee: number;
   total: number;
   status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+  trackingNo?: string;
+  carrier?: string;
 }

@@ -19,6 +19,380 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+// ==========================================
+// POSTEX COURIER INTEGRATION PROXY ENDPOINTS
+// ==========================================
+
+// 1. PostEx Configuration check status
+app.get("/api/postex/config", (req, res) => {
+  const token = process.env.POSTEX_API_TOKEN ? process.env.POSTEX_API_TOKEN.trim() : "";
+  let maskedToken = "Not Configured";
+  if (token) {
+    maskedToken = token.substring(0, Math.min(4, token.length)) + "••••••••" + token.substring(Math.max(0, token.length - 4));
+  }
+  res.json({
+    configured: !!token,
+    token: maskedToken
+  });
+});
+
+// 2. Operational Cities list query
+app.get("/api/postex/cities", async (req, res) => {
+  try {
+    const token = process.env.POSTEX_API_TOKEN ? process.env.POSTEX_API_TOKEN.trim() : "";
+    if (!token) {
+      // High-fidelity fallback list of Pakistani operational cities when token is not yet active
+      return res.json({
+        statusCode: "200",
+        statusMessage: "SUCCESSFULLY OPERATED (DEMO MODE)",
+        dist: [
+          { operationalCityName: "Lahore", countryName: "Pakistan", isPickupCity: true, isDeliveryCity: true },
+          { operationalCityName: "Islamabad", countryName: "Pakistan", isPickupCity: true, isDeliveryCity: true },
+          { operationalCityName: "Karachi", countryName: "Pakistan", isPickupCity: true, isDeliveryCity: true },
+          { operationalCityName: "Rawalpindi", countryName: "Pakistan", isPickupCity: true, isDeliveryCity: true },
+          { operationalCityName: "Faisalabad", countryName: "Pakistan", isPickupCity: true, isDeliveryCity: true },
+          { operationalCityName: "Multan", countryName: "Pakistan", isPickupCity: true, isDeliveryCity: true },
+          { operationalCityName: "Peshawar", countryName: "Pakistan", isPickupCity: true, isDeliveryCity: true },
+          { operationalCityName: "Gujranwala", countryName: "Pakistan", isPickupCity: true, isDeliveryCity: true },
+          { operationalCityName: "Sialkot", countryName: "Pakistan", isPickupCity: true, isDeliveryCity: true },
+          { operationalCityName: "Quetta", countryName: "Pakistan", isPickupCity: false, isDeliveryCity: true },
+          { operationalCityName: "Hyderabad", countryName: "Pakistan", isPickupCity: false, isDeliveryCity: true },
+          { operationalCityName: "Sargodha", countryName: "Pakistan", isPickupCity: false, isDeliveryCity: true },
+          { operationalCityName: "Bahawalpur", countryName: "Pakistan", isPickupCity: false, isDeliveryCity: true }
+        ]
+      });
+    }
+
+    const type = req.query.operationalCityType || "";
+    const url = `https://api.postex.pk/services/integration/api/order/v2/get-operational-city${type ? `?operationalCityType=${type}` : ""}`;
+    
+    console.log(`Forwarding query to PostEx operational cities API: ${url}`);
+    const response = await fetch(url, {
+      headers: { token: token }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`PostEx operational cities HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err: any) {
+    console.error("Error fetching PostEx operational cities:", err);
+    res.status(500).json({ error: "Failed to fetch PostEx cities", details: err.message });
+  }
+});
+
+// 3. Merchant registered pickup warehouse addresses lookup
+app.get("/api/postex/merchant-address", async (req, res) => {
+  try {
+    const token = process.env.POSTEX_API_TOKEN ? process.env.POSTEX_API_TOKEN.trim() : "";
+    if (!token) {
+      // High-fidelity fallback registered warehouse list in demo mode
+      return res.json({
+        statusCode: "200",
+        statusMessage: "SUCCESSFULLY OPERATED (DEMO MODE)",
+        dist: [
+          {
+            phone1: "+923000441793",
+            phone2: "+923214567890",
+            contactPersonName: "Babar Razzaq",
+            cityName: "Lahore",
+            address: "Akash Collection Wholesale, Shop #4, Shalimar Link Road, Lahore",
+            addressCode: "LHR-WH-001"
+          },
+          {
+            phone1: "+923001234567",
+            phone2: "",
+            contactPersonName: "Akash Ghafoor",
+            cityName: "Faisalabad",
+            address: "Akash Warehouse, Montgomery Bazar, Faisalabad",
+            addressCode: "FSD-WH-002"
+          }
+        ]
+      });
+    }
+
+    const cityName = req.query.cityName || "";
+    const url = `https://api.postex.pk/services/integration/api/order/v1/get-merchant-address${cityName ? `?cityName=${cityName}` : ""}`;
+    
+    console.log(`Forwarding query to PostEx merchant address API: ${url}`);
+    const response = await fetch(url, {
+      headers: { token: token }
+    });
+
+    if (!response.ok) {
+      throw new Error(`PostEx merchant address HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err: any) {
+    console.error("Error fetching PostEx address details:", err);
+    res.status(500).json({ error: "Failed to fetch PostEx pickup addresses", details: err.message });
+  }
+});
+
+// 4. Create new Order booking in PostEx system
+app.post("/api/postex/create-order", async (req, res) => {
+  try {
+    const token = process.env.POSTEX_API_TOKEN ? process.env.POSTEX_API_TOKEN.trim() : "";
+    const orderData = req.body;
+
+    if (!orderData.cityName || !orderData.customerName || !orderData.customerPhone) {
+      return res.status(400).json({ error: "cityName, customerName, and customerPhone are required fields." });
+    }
+
+    // Clean phone number format for PostEx specifications (Must be standard Pakistani format: 03xxxxxxxxx)
+    let phone = orderData.customerPhone.trim();
+    if (phone.startsWith("+92")) {
+      phone = "0" + phone.substring(3);
+    } else if (phone.startsWith("92")) {
+      phone = "0" + phone.substring(2);
+    }
+    phone = phone.replace(/\D/g, "");
+    if (phone.length === 10 && !phone.startsWith("0")) {
+      phone = "0" + phone;
+    }
+
+    // Ensure physical deliveryAddress is provided or falls back safely
+    const deliveryAddress = orderData.deliveryAddress || orderData.cityName;
+
+    const payload = {
+      cityName: orderData.cityName,
+      customerName: orderData.customerName,
+      customerPhone: phone,
+      deliveryAddress: deliveryAddress,
+      invoiceDivision: Number(orderData.invoiceDivision) || 1,
+      invoicePayment: Number(orderData.invoicePayment) || 0,
+      items: Number(orderData.items) || 1,
+      orderDetail: orderData.orderDetail || "Clothing purchase from Akash Collection",
+      orderRefNumber: orderData.orderRefNumber || `AK-${Math.floor(10000 + Math.random() * 90000)}`,
+      orderType: orderData.orderType || "Normal",
+      transactionNotes: orderData.transactionNotes || "Processed from merchant back-office system",
+      pickupAddressCode: orderData.pickupAddressCode || "",
+      storeAddressCode: orderData.storeAddressCode || ""
+    };
+
+    if (!token) {
+      // Mock successful order creation under demo mode
+      const mockTracking = `PE-${Math.floor(10000000 + Math.random() * 90000000)}`;
+      console.log(`[DEMO] Simulating PostEx booking with tracking ID: ${mockTracking}`);
+      return res.json({
+        statusCode: "200",
+        statusMessage: "ORDER HAS BEEN CREATED (DEMO MODE)",
+        dist: {
+          trackingNumber: mockTracking,
+          orderStatus: "UnBooked",
+          orderDate: new Date().toISOString().replace('T', ' ').substring(0, 19)
+        }
+      });
+    }
+
+    const url = "https://api.postex.pk/services/integration/api/order/v3/create-order";
+    console.log("Forwarding order booking to PostEx API:", JSON.stringify(payload));
+    
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "token": token
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err: any) {
+    console.error("Error creating order booking on PostEx:", err);
+    res.status(500).json({ error: "Failed to book PostEx courier shipment", details: err.message });
+  }
+});
+
+// 5. Cancel active booked shipment in PostEx system
+app.put("/api/postex/cancel-order", async (req, res) => {
+  try {
+    const token = process.env.POSTEX_API_TOKEN ? process.env.POSTEX_API_TOKEN.trim() : "";
+    const { trackingNumber } = req.body;
+
+    if (!trackingNumber) {
+      return res.status(400).json({ error: "trackingNumber parameter is required." });
+    }
+
+    if (!token) {
+      console.log(`[DEMO] Simulating cancel operation for PostEx tracking ID: ${trackingNumber}`);
+      return res.json({
+        statusCode: "200",
+        statusMessage: "Successfully Cancelled (DEMO MODE)"
+      });
+    }
+
+    const url = "https://api.postex.pk/services/integration/api/order/v1/cancel-order";
+    console.log(`Forwarding cancellation query to PostEx API for tracking number: ${trackingNumber}`);
+    
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "token": token
+      },
+      body: JSON.stringify({ trackingNumber })
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err: any) {
+    console.error("Error cancelling booked courier on PostEx:", err);
+    res.status(500).json({ error: "Failed to cancel PostEx shipment", details: err.message });
+  }
+});
+
+// 6. Live Shipment order tracking lookup
+app.get("/api/postex/track/:trackingNumber", async (req, res) => {
+  try {
+    const token = process.env.POSTEX_API_TOKEN ? process.env.POSTEX_API_TOKEN.trim() : "";
+    const { trackingNumber } = req.params;
+
+    if (!trackingNumber) {
+      return res.status(400).json({ error: "Tracking number parameter is required" });
+    }
+
+    if (!token) {
+      // Highly descriptive fallback tracking history logic
+      const isDelivered = trackingNumber.endsWith("2") || trackingNumber.endsWith("4") || trackingNumber.includes("DELIV");
+      const isOuf = trackingNumber.endsWith("5") || trackingNumber.endsWith("7") || trackingNumber.includes("OUT");
+      
+      const status = isDelivered ? "Delivered" : isOuf ? "Out For Delivery" : "Booked";
+      const statusCode = isDelivered ? "0005" : isOuf ? "0004" : "0002";
+      
+      const history = [
+        { transactionStatusMessage: "At Merchant's Warehouse", transactionStatusMessageCode: "0001" },
+        { transactionStatusMessage: "At PostEx Warehouse", transactionStatusMessageCode: "0003" }
+      ];
+      if (isOuf || isDelivered) {
+        history.push({ transactionStatusMessage: "Package on Route / Out For Delivery", transactionStatusMessageCode: "0004" });
+      }
+      if (isDelivered) {
+        history.push({ transactionStatusMessage: "Delivered", transactionStatusMessageCode: "0005" });
+      }
+
+      return res.json({
+        statusCode: "200",
+        statusMessage: "SUCCESSFULLY OPERATED (DEMO MODE)",
+        dist: {
+          customerName: "Saira Bibi",
+          customerPhone: "03009876543",
+          deliveryAddress: "House A-12, Street 3, Garden Town, Lahore",
+          invoicePayment: 3450,
+          trackingNumber: trackingNumber,
+          transactionStatus: status,
+          orderRefNumber: `AK-${trackingNumber.replace(/\D/g, "") || '8192'}`,
+          transactionStatusHistory: history
+        }
+      });
+    }
+
+    const url = `https://api.postex.pk/services/integration/api/order/v1/track-order/${trackingNumber}`;
+    console.log(`Forwarding tracking query to PostEx API: ${url}`);
+    
+    const response = await fetch(url, {
+      headers: { token: token }
+    });
+
+    if (!response.ok) {
+      throw new Error(`PostEx tracking HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err: any) {
+    console.error("Error tracking order shipment with PostEx:", err);
+    res.status(500).json({ error: "Failed to track PostEx shipment", details: err.message });
+  }
+});
+
+// 7. General search of placed/active/completed orders
+app.get("/api/postex/orders", async (req, res) => {
+  try {
+    const token = process.env.POSTEX_API_TOKEN ? process.env.POSTEX_API_TOKEN.trim() : "";
+    const orderStatusID = req.query.orderStatusID || "0";
+    const fromDate = req.query.fromDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    const toDate = req.query.toDate || new Date().toISOString().split('T')[0];
+
+    if (!token) {
+      // Dynamic list mock based on filters
+      return res.json({
+        statusCode: "200",
+        statusMessage: "SUCCESSFULLY OPERATED (DEMO MODE)",
+        dist: [
+          {
+            customerName: "Amina Khan",
+            customerPhone: "03001234567",
+            deliveryAddress: "House 45, Street 2, Sector F-10, Islamabad",
+            invoicePayment: 4800,
+            trackingNumber: "PE-87234901",
+            transactionDate: "2026-06-28",
+            transactionStatus: "Out For Delivery",
+            orderRefNumber: "AK-71932"
+          },
+          {
+            customerName: "Zahid Ahmed",
+            customerPhone: "03219876543",
+            deliveryAddress: "DHA Phase 5, Block C, House 12, Lahore",
+            invoicePayment: 12500,
+            trackingNumber: "PE-56123498",
+            transactionDate: "2026-06-29",
+            transactionStatus: "Booked",
+            orderRefNumber: "AK-98432"
+          },
+          {
+            customerName: "Ayesha Bibi",
+            customerPhone: "03334567123",
+            deliveryAddress: "Gulshan-e-Iqbal, Block 13-D, Karachi",
+            invoicePayment: 6200,
+            trackingNumber: "PE-29837452",
+            transactionDate: "2026-06-27",
+            transactionStatus: "Delivered",
+            orderRefNumber: "AK-10294"
+          }
+        ]
+      });
+    }
+
+    const isUnbookedOnly = orderStatusID === "1" || orderStatusID === "Unbooked";
+    const baseUrl = isUnbookedOnly 
+      ? "https://api.postex.pk/services/integration/api/order/v2/get-unbooked-orders"
+      : "https://api.postex.pk/services/integration/api/order/v1/get-all-order";
+
+    const params = new URLSearchParams();
+    if (isUnbookedOnly) {
+      params.append("startDate", fromDate.toString());
+      params.append("endDate", toDate.toString());
+    } else {
+      params.append("orderStatusID", orderStatusID.toString());
+      params.append("fromDate", fromDate.toString());
+      params.append("toDate", toDate.toString());
+    }
+
+    const url = `${baseUrl}?${params.toString()}`;
+    console.log(`Forwarding order list query to PostEx API: ${url}`);
+    
+    const response = await fetch(url, {
+      headers: { token: token }
+    });
+
+    if (!response.ok) {
+      throw new Error(`PostEx orders query HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err: any) {
+    console.error("Error querying list of orders from PostEx:", err);
+    res.status(500).json({ error: "Failed to query PostEx orders list", details: err.message });
+  }
+});
+
 // API test-email diagnostic endpoint
 app.post("/api/test-email", async (req, res) => {
   try {
