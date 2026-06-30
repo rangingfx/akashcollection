@@ -67,15 +67,15 @@ export default function TrackOrderModal({ onClose, orders }: TrackOrderModalProp
       const steps = [
         { title: 'Order Booking Catalogued', description: 'Order logged into the Akash Wholesale system from secure browser portal.', time: 'Today, 2:10 PM', done: true, active: false },
         { title: 'Tailoring & Styling Verification', description: 'Garment dimensions and print quality checked by quality control.', time: 'Today, 4:30 PM', done: true, active: true },
-        { title: 'Handed over to Leopards Courier', description: 'Package wrapped in secure brand polybag and dispatched to Lahore dispatch dock.', time: 'Awaiting voice confirmation call', done: false, active: false },
+        { title: 'Handed over to PostEx Courier', description: 'Package wrapped in secure brand polybag and dispatched to Lahore dispatch dock.', time: 'Awaiting voice confirmation call', done: false, active: false },
         { title: 'Home Package Handover', description: 'Delivery rider delivers parcel to consumer address.', time: 'Est. 2-3 working days', done: false, active: false }
       ];
 
       setTrackResult({
         id: localMatch.id,
         status: localMatch.status === 'Shipped' ? 'Shipped' : 'Processing',
-        carrier: localMatch.carrier || 'Leopards Courier (COD)',
-        trackingNo: localMatch.trackingNo || `LEO-9284210-${localMatch.id.split('-')[1] || '94'}`,
+        carrier: localMatch.carrier || 'PostEx Courier (COD)',
+        trackingNo: localMatch.trackingNo || `PEX-9284210-${localMatch.id.split('-')[1] || '94'}`,
         city: localMatch.customer.city,
         address: localMatch.customer.address,
         customerName: `${localMatch.customer.firstName} ${localMatch.customer.lastName}`,
@@ -148,21 +148,21 @@ export default function TrackOrderModal({ onClose, orders }: TrackOrderModalProp
     const steps = isDemo ? [
       { title: 'Order Booked', description: 'Order successfully logged and confirmed.', time: '2 Days ago, 11:00 AM', done: true, active: false },
       { title: 'Premium Packing Secured', description: 'Premium lavender-scented box packaging approved by QC specialists.', time: 'Yesterday, 9:20 AM', done: true, active: false },
-      { title: 'Dispatched from Lahore Hub', description: 'Manifest packet loaded onto Leopards transit truck LHR-048.', time: 'Yesterday, 8:00 PM', done: true, active: false },
-      { title: 'Out for Courier Delivery', description: 'Leopards courier rider Ahmad (0321-8293122) out for home delivery in matching sector.', time: 'Today, 9:15 AM', done: true, active: true },
+      { title: 'Dispatched from Lahore Hub', description: 'Manifest packet loaded onto PostEx transit truck LHR-048.', time: 'Yesterday, 8:00 PM', done: true, active: false },
+      { title: 'Out for Courier Delivery', description: 'PostEx courier rider Ahmad (0321-8293122) out for home delivery in matching sector.', time: 'Today, 9:15 AM', done: true, active: true },
       { title: 'Delivered', description: 'Signed and cash cleared.', time: 'Est. Today by 6:00 PM', done: false, active: false }
     ] : [
       { title: 'Order Booked', description: 'Order logged from Akash PK e-store.', time: 'June 18, 2026', done: true, active: false },
       { title: 'Tailor Approved', description: 'Unstitched patterns gathered for packaging.', time: 'June 18, 2026', done: true, active: false },
-      { title: 'Shipped', description: 'Picked up by Call Courier services.', time: 'June 19, 2026', done: true, active: false },
+      { title: 'Shipped', description: 'Picked up by PostEx services.', time: 'June 19, 2026', done: true, active: false },
       { title: 'Delivered', description: 'Handed over to customer and PKR amount cleared.', time: 'June 20, 2026', done: true, active: true }
     ];
 
     setTrackResult({
       id: matchCode.startsWith('AK-') ? matchCode : `AK-${matchCode}`,
       status: isDemo ? 'Out for Delivery' : 'Delivered',
-      carrier: 'Leopards Pakistan',
-      trackingNo: `LEO-92149${matchCode.replace(/\D/g, '') || '4259'}`,
+      carrier: 'PostEx Pakistan',
+      trackingNo: `PEX-92149${matchCode.replace(/\\D/g, '') || '4259'}`,
       city: 'Rawalpindi',
       address: 'Sector G-9/1, Street 4, Islamabad',
       customerName: 'Zainab Bibi',
@@ -333,7 +333,7 @@ export default function TrackOrderModal({ onClose, orders }: TrackOrderModalProp
         {/* Tracking info foot */}
         <div className="mt-6 pt-4 border-t border-gray-100 text-[10px] text-gray-400 font-mono text-center flex flex-col gap-1 inline-block" id="track-assistance">
           <span>Need help directly with shipping couriers? Contact support details:</span>
-          <span>Leopards Helpline: (021) 111-300-786 | Lahore Office: G.T. Road Baghbanpura</span>
+          <span>PostEx Helpline: (042) 32157777 | Lahore Office: DHA Phase 8</span>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Search, HelpCircle, Truck, Menu, X, ArrowRight, Phone, Mail, MapPin, BadgeCheck, Heart } from 'lucide-react';
+import { ShoppingBag, Search, HelpCircle, Truck, Menu, X, ArrowRight, Phone, Mail, MapPin, BadgeCheck, Heart, User } from 'lucide-react';
 import { CartItem } from '../types';
 
 interface HeaderProps {
@@ -12,6 +12,7 @@ interface HeaderProps {
   favoritesCount?: number;
   onOpenCart: () => void;
   onOpenTrack: () => void;
+  onOpenAccount?: () => void;
   onCategorySelect: (category: 'all' | 'unstitched' | 'ready-to-wear' | 'festive' | 'sale' | 'wishlist') => void;
   selectedCategory: string;
   onSearch: (term: string) => void;
@@ -23,6 +24,7 @@ export default function Header({
   favoritesCount = 0,
   onOpenCart,
   onOpenTrack,
+  onOpenAccount,
   onCategorySelect,
   selectedCategory,
   onSearch,
@@ -153,6 +155,16 @@ export default function Header({
                 {favoritesCount}
               </span>
             )}
+          </button>
+
+          {/* Account Utility */}
+          <button
+            id="header-account-btn"
+            onClick={onOpenAccount}
+            className="relative flex items-center gap-1.5 text-stone-800 hover:text-stone-500 p-1.5 transition-colors focus:outline-none hidden sm:flex"
+            aria-label="Open Account"
+          >
+            <User size={21} strokeWidth={1.8} />
           </button>
 
           {/* Cart Bag with Badge */}

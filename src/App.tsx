@@ -35,6 +35,8 @@ import ProductCard from './components/ProductCard';
 import QuickViewModal from './components/QuickViewModal';
 import CartDrawer from './components/CartDrawer';
 
+import UserAccount from './components/UserAccount';
+
 // Lazy loaded modals to optimize bundle size
 const CheckoutSection = React.lazy(() => import('./components/CheckoutSection'));
 const OrderSuccessModal = React.lazy(() => import('./components/OrderSuccessModal'));
@@ -46,6 +48,7 @@ import { PrivacyPolicyModal, RefundPolicyModal, ShippingPolicyModal, TermsCondit
 
 import { PRODUCTS, MOCK_REVIEWS } from './data/products';
 import { Product, CartItem, FilterState, Order, CustomerDetails, Review } from './types';
+import { createPostExOrder } from './services/postex';
 
 import unstitchedBannerImg from './assets/images/unstitched_banner_1782097511336.jpg';
 import rtwBannerImg from './assets/images/ready_to_wear_banner_1782097529638.jpg';
@@ -55,7 +58,7 @@ import pretBannerImg from './assets/images/pret_wear_banner_1782297192141.jpg';
 
 export default function App() {
   // Navigation & Page State
-  const [currentView, setCurrentView] = useState<'store' | 'checkout' | 'success'>('store');
+  const [currentView, setCurrentView] = useState<'store' | 'checkout' | 'success' | 'account'>('store');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'unstitched' | 'ready-to-wear' | 'festive' | 'sale' | 'wishlist'>('all');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -394,7 +397,7 @@ export default function App() {
   };
 
   // 4. SUBMIT ORDER LOGIC (Checkout Complete)
-  const handlePlaceOrder = (customer: CustomerDetails) => {
+  const handlePlaceOrder = async (customer: CustomerDetails) => {
     // Generate simulated billing metrics
     const subtotal = cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
     const discountPercentStr = localStorage.getItem('akash_cart_discount_percent');
@@ -403,8 +406,10 @@ export default function App() {
     const shippingFee = subtotal >= 2500 ? 0 : 250;
     const total = subtotal - discountAmount + shippingFee;
 
+    const orderId = `AK-${Math.floor(10000 + Math.random() * 90000)}`;
+
     const newOrder: Order = {
-      id: `AK-${Math.floor(10000 + Math.random() * 90000)}`, // e.g. AK-71283
+      id: orderId, // e.g. AK-71283
       date: new Date().toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
@@ -417,6 +422,17 @@ export default function App() {
       total,
       status: 'Pending'
     };
+
+    try {
+      const postExResponse = await createPostExOrder(orderId, cart, total, customer);
+      if (postExResponse?.statusCode === "200" && postExResponse.dist?.trackingNumber) {
+        newOrder.trackingNo = postExResponse.dist.trackingNumber;
+        newOrder.carrier = 'PostEx Courier';
+        newOrder.status = 'Shipped';
+      }
+    } catch (err) {
+      console.error('Failed to create PostEx tracking', err);
+    }
 
     // Save order
     const nextOrders = [...placedOrders, newOrder];
@@ -624,6 +640,10 @@ export default function App() {
         favoritesCount={favorites.length}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenTrack={() => setIsTrackOpen(true)}
+        onOpenAccount={() => {
+          setCurrentView('account');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
         onCategorySelect={setSelectedCategory}
         selectedCategory={selectedCategory}
         onSearch={setSearchTerm}
@@ -1034,7 +1054,7 @@ export default function App() {
                   </div>
                   <h3 className="font-serif text-base font-bold text-gray-100 uppercase tracking-wider">Secure Cash Payment</h3>
                   <p className="text-xs text-gray-400 leading-relaxed font-sans max-w-xs">
-                    Risk-free checkout. Only pays the cash to leopards courier agent once you receive the sealed brand parcel directly in your hands.
+                    Risk-free checkout. Only pays the cash to PostEx courier agent once you receive the sealed brand parcel directly in your hands.
                   </p>
                 </div>
               </div>
@@ -1142,6 +1162,19 @@ export default function App() {
               onContinueShopping={() => {
                 setCurrentView('store');
                 setSelectedCategory('all');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+          </React.Suspense>
+        )}
+
+        {/* D. Account / Orders View */}
+        {currentView === 'account' && (
+          <React.Suspense fallback={<div className="p-8 text-center"><div className="w-8 h-8 mx-auto border-4 border-stone-200 border-t-stone-800 rounded-full animate-spin"></div></div>}>
+            <UserAccount
+              orders={placedOrders}
+              onBack={() => {
+                setCurrentView('store');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             />

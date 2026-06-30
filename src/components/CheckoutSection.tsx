@@ -10,6 +10,7 @@ import { getEstimatedDeliveryDays, formatDeliveryDateRange } from '../lib/delive
 import { ShieldCheck, ShoppingCart, ArrowLeft, Send, Sparkles, Building2, User2, MapPin, PhoneCall } from 'lucide-react';
 import { CartItem, CustomerDetails } from '../types';
 import { CITIES_OF_PAKISTAN } from '../data/products';
+import { fetchOperationalCities } from '../services/postex';
 
 interface CheckoutSectionProps {
   cart: CartItem[];
@@ -34,6 +35,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [discountPercent, setDiscountPercent] = useState(0);
   const [fileSelectedName, setFileSelectedName] = useState('');
+  const [operationalCities, setOperationalCities] = useState<string[]>(CITIES_OF_PAKISTAN);
 
   useEffect(() => {
     // Read the discount from localStorage if saved in CartDrawer
@@ -41,6 +43,21 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
     if (savedDiscount) {
       setDiscountPercent(JSON.parse(savedDiscount));
     }
+    
+    // Fetch active delivery cities from PostEx API
+    const loadCities = async () => {
+      const cities = await fetchOperationalCities();
+      const activeDeliveryCities = cities
+        .filter(c => c.isDeliveryCity)
+        .map(c => c.operationalCityName)
+        .sort((a, b) => a.localeCompare(b));
+        
+      if (activeDeliveryCities.length > 0) {
+        setOperationalCities(activeDeliveryCities);
+      }
+    };
+    
+    loadCities();
   }, []);
 
   const subtotal = cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
@@ -266,7 +283,7 @@ export default function CheckoutSection({ cart, onBackToCart, onSubmitOrder }: C
                     onChange={handleInputChange}
                     className="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-xs outline-none focus:ring-1 focus:ring-black focus:bg-white"
                   >
-                    {CITIES_OF_PAKISTAN.map(city => (
+                    {operationalCities.map(city => (
                       <option key={city} value={city}>{city}</option>
                     ))}
                   </select>

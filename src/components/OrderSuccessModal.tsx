@@ -111,7 +111,7 @@ export default function OrderSuccessModal({ order, onContinueShopping }: OrderSu
               </p>
               <p>
                 <span className="text-gray-400">Courier Company:</span>{' '}
-                <strong className="text-gray-900">Leopards / Call Courier (Nationwide)</strong>
+                <strong className="text-gray-900">PostEx Courier (Nationwide)</strong>
               </p>
               <p>
                 <span className="text-gray-400">Est. Arrival window:</span>{' '}
@@ -120,7 +120,7 @@ export default function OrderSuccessModal({ order, onContinueShopping }: OrderSu
                 </strong>
               </p>
               <p className="text-[10px] text-gray-500 italic leading-relaxed pt-2">
-                *A customized tracking link from leopardscourier.com will be sent to your email <strong>{order.customer.email}</strong> as soon as the courier rider picks up the parcel.
+                *A customized tracking link from postex.pk will be sent to your email <strong>{order.customer.email}</strong> as soon as the courier rider picks up the parcel.
               </p>
             </div>
           </div>
