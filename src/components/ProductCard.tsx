@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Eye, ShoppingCart, Percent, Heart, Flame, Share2 } from 'lucide-react';
+import { Eye, ShoppingCart, Percent, Heart, Flame, Share2, MessageCircle } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -96,6 +96,29 @@ export default function ProductCard({
     onAddToCart(product, defaultSize);
   };
 
+  const handleWhatsAppShare = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const shareUrl = `${window.location.origin}${window.location.pathname}?product=${product.id}`;
+    
+    const message = `🌸 *Akash Collection Wholesale* 🌸\n\n👗 *${product.title}*\n🧶 *Fabric:* ${product.fabric}\n📐 *Pieces:* ${product.pieces}\n💰 *Price:* Rs. ${product.price.toLocaleString()}\n\n🔗 *Order Link:* ${shareUrl}\n\n🖼️ *Image:* ${product.image}`;
+    
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+    
+    const link = document.createElement('a');
+    link.href = whatsappUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    if (onShareSuccess) {
+      onShareSuccess('Sharing to WhatsApp', 'Opening WhatsApp to share this product...');
+    }
+  };
+
   return (
     <div
       id={`product-card-${product.id}`}
@@ -170,6 +193,19 @@ export default function ProductCard({
           />
         </button>
 
+        {/* WhatsApp Share button overlay */}
+        <button
+          id={`whatsapp-share-btn-${product.id}`}
+          onClick={handleWhatsAppShare}
+          className="absolute top-[5.3rem] right-2.5 z-10 bg-emerald-50 hover:bg-emerald-100 p-2 rounded-full shadow-sm text-emerald-600 transition-all duration-300 backdrop-blur-[2px] border border-emerald-100/50 flex items-center justify-center hover:scale-105 active:scale-95"
+          title="Share via WhatsApp"
+        >
+          <MessageCircle 
+            size={15} 
+            className="text-emerald-600 hover:text-emerald-700 transition-colors fill-emerald-50"
+          />
+        </button>
+
         {/* Fabric Type bottom badge */}
         <div className="absolute bottom-2.5 left-2.5" id={`fabric-badge-wrap-${product.id}`}>
           <span className="bg-white/90 text-gray-800 text-[9px] font-mono tracking-widest font-semibold uppercase px-2 py-0.5 rounded-full shadow-sm backdrop-blur-[2px]">
@@ -210,6 +246,15 @@ export default function ProductCard({
             title="Share Product link"
           >
             <Share2 size={16} />
+          </button>
+
+          <button
+            id={`card-whatsapp-share-action-btn-${product.id}`}
+            onClick={handleWhatsAppShare}
+            className="bg-white p-2.5 rounded-full shadow-md text-emerald-600 hover:bg-emerald-600 hover:text-white transition-colors duration-200"
+            title="Share via WhatsApp"
+          >
+            <MessageCircle size={16} />
           </button>
         </div>
       </div>
