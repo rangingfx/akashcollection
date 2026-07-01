@@ -1532,6 +1532,14 @@ export default function App() {
         <div className="max-w-7xl mx-auto pt-8 border-t border-stone-850 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 font-mono text-center" id="footer-bottom-credit">
           <p>© 2026 Akash Collection Wholesale Pakistan. All Rights Reserved. Registered with FBR Pakistan.</p>
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-[10px] uppercase tracking-widest text-gray-500 font-medium">
+            <button 
+              onClick={() => setIsPostExOpen(true)}
+              className="hover:text-blue-400 transition-colors bg-stone-900/50 p-1.5 rounded-full border border-stone-800 hover:border-blue-500/50 flex items-center gap-1.5 px-3"
+              title="PostEx Merchant Portal"
+            >
+              <Truck size={14} />
+              <span>Merchant Hub</span>
+            </button>
             <div className="flex items-center gap-2">
               <a 
                 href="https://wa.me/923121700872" 
