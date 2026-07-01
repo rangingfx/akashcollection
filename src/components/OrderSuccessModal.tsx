@@ -4,8 +4,9 @@
  */
 
 import React from 'react';
-import { CheckCircle2, ShoppingBag, MapPin, Phone, Mail, FileText, Printer, Sparkles } from 'lucide-react';
+import { CheckCircle2, ShoppingBag, MapPin, Phone, Mail, FileText, Printer, Sparkles, Download } from 'lucide-react';
 import { Order } from '../types';
+import { generateInvoicePDF } from '../utils/pdfGenerator';
 
 interface OrderSuccessModalProps {
   order: Order;
@@ -15,15 +16,8 @@ interface OrderSuccessModalProps {
 export default function OrderSuccessModal({ order, onContinueShopping }: OrderSuccessModalProps) {
   const deliveryDays = order.customer.city === 'Lahore' ? '1 to 2' : (['Karachi', 'Islamabad', 'Rawalpindi'].includes(order.customer.city) ? '2 to 3' : '3 to 5');
 
-  const handlePrint = () => {
-    try {
-      const originalTitle = document.title;
-      document.title = `Order_Receipt_${order.id}`;
-      window.print();
-      document.title = originalTitle;
-    } catch (e) {
-      console.warn('Printing is not allowed in this environment:', e);
-    }
+  const handleDownloadInvoice = () => {
+    generateInvoicePDF(order);
   };
 
   return (
@@ -206,11 +200,11 @@ export default function OrderSuccessModal({ order, onContinueShopping }: OrderSu
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-center pt-4 border-t border-gray-100 font-mono" id="receipt-actions">
           <button
             id="print-receipt-btn"
-            onClick={handlePrint}
-            className="flex items-center gap-1.5 text-xs text-gray-600 hover:text-black border border-gray-200 hover:border-black rounded-lg px-4 py-2.5 bg-white transition-all font-bold group"
+            onClick={handleDownloadInvoice}
+            className="flex items-center gap-1.5 text-xs text-emerald-700 hover:text-white border border-emerald-600 bg-emerald-50 hover:bg-emerald-600 rounded-lg px-4 py-2.5 transition-all font-bold group"
           >
-            <Printer size={15} className="group-hover:scale-110 duration-200" />
-            <span>PRINT RECEIPT / SAVE PDF</span>
+            <Download size={15} className="group-hover:scale-110 duration-200" />
+            <span>DOWNLOAD INVOICE PDF</span>
           </button>
 
           <button

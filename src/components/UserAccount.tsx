@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Package, Clock, Truck, MapPin, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Package, Clock, Truck, MapPin, CheckCircle, AlertCircle, RefreshCw, Download } from 'lucide-react';
 import { Order } from '../types';
+import { generateInvoicePDF } from '../utils/pdfGenerator';
 
 interface UserAccountProps {
   orders: Order[];
@@ -64,7 +65,7 @@ export default function UserAccount({ orders, onBack }: UserAccountProps) {
                     <Clock size={14} /> {order.date}
                   </p>
                 </div>
-                <div className="flex flex-col md:items-end gap-1">
+                <div className="flex flex-col md:items-end gap-2">
                   <div className="text-sm font-semibold text-stone-600 bg-stone-100 px-3 py-1 rounded-full w-fit">
                     Status: {order.status}
                   </div>
@@ -73,6 +74,13 @@ export default function UserAccount({ orders, onBack }: UserAccountProps) {
                       Tracking ID: {order.trackingNo}
                     </div>
                   )}
+                  <button
+                    onClick={() => generateInvoicePDF(order)}
+                    className="mt-2 text-xs font-bold font-mono tracking-widest uppercase flex items-center gap-1 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 hover:text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-lg transition-colors"
+                  >
+                    <Download size={14} />
+                    Download Invoice
+                  </button>
                 </div>
               </div>
               
