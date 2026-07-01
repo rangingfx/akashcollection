@@ -158,7 +158,7 @@ app.post("/api/postex/create-order", async (req, res) => {
     // Ensure physical deliveryAddress is provided or falls back safely
     const deliveryAddress = orderData.deliveryAddress || orderData.cityName;
 
-    const payload = {
+    const payload: any = {
       cityName: orderData.cityName,
       customerName: orderData.customerName,
       customerPhone: phone,
@@ -169,10 +169,20 @@ app.post("/api/postex/create-order", async (req, res) => {
       orderDetail: orderData.orderDetail || "Clothing purchase from Akash Collection",
       orderRefNumber: orderData.orderRefNumber || `AK-${Math.floor(10000 + Math.random() * 90000)}`,
       orderType: orderData.orderType || "Normal",
-      transactionNotes: orderData.transactionNotes || "Processed from merchant back-office system",
-      pickupAddressCode: orderData.pickupAddressCode || "",
-      storeAddressCode: orderData.storeAddressCode || ""
+      transactionNotes: orderData.transactionNotes || "Processed from merchant back-office system"
     };
+
+    if (orderData.pickupAddressCode) {
+      payload.pickupAddressCode = orderData.pickupAddressCode;
+    } else if (!orderData.storeAddressCode) {
+      // PostEx API requires either pickupAddressCode or storeAddressCode.
+      // Default to the standard merchant address code '001' if omitted.
+      payload.pickupAddressCode = "001";
+    }
+    
+    if (orderData.storeAddressCode) {
+      payload.storeAddressCode = orderData.storeAddressCode;
+    }
 
     if (!token) {
       // Mock successful order creation under demo mode
