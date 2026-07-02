@@ -35,660 +35,187 @@ export const CITIES_OF_PAKISTAN = [
 
 export const PRODUCTS: Product[] = [
   {
-    id: 'akash-3pc-lawn-1',
-    title: 'Unstitched 3 Piece Lawn Suit',
-    description: 'Component Details (3 Piece) Measurement:\n• Digital Printed Embroidered Front On Lawn: 1.15m\n• Digital Printed Back On Lawn: 1.15m\n• Digital Printed Sleeves On Lawn: 0.65m\n• Embroidered Border On Organza: 1m\n• Embroidered Patti On Organza: 1.5m\n• Embroidered Woven Net Dupatta: 2.5m\n• Embroidered Pallu For Dupatta On Organza: 2m\n• Dyed Cotton Pants: 1.80m',
-    price: 4499,
+    id: 'zamzam-lawn-3pc-1',
+    title: 'Zamzam Lawn 3-Piece Suit',
+    description: 'Premium Zamzam Lawn 3-Piece Suit.\n\nComponent Details:\n• Digital Printed Zamzam Lawn Shirt\n• Digital Printed Dupatta\n• Dyed Trouser',
+    price: 4550,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '3 Piece',
     image: '/lawn-1.jpeg',
-    gallery: [
-      '/lawn-1.jpeg',
-      '/lawn-2.jpeg',
-      '/lawn-3.jpeg',
-      '/lawn-4.jpeg',
-      '/lawn-5.jpeg',
-      '/lawn-6.jpeg',
-      '/lawn-7.jpeg',
-      '/lawn-8.jpeg'
-    ],
+    gallery: ['/lawn-1.jpeg'],
     sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-3PC-1',
+    stock: 50,
+    sku: 'ZAM-LAWN-3PC-1',
     details: [
-      'Premium Lawn Fabric',
-      'Original Colors',
+      'Premium Zamzam Lawn Fabric',
+      'High-quality digital print',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
     ],
     isNew: true,
-    colors: ['Purple', 'Pink', 'Orange', 'Cream', 'Teal', 'Peach', 'Lilac', 'Aqua'],
+    colors: ['Multicolor'],
     brand: 'Akash Collection'
   },
   {
-    id: 'akash-2pc-lawn-1',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
+    id: 'zamzam-lawn-3pc-2',
+    title: 'Zamzam Lawn 3-Piece Suit',
+    description: 'Premium Zamzam Lawn 3-Piece Suit.\n\nComponent Details:\n• Digital Printed Zamzam Lawn Shirt\n• Digital Printed Dupatta\n• Dyed Trouser',
+    price: 4550,
     fabric: 'Lawn',
     type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-1.jpeg',
-    gallery: [
-      '/lawn-1.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-1',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-2',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
+    pieces: '3 Piece',
     image: '/lawn-2.jpeg',
-    gallery: [
-      '/lawn-2.jpeg'
-    ],
+    gallery: ['/lawn-2.jpeg'],
     sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-2',
+    stock: 50,
+    sku: 'ZAM-LAWN-3PC-2',
     details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
+      'Premium Zamzam Lawn Fabric',
+      'High-quality digital print',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
     ],
     isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
+    colors: ['Multicolor'],
     brand: 'Akash Collection'
   },
   {
-    id: 'akash-2pc-lawn-3',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
+    id: 'zamzam-lawn-3pc-3',
+    title: 'Zamzam Lawn 3-Piece Suit',
+    description: 'Premium Zamzam Lawn 3-Piece Suit.\n\nComponent Details:\n• Digital Printed Zamzam Lawn Shirt\n• Digital Printed Dupatta\n• Dyed Trouser',
+    price: 4550,
     fabric: 'Lawn',
     type: 'unstitched',
-    pieces: '2 Piece',
+    pieces: '3 Piece',
     image: '/lawn-3.jpeg',
-    gallery: [
-      '/lawn-3.jpeg'
-    ],
+    gallery: ['/lawn-3.jpeg'],
     sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-3',
+    stock: 50,
+    sku: 'ZAM-LAWN-3PC-3',
     details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
+      'Premium Zamzam Lawn Fabric',
+      'High-quality digital print',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
     ],
     isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
+    colors: ['Multicolor'],
     brand: 'Akash Collection'
   },
   {
-    id: 'akash-2pc-lawn-4',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
+    id: 'swiss-lawn-3pc-1',
+    title: 'Swiss Lawn 3-Piece Suit',
+    description: 'Elegant Swiss Lawn 3-Piece Suit.\n\nComponent Details:\n• Digital Printed Swiss Lawn Shirt\n• Digital Printed Swiss Lawn Dupatta\n• Dyed Trouser',
+    price: 5550,
     fabric: 'Lawn',
     type: 'unstitched',
-    pieces: '2 Piece',
+    pieces: '3 Piece',
     image: '/lawn-4.jpeg',
-    gallery: [
-      '/lawn-4.jpeg'
-    ],
+    gallery: ['/lawn-4.jpeg'],
     sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-4',
+    stock: 50,
+    sku: 'SWISS-LAWN-3PC-1',
     details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
+      'Premium Swiss Lawn Fabric',
+      'Elegant design',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
     ],
     isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
+    colors: ['Multicolor'],
     brand: 'Akash Collection'
   },
   {
-    id: 'akash-2pc-lawn-5',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
+    id: 'swiss-lawn-3pc-2',
+    title: 'Swiss Lawn 3-Piece Suit',
+    description: 'Elegant Swiss Lawn 3-Piece Suit.\n\nComponent Details:\n• Digital Printed Swiss Lawn Shirt\n• Digital Printed Swiss Lawn Dupatta\n• Dyed Trouser',
+    price: 5550,
     fabric: 'Lawn',
     type: 'unstitched',
-    pieces: '2 Piece',
+    pieces: '3 Piece',
     image: '/lawn-5.jpeg',
-    gallery: [
-      '/lawn-5.jpeg'
-    ],
+    gallery: ['/lawn-5.jpeg'],
     sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-5',
+    stock: 50,
+    sku: 'SWISS-LAWN-3PC-2',
     details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
+      'Premium Swiss Lawn Fabric',
+      'Elegant design',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
     ],
     isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
+    colors: ['Multicolor'],
     brand: 'Akash Collection'
   },
   {
-    id: 'akash-2pc-lawn-6',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
+    id: 'swiss-lawn-3pc-3',
+    title: 'Swiss Lawn 3-Piece Suit',
+    description: 'Elegant Swiss Lawn 3-Piece Suit.\n\nComponent Details:\n• Digital Printed Swiss Lawn Shirt\n• Digital Printed Swiss Lawn Dupatta\n• Dyed Trouser',
+    price: 5550,
     fabric: 'Lawn',
     type: 'unstitched',
-    pieces: '2 Piece',
+    pieces: '3 Piece',
     image: '/lawn-6.jpeg',
-    gallery: [
-      '/lawn-6.jpeg'
-    ],
+    gallery: ['/lawn-6.jpeg'],
     sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-6',
+    stock: 50,
+    sku: 'SWISS-LAWN-3PC-3',
     details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
+      'Premium Swiss Lawn Fabric',
+      'Elegant design',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
     ],
     isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
+    colors: ['Multicolor'],
     brand: 'Akash Collection'
   },
   {
-    id: 'akash-2pc-lawn-7',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
+    id: 'lawn-2pc-1',
+    title: '2-Piece Lawn Suit',
+    description: 'Classic 2-Piece Lawn Suit.\n\nComponent Details:\n• Digital Printed Lawn Shirt\n• Dyed Trouser',
     price: 2750,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
     image: '/lawn-7.jpeg',
-    gallery: [
-      '/lawn-7.jpeg'
-    ],
+    gallery: ['/lawn-7.jpeg'],
     sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-7',
+    stock: 50,
+    sku: 'LAWN-2PC-1',
     details: [
-      'Premium Embroidered Lawn',
+      'Quality Lawn Fabric',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
     ],
     isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
+    colors: ['Multicolor'],
     brand: 'Akash Collection'
   },
   {
-    id: 'akash-2pc-lawn-8',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
+    id: 'lawn-2pc-2',
+    title: '2-Piece Lawn Suit',
+    description: 'Classic 2-Piece Lawn Suit.\n\nComponent Details:\n• Digital Printed Lawn Shirt\n• Dyed Trouser',
     price: 2750,
     fabric: 'Lawn',
     type: 'unstitched',
     pieces: '2 Piece',
     image: '/lawn-8.jpeg',
-    gallery: [
-      '/lawn-8.jpeg'
-    ],
+    gallery: ['/lawn-8.jpeg'],
     sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-8',
+    stock: 50,
+    sku: 'LAWN-2PC-2',
     details: [
-      'Premium Embroidered Lawn',
+      'Quality Lawn Fabric',
       'Original Colors',
       'Wholesale bulk pricing',
       'Fast delivery across Pakistan'
     ],
     isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-9',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-9.jpeg',
-    gallery: [
-      '/lawn-9.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-9',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-10',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-10.jpeg',
-    gallery: [
-      '/lawn-10.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-10',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-11',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-11.jpeg',
-    gallery: [
-      '/lawn-11.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-11',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-12',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-12.jpeg',
-    gallery: [
-      '/lawn-12.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-12',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-13',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-13.jpeg',
-    gallery: [
-      '/lawn-13.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-13',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-14',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-14.jpeg',
-    gallery: [
-      '/lawn-14.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-14',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-15',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-15.jpeg',
-    gallery: [
-      '/lawn-15.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-15',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-16',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-16.jpeg',
-    gallery: [
-      '/lawn-16.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-16',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-17',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-17.jpeg',
-    gallery: [
-      '/lawn-17.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-17',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-18',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-18.jpeg',
-    gallery: [
-      '/lawn-18.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-18',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-19',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-19.jpeg',
-    gallery: [
-      '/lawn-19.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-19',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-20',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-20.jpeg',
-    gallery: [
-      '/lawn-20.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-20',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-21',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-21.jpeg',
-    gallery: [
-      '/lawn-21.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-21',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-22',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-22.jpeg',
-    gallery: [
-      '/lawn-22.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-22',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-23',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-23.jpeg',
-    gallery: [
-      '/lawn-23.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-23',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-24',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-24.jpeg',
-    gallery: [
-      '/lawn-24.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-24',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
-    brand: 'Akash Collection'
-  },
-  {
-    id: 'akash-2pc-lawn-25',
-    title: '2 Piece - Embroidered Lawn Suit',
-    description: 'Component Details (2 Piece):\n• Digital Printed Embroidered Front On Lawn\n• Digital Printed Back On Lawn\n• Digital Printed Sleeves On Lawn\n• Dyed Cotton Pants',
-    price: 2750,
-    fabric: 'Lawn',
-    type: 'unstitched',
-    pieces: '2 Piece',
-    image: '/lawn-25.jpeg',
-    gallery: [
-      '/lawn-25.jpeg'
-    ],
-    sizes: ['Unstitched'],
-    stock: 100,
-    sku: 'AK-LAWN-2PC-25',
-    details: [
-      'Premium Embroidered Lawn',
-      'Original Colors',
-      'Wholesale bulk pricing',
-      'Fast delivery across Pakistan'
-    ],
-    isNew: true,
-    colors: ['Red', 'Blue', 'Green'],
+    colors: ['Multicolor'],
     brand: 'Akash Collection'
   }
 ];
