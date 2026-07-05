@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -1065,10 +1066,22 @@ export default function App() {
             <section className="bg-stone-50 py-16 px-4 sm:px-6 lg:px-8" id="testimonials-carousel-box">
               <div className="max-w-5xl mx-auto space-y-8">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                  <div className="space-y-1.5 text-left">
-                    <span className="font-mono text-[10px] text-amber-800 tracking-[0.2em] font-bold uppercase block">HAPPY CLIENTS REVIEWED</span>
+                  <motion.div 
+                    initial={{ x: -20, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="space-y-1.5 text-left"
+                  >
+                    <motion.span 
+                      animate={{ x: [0, 8, 0] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      className="font-mono text-[10px] text-amber-800 tracking-[0.2em] font-bold uppercase block w-fit"
+                    >
+                      HAPPY CLIENTS REVIEWED
+                    </motion.span>
                     <h2 className="font-serif text-2xl font-bold text-stone-900 uppercase">Verifiable Feedback From Pakistani Buyers</h2>
-                  </div>
+                  </motion.div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-mono text-stone-500 uppercase">Filter:</span>
                     <div className="flex flex-wrap gap-2">
