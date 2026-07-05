@@ -1528,6 +1528,20 @@ export default function App() {
 
         </div>
 
+        {/* Location Map */}
+        <div className="max-w-7xl mx-auto pb-8 border-b border-stone-850 mb-8" id="footer-location-map">
+          <div className="w-full aspect-video sm:aspect-[21/9] lg:aspect-[32/9] rounded-xl overflow-hidden border border-stone-800 opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 duration-500 relative">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.9795433092772!2d73.1032375745307!3d33.65769193846273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfebaf49b2aabf%3A0x8cf0738877a81a13!2sAkashCollection.pk!5e0!3m2!1sen!2s!4v1783249954672!5m2!1sen!2s" 
+              className="absolute inset-0 w-full h-full"
+              style={{ border: 0 }} 
+              allowFullScreen={false} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+
         {/* Footer base credits */}
         <div className="max-w-7xl mx-auto pt-8 border-t border-stone-850 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 font-mono text-center" id="footer-bottom-credit">
           <p>© 2026 Akash Collection Wholesale Pakistan. All Rights Reserved. Registered with FBR Pakistan.</p>
