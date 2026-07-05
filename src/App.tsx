@@ -1435,15 +1435,6 @@ export default function App() {
               >
                 <Twitter size={13} />
               </a>
-              <a 
-                href="https://wa.me/923347272246" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-8 h-8 rounded-full border border-stone-800 hover:border-stone-500 hover:text-white flex items-center justify-center transition-all text-gray-400 bg-stone-900/30 hover:bg-stone-800"
-                title="Contact us on WhatsApp"
-              >
-                <MessageCircle size={13} />
-              </a>
             </div>
           </div>
 
@@ -1500,9 +1491,6 @@ export default function App() {
                 <div className="flex flex-col gap-1.5">
                   <a href="https://wa.me/923115930237" target="_blank" rel="noopener noreferrer" className="inline-block group">
                     <span className="font-mono text-[13px] bg-stone-800/80 px-2.5 py-1 rounded border border-stone-700/50 group-hover:border-emerald-500/50 group-hover:bg-stone-800 group-hover:text-emerald-400 transition-all">+92 311 5930237</span>
-                  </a>
-                  <a href="https://wa.me/923347272246" target="_blank" rel="noopener noreferrer" className="inline-block group">
-                    <span className="font-mono text-[13px] bg-stone-800/80 px-2.5 py-1 rounded border border-stone-700/50 group-hover:border-emerald-500/50 group-hover:bg-stone-800 group-hover:text-emerald-400 transition-all">+92 334 7272246</span>
                   </a>
                 </div>
               </div>
@@ -1632,26 +1620,6 @@ export default function App() {
           <div className="mb-4 bg-white border border-stone-200 shadow-2xl rounded-xl p-4 w-64 overflow-hidden origin-bottom-right transition-all animate-in fade-in zoom-in-95 duration-200">
             <h4 className="font-serif font-bold text-stone-900 mb-3 border-b border-stone-100 pb-2">How can we help?</h4>
             <div className="space-y-2">
-              <a 
-                href="https://wa.me/923347272246"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                  setIsWhatsAppMenuOpen(false);
-                  if (typeof window !== 'undefined' && (window as any).fbq) {
-                    (window as any).fbq('track', 'Contact');
-                  }
-                }}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors border border-stone-100 hover:border-stone-200 group/wa"
-              >
-                <div className="bg-emerald-50 text-emerald-500 p-2 rounded-full group-hover/wa:bg-emerald-500 group-hover/wa:text-white transition-colors">
-                  <ShoppingBag size={16} />
-                </div>
-                <div>
-                  <p className="font-semibold text-[13px] text-stone-900">View Catalog</p>
-                  <p className="text-[11px] text-stone-500 font-mono">Browse our collection</p>
-                </div>
-              </a>
               <a 
                 href="https://wa.me/923115930237"
                 target="_blank"
