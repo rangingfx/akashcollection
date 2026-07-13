@@ -38,6 +38,11 @@ import CartDrawer from './components/CartDrawer';
 
 import UserAccount from './components/UserAccount';
 
+// Premium WhatsApp Catalog Components
+import WhatsAppCatalog from './components/WhatsAppCatalog';
+import ShopOnWhatsApp from './components/ShopOnWhatsApp';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
+
 // Lazy loaded modals to optimize bundle size
 const CheckoutSection = React.lazy(() => import('./components/CheckoutSection'));
 const OrderSuccessModal = React.lazy(() => import('./components/OrderSuccessModal'));
@@ -156,7 +161,6 @@ export default function App() {
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [isWhatsAppMenuOpen, setIsWhatsAppMenuOpen] = useState(false);
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const [reviewFilter, setReviewFilter] = useState<number | null>(null);
 
@@ -1146,6 +1150,10 @@ export default function App() {
               </div>
             </section>
 
+            {/* PREMIUM WHATSAPP CATALOG & SHOP ON WHATSAPP SECTIONS */}
+            <WhatsAppCatalog onShareSuccess={(title, message) => triggerToast(title, message, 'success')} />
+            <ShopOnWhatsApp />
+
             {/* NEWSLETTER SUBSCRIPTION SECTION */}
             <React.Suspense fallback={null}>
         <NewsletterSubscription />
@@ -1628,55 +1636,7 @@ export default function App() {
       </div>
 
       {/* Floating Elegant WhatsApp Button */}
-      <div className="fixed bottom-6 right-6 z-[999] flex flex-col items-end pointer-events-auto">
-        {isWhatsAppMenuOpen && (
-          <div className="mb-4 bg-white border border-stone-200 shadow-2xl rounded-xl p-4 w-64 overflow-hidden origin-bottom-right transition-all animate-in fade-in zoom-in-95 duration-200">
-            <h4 className="font-serif font-bold text-stone-900 mb-3 border-b border-stone-100 pb-2">How can we help?</h4>
-            <div className="space-y-2">
-              <a 
-                href="https://wa.me/923115930237"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                  setIsWhatsAppMenuOpen(false);
-                  if (typeof window !== 'undefined' && (window as any).fbq) {
-                    (window as any).fbq('track', 'Contact');
-                  }
-                }}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors border border-stone-100 hover:border-stone-200 group/wa"
-              >
-                <div className="bg-emerald-50 text-emerald-500 p-2 rounded-full group-hover/wa:bg-emerald-500 group-hover/wa:text-white transition-colors">
-                  <Phone size={16} />
-                </div>
-                <div>
-                  <p className="font-semibold text-[13px] text-stone-900">Sales</p>
-                  <p className="text-[11px] text-stone-500 font-mono">+92 311 5930237</p>
-                </div>
-              </a>
-            </div>
-          </div>
-        )}
-        
-        <button 
-          onClick={() => setIsWhatsAppMenuOpen(!isWhatsAppMenuOpen)}
-          className="bg-stone-900 border border-stone-800 text-white shadow-2xl rounded-full p-4 sm:p-5 flex items-center justify-center hover:bg-stone-800 hover:scale-110 active:scale-95 transition-all duration-300 group cursor-pointer"
-          id="floating-whatsapp-widget"
-          title="WhatsApp Order Assistant"
-        >
-          {!isWhatsAppMenuOpen && (
-            <div className="absolute right-full mr-3 bg-stone-900 border border-stone-800 text-white font-sans text-[10px] font-bold tracking-widest py-2 px-3 rounded-md shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none uppercase">
-              WhatsApp Order Assistant
-            </div>
-          )}
-          {isWhatsAppMenuOpen ? (
-             <X className="w-7 h-7 sm:w-8 sm:h-8" />
-          ) : (
-            <svg className="w-7 h-7 sm:w-8 sm:h-8 fill-current text-emerald-400" viewBox="0 0 24 24">
-              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.456L0 24zm12.008-21.75c-5.412 0-9.82 4.409-9.825 9.822-.002 1.802.469 3.562 1.365 5.123l.299.52-1.01 3.69 3.774-.99.505.299c1.498.887 3.202 1.354 4.902 1.355 5.41.002 9.818-4.407 9.824-9.822.003-2.623-1.018-5.088-2.879-6.953-1.859-1.865-4.322-2.894-6.946-2.894zm5.372 13.06c-.294-.147-1.74-.86-2.012-.958-.27-.099-.469-.147-.666.147-.196.294-.761.958-.934 1.155-.171.196-.343.221-.637.074-.294-.147-1.241-.457-2.364-1.46-.874-.78-1.464-1.744-1.636-2.038-.172-.294-.018-.453.129-.6.133-.133.294-.343.441-.515.147-.171.196-.294.294-.49.098-.196.05-.367-.025-.515-.074-.148-.666-1.606-.913-2.197-.24-.578-.48-.5-.666-.51-.173-.008-.367-.01-.563-.01-.196 0-.515.073-.784.367-.27.294-1.029 1.005-1.029 2.451s1.054 2.843 1.201 3.039c.147.196 2.074 3.167 5.025 4.444.70.304 1.249.486 1.677.622.705.224 1.345.193 1.853.117.566-.084 1.741-.711 1.986-1.396.246-.686.246-1.274.172-1.396-.073-.122-.27-.196-.564-.343z"/>
-            </svg>
-          )}
-        </button>
-      </div>
+      <FloatingWhatsApp onShareSuccess={(title, message) => triggerToast(title, message, 'success')} />
 
       {/* Policy Modals */}
       <PrivacyPolicyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />

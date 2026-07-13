@@ -41,19 +41,19 @@ export const generateInvoicePDF = (order: Order) => {
   
   doc.setFontSize(10);
   doc.setTextColor(textColor[0], textColor[1], textColor[2]);
-  doc.text(order.customer.name, 14, 66);
+  doc.text(`${order.customer.firstName} ${order.customer.lastName}`, 14, 66);
   doc.text(order.customer.phone, 14, 72);
   doc.text(order.customer.email, 14, 78);
   doc.text(order.customer.address, 14, 84);
-  doc.text(`${order.customer.city}, ${order.customer.zipCode}`, 14, 90);
+  doc.text(`${order.customer.city}, ${order.customer.postalCode}`, 14, 90);
 
   // Items Table
   const tableColumn = ["Item", "Quantity", "Price", "Total"];
   const tableRows = order.items.map(item => [
-    item.name,
+    item.product.title,
     item.quantity.toString(),
-    `Rs. ${item.price.toLocaleString()}`,
-    `Rs. ${(item.price * item.quantity).toLocaleString()}`
+    `Rs. ${item.product.price.toLocaleString()}`,
+    `Rs. ${(item.product.price * item.quantity).toLocaleString()}`
   ]);
 
   autoTable(doc, {
