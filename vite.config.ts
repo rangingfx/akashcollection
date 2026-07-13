@@ -3,9 +3,11 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig, splitVendorChunkPlugin} from 'vite';
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss(), splitVendorChunkPlugin()],
+    plugins: [react(), tailwindcss(), splitVendorChunkPlugin(), cloudflare()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
