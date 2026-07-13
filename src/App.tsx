@@ -42,6 +42,8 @@ import UserAccount from './components/UserAccount';
 import WhatsAppCatalog from './components/WhatsAppCatalog';
 import ShopOnWhatsApp from './components/ShopOnWhatsApp';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
+import FacebookSection from './components/FacebookSection';
+import TikTokSection from './components/TikTokSection';
 
 // Lazy loaded modals to optimize bundle size
 const CheckoutSection = React.lazy(() => import('./components/CheckoutSection'));
@@ -1153,6 +1155,8 @@ export default function App() {
             {/* PREMIUM WHATSAPP CATALOG & SHOP ON WHATSAPP SECTIONS */}
             <WhatsAppCatalog onShareSuccess={(title, message) => triggerToast(title, message, 'success')} />
             <ShopOnWhatsApp />
+            <FacebookSection />
+            <TikTokSection />
 
             {/* NEWSLETTER SUBSCRIPTION SECTION */}
             <React.Suspense fallback={null}>
