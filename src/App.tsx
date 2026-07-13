@@ -28,7 +28,8 @@ import {
   MapPin,
   Phone,
   BadgeCheck,
-  ShoppingBag
+  ShoppingBag,
+  Settings
 } from 'lucide-react';
 
 import Header from './components/Header';
@@ -37,6 +38,7 @@ import QuickViewModal from './components/QuickViewModal';
 import CartDrawer from './components/CartDrawer';
 
 import UserAccount from './components/UserAccount';
+import AdminDashboard from './components/AdminDashboard';
 
 // Premium WhatsApp Catalog Components
 import WhatsAppCatalog from './components/WhatsAppCatalog';
@@ -66,9 +68,12 @@ import pretBannerImg from './assets/images/pret_wear_banner_1782297192141.jpg';
 
 export default function App() {
   // Navigation & Page State
-  const [currentView, setCurrentView] = useState<'store' | 'checkout' | 'success' | 'account'>('store');
+  const [currentView, setCurrentView] = useState<'store' | 'checkout' | 'success' | 'account' | 'admin'>('store');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'unstitched' | 'ready-to-wear' | 'festive' | 'sale' | 'wishlist'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Dynamic Catalog State
+  const [productsState, setProductsState] = useState<Product[]>(PRODUCTS);
 
   // Cart & Orders State
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -184,7 +189,7 @@ export default function App() {
     sortBy: 'best-seller'
   });
 
-  // Load state from local storage on mount
+  // Load state from local storage and fetch synced products on mount
   useEffect(() => {
     const savedCart = localStorage.getItem('akash_collection_cart');
     if (savedCart) {
@@ -212,6 +217,22 @@ export default function App() {
         console.error('Error parsing favorites from localStorage', e);
       }
     }
+
+    // Fetch synchronized catalog products from backend
+    fetch('/api/products')
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('API offline, falling back to local dataset');
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProductsState(data);
+          console.log(`Loaded ${data.length} synchronized products from reseller catalog!`);
+        }
+      })
+      .catch(err => {
+        console.warn('Sync products fetch fallback active:', err.message);
+      });
   }, []);
 
   // Sync state to local storage
@@ -254,7 +275,7 @@ export default function App() {
       const urlParams = new URLSearchParams(window.location.search);
       const prId = urlParams.get('product') || window.location.hash.replace('#product-', '');
       if (prId) {
-        const found = PRODUCTS.find(p => p.id === prId);
+        const found = productsState.find(p => p.id === prId);
         if (found) {
           setQuickViewProduct(found);
         }
@@ -493,7 +514,7 @@ export default function App() {
   };
 
   // Filter products matching dynamic states
-  const filteredProducts = PRODUCTS.filter(product => {
+  const filteredProducts = productsState.filter(product => {
     if (selectedCategory === 'wishlist') {
       if (!favorites.includes(product.id)) return false;
     }
@@ -1111,42 +1132,83 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="testimonials-cards-grid">
+                <div className="relative w-full overflow-hidden py-4" id="testimonials-slider-container">
+                  {/* Visual gradient fades to mask edges */}
+                  <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-stone-50 to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-stone-50 to-transparent z-10 pointer-events-none" />
+
                   {filteredReviews.length === 0 ? (
-                    <div className="col-span-full py-12 text-center text-stone-500">
+                    <div className="py-12 text-center text-stone-500">
                       No reviews found for this rating yet.
                     </div>
                   ) : (
-                    filteredReviews.map(rev => (
-                      <div 
-                        key={rev.id} 
-                        onClick={() => setSelectedReview(rev)}
-                        className="bg-white p-5 rounded-xl border border-stone-150 hover:shadow-lg transition-all cursor-pointer flex flex-col justify-between hover:-translate-y-1 group" 
-                        id={`review-card-${rev.id}`}
-                      >
-                        <div>
-                          {/* Rating stars */}
-                          <div className="flex gap-0.5 text-amber-500 mb-2.5">
-                            {Array.from({ length: rev.rating }).map((_, i) => (
-                              <span key={i} className="text-sm font-bold">★</span>
-                            ))}
-                          </div>
-                          <p className="text-xs text-gray-600 italic leading-relaxed font-serif line-clamp-4 group-hover:text-stone-900 transition-colors">
-                            "{rev.comment}"
-                          </p>
-                        </div>
+                    <div className="flex w-max gap-6 animate-marquee-infinite hover:[animation-play-state:paused]">
+                      {/* Set 1 */}
+                      <div className="flex gap-6 shrink-0">
+                        {filteredReviews.map((rev, idx) => (
+                          <div 
+                            key={`rev-s1-${rev.id}-${idx}`} 
+                            onClick={() => setSelectedReview(rev)}
+                            className="w-72 bg-white p-5 rounded-xl border border-stone-150 hover:shadow-lg hover:border-stone-300 transition-all cursor-pointer flex flex-col justify-between group" 
+                          >
+                            <div>
+                              {/* Rating stars */}
+                              <div className="flex gap-0.5 text-amber-500 mb-2.5">
+                                {Array.from({ length: rev.rating }).map((_, i) => (
+                                  <span key={i} className="text-sm font-bold">★</span>
+                                ))}
+                              </div>
+                              <p className="text-xs text-gray-600 italic leading-relaxed font-serif line-clamp-4 group-hover:text-stone-900 transition-colors">
+                                "{rev.comment}"
+                              </p>
+                            </div>
 
-                        <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[10px] font-mono text-gray-400">
-                          <div>
-                            <p className="font-sans font-bold text-stone-800 text-[11px] block text-left leading-none mb-0.5">{rev.customerName}</p>
-                            <span>{rev.date}</span>
+                            <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[10px] font-mono text-gray-400">
+                              <div>
+                                <p className="font-sans font-bold text-stone-800 text-[11px] block text-left leading-none mb-0.5">{rev.customerName}</p>
+                                <span>{rev.date}</span>
+                              </div>
+                              {rev.verified && (
+                                <span className="text-emerald-700 bg-emerald-50 px-1 rounded-sm text-[9px] font-bold">✓ VERIFIED</span>
+                              )}
+                            </div>
                           </div>
-                          {rev.verified && (
-                            <span className="text-emerald-700 bg-emerald-50 px-1 rounded-sm text-[9px] font-bold">✓ VERIFIED</span>
-                          )}
-                        </div>
+                        ))}
                       </div>
-                    ))
+
+                      {/* Set 2 (for seamless looping) */}
+                      <div className="flex gap-6 shrink-0">
+                        {filteredReviews.map((rev, idx) => (
+                          <div 
+                            key={`rev-s2-${rev.id}-${idx}`} 
+                            onClick={() => setSelectedReview(rev)}
+                            className="w-72 bg-white p-5 rounded-xl border border-stone-150 hover:shadow-lg hover:border-stone-300 transition-all cursor-pointer flex flex-col justify-between group" 
+                          >
+                            <div>
+                              {/* Rating stars */}
+                              <div className="flex gap-0.5 text-amber-500 mb-2.5">
+                                {Array.from({ length: rev.rating }).map((_, i) => (
+                                  <span key={i} className="text-sm font-bold">★</span>
+                                ))}
+                              </div>
+                              <p className="text-xs text-gray-600 italic leading-relaxed font-serif line-clamp-4 group-hover:text-stone-900 transition-colors">
+                                "{rev.comment}"
+                              </p>
+                            </div>
+
+                            <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-[10px] font-mono text-gray-400">
+                              <div>
+                                <p className="font-sans font-bold text-stone-800 text-[11px] block text-left leading-none mb-0.5">{rev.customerName}</p>
+                                <span>{rev.date}</span>
+                              </div>
+                              {rev.verified && (
+                                <span className="text-emerald-700 bg-emerald-50 px-1 rounded-sm text-[9px] font-bold">✓ VERIFIED</span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
@@ -1205,6 +1267,16 @@ export default function App() {
               }}
             />
           </React.Suspense>
+        )}
+        
+        {/* E. Reseller Administrative Dashboard */}
+        {currentView === 'admin' && (
+          <AdminDashboard
+            onBack={() => {
+              setCurrentView('store');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
         )}
       </main>
 
@@ -1561,11 +1633,22 @@ export default function App() {
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-[10px] uppercase tracking-widest text-gray-500 font-medium">
             <button 
               onClick={() => setIsPostExOpen(true)}
-              className="hover:text-blue-400 transition-colors bg-stone-900/50 p-1.5 rounded-full border border-stone-800 hover:border-blue-500/50 flex items-center gap-1.5 px-3"
+              className="hover:text-blue-400 transition-colors bg-stone-900/50 p-1.5 rounded-full border border-stone-800 hover:border-blue-500/50 flex items-center gap-1.5 px-3 cursor-pointer"
               title="PostEx Merchant Portal"
             >
               <Truck size={14} />
               <span>Merchant Hub</span>
+            </button>
+            <button 
+              onClick={() => {
+                setCurrentView('admin');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="hover:text-amber-500 transition-colors bg-stone-900/50 p-1.5 rounded-full border border-stone-800 hover:border-amber-500/50 flex items-center gap-1.5 px-3 cursor-pointer"
+              title="Reseller Admin Portal"
+            >
+              <Settings size={14} />
+              <span>Admin Portal</span>
             </button>
             <div className="flex items-center gap-2">
               <a 

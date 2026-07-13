@@ -2,10 +2,54 @@ import express from "express";
 import path from "path";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import fs from "fs";
 import { createServer as createViteServer } from "vite";
+import { PRODUCTS } from "./src/data/products";
 
 // Load environment variables
 dotenv.config();
+
+const ORDERS_DB_PATH = path.join(process.cwd(), "src", "data", "orders_db.json");
+const SYNC_SETTINGS_PATH = path.join(process.cwd(), "src", "data", "sync_settings.json");
+const SYNC_PRODUCTS_PATH = path.join(process.cwd(), "src", "data", "synced_products.json");
+
+function initDbFiles() {
+  const dir = path.join(process.cwd(), "src", "data");
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  
+  if (!fs.existsSync(ORDERS_DB_PATH)) {
+    fs.writeFileSync(ORDERS_DB_PATH, JSON.stringify([], null, 2));
+  }
+  
+  if (!fs.existsSync(SYNC_SETTINGS_PATH)) {
+    fs.writeFileSync(SYNC_SETTINGS_PATH, JSON.stringify({
+      settings: {
+        supplierUrl: "https://ejaazcollection.com",
+        storefrontToken: "",
+        adminApiKey: "",
+        autoSyncEnabled: true,
+        syncIntervalMinutes: 60,
+        markupPercent: 10
+      },
+      stats: {
+        lastSyncTime: new Date().toISOString(),
+        status: "idle",
+        productCount: 0,
+        inStockCount: 0,
+        outOfStockCount: 0,
+        failedLogs: []
+      }
+    }, null, 2));
+  }
+  
+  if (!fs.existsSync(SYNC_PRODUCTS_PATH)) {
+    fs.writeFileSync(SYNC_PRODUCTS_PATH, JSON.stringify([], null, 2));
+  }
+}
+
+initDbFiles();
 
 const app = express();
 const PORT = 3000;
@@ -813,6 +857,16 @@ app.post("/api/place-order", async (req, res) => {
     }
 
     // Always succeed in recording order
+    try {
+      const ordersData = fs.readFileSync(ORDERS_DB_PATH, "utf8");
+      const currentOrders = JSON.parse(ordersData);
+      currentOrders.unshift(order); // Put new order at the top
+      fs.writeFileSync(ORDERS_DB_PATH, JSON.stringify(currentOrders, null, 2));
+      console.log(`Order ${order.id} successfully persisted in orders_db.json!`);
+    } catch (saveErr) {
+      console.error("Failed to persist order in local JSON database:", saveErr);
+    }
+
     return res.json({ 
       success: true, 
       id: order.id, 
@@ -829,6 +883,288 @@ app.post("/api/place-order", async (req, res) => {
       error: "Server processing exception", 
       details: err.message || err 
     });
+  }
+});
+
+// ==========================================
+// RESELLER CATALOG & ADMIN PANEL ENDPOINTS
+// ==========================================
+
+// 1. Get all active synchronized products
+app.get("/api/products", (req, res) => {
+  try {
+    const productsData = fs.readFileSync(SYNC_PRODUCTS_PATH, "utf8");
+    let products = JSON.parse(productsData);
+    
+    // If empty, initialize synced products with the standard PRODUCTS mapped with default 10% markup
+    if (products.length === 0) {
+      const configData = JSON.parse(fs.readFileSync(SYNC_SETTINGS_PATH, "utf8"));
+      const markup = configData.settings?.markupPercent || 10;
+      
+      products = PRODUCTS.map(p => ({
+        ...p,
+        originalPrice: p.originalPrice || p.price,
+        price: Math.round((p.price * (1 + markup / 100)) / 50) * 50 // Rounded markup to nearest 50 PKR
+      }));
+      fs.writeFileSync(SYNC_PRODUCTS_PATH, JSON.stringify(products, null, 2));
+    }
+    
+    res.json(products);
+  } catch (err: any) {
+    console.error("Error reading synced products:", err);
+    res.status(500).json({ error: "Failed to read synchronized products", details: err.message });
+  }
+});
+
+// 2. Get sync settings and statistics
+app.get("/api/admin/settings", (req, res) => {
+  try {
+    const configData = fs.readFileSync(SYNC_SETTINGS_PATH, "utf8");
+    res.json(JSON.parse(configData));
+  } catch (err: any) {
+    res.status(500).json({ error: "Failed to read settings", details: err.message });
+  }
+});
+
+// 3. Update sync settings
+app.post("/api/admin/settings", (req, res) => {
+  try {
+    const newSettings = req.body;
+    const configData = JSON.parse(fs.readFileSync(SYNC_SETTINGS_PATH, "utf8"));
+    
+    configData.settings = {
+      ...configData.settings,
+      ...newSettings
+    };
+    
+    fs.writeFileSync(SYNC_SETTINGS_PATH, JSON.stringify(configData, null, 2));
+    
+    // Also re-apply markup to existing synced products immediately!
+    const productsData = JSON.parse(fs.readFileSync(SYNC_PRODUCTS_PATH, "utf8"));
+    if (productsData.length > 0) {
+      const updatedProducts = productsData.map((p: any) => {
+        const basePrice = p.originalPrice || Math.round(p.price / (1 + configData.settings.markupPercent / 100));
+        return {
+          ...p,
+          originalPrice: basePrice,
+          price: Math.round((basePrice * (1 + configData.settings.markupPercent / 100)) / 50) * 50
+        };
+      });
+      fs.writeFileSync(SYNC_PRODUCTS_PATH, JSON.stringify(updatedProducts, null, 2));
+    }
+
+    res.json({ success: true, settings: configData.settings });
+  } catch (err: any) {
+    console.error("Failed to update settings:", err);
+    res.status(500).json({ error: "Failed to update settings", details: err.message });
+  }
+});
+
+// 4. Trigger manual or scheduled catalog synchronization with Ejaaz Collection
+app.post("/api/admin/sync", async (req, res) => {
+  const configData = JSON.parse(fs.readFileSync(SYNC_SETTINGS_PATH, "utf8"));
+  const { supplierUrl, markupPercent } = configData.settings;
+  
+  configData.stats.status = "syncing";
+  fs.writeFileSync(SYNC_SETTINGS_PATH, JSON.stringify(configData, null, 2));
+
+  let fetchedProducts: any[] = [];
+  let syncSuccess = false;
+  let logMessage = "";
+
+  try {
+    const targetUrl = `${supplierUrl}/products.json?limit=50`;
+    console.log(`[SYNC ENGINE] Querying supplier Shopify catalog: ${targetUrl}`);
+    
+    const response = await fetch(targetUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+      },
+      signal: AbortSignal.timeout(10000) // 10s timeout
+    });
+
+    if (!response.ok) {
+      throw new Error(`Shopify catalog returned status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (data && Array.isArray(data.products)) {
+      fetchedProducts = data.products;
+      syncSuccess = true;
+      logMessage = `Successfully fetched ${fetchedProducts.length} articles from supplier endpoint.`;
+    } else {
+      throw new Error("Invalid Shopify products JSON structure returned.");
+    }
+  } catch (err: any) {
+    console.warn("[SYNC ENGINE] Remote Shopify sync failed, activating high-fidelity offline mapping:", err.message);
+    logMessage = `WARNING: Remote supplier sync connection failed (${err.message}). Activating local offline database mapper.`;
+  }
+
+  try {
+    let finalProductsList: any[] = [];
+    
+    if (syncSuccess && fetchedProducts.length > 0) {
+      // Parse Ejaaz Collection's real Shopify products list
+      finalProductsList = fetchedProducts.map((p: any) => {
+        const basePrice = parseFloat(p.variants?.[0]?.price || "3500");
+        const markedPrice = Math.round((basePrice * (1 + markupPercent / 100)) / 50) * 50;
+        
+        // Guess fabric from title/type/tags
+        let fabric = "Lawn";
+        const combinedText = `${p.title} ${p.product_type} ${p.tags?.join(" ")}`.toLowerCase();
+        if (combinedText.includes("chiffon")) fabric = "Chiffon";
+        else if (combinedText.includes("organza")) fabric = "Organza";
+        else if (combinedText.includes("cotton")) fabric = "Cotton";
+        else if (combinedText.includes("jacquard")) fabric = "Jacquard";
+        else if (combinedText.includes("cambric")) fabric = "Cambric";
+        else if (combinedText.includes("silk")) fabric = "Silk";
+
+        // Guess pieces
+        let pieces = "3 Piece";
+        if (combinedText.includes("1 piece") || combinedText.includes("1pc")) pieces = "1 Piece";
+        else if (combinedText.includes("2 piece") || combinedText.includes("2pc")) pieces = "2 Piece";
+
+        // Map product category type
+        let type = "unstitched";
+        if (combinedText.includes("ready") || combinedText.includes("stitched") || combinedText.includes("kurti")) type = "ready-to-wear";
+        else if (combinedText.includes("festive") || combinedText.includes("luxury")) type = "festive";
+        if (combinedText.includes("sale") || basePrice < 3000) type = "sale";
+
+        // Map size options
+        let sizes = ["Unstitched"];
+        if (type === "ready-to-wear") {
+          sizes = ["S", "M", "L", "XL"];
+        }
+
+        // Details list
+        const details = [
+          `Premium ${fabric} Fabric Quality`,
+          "Digital print designer aesthetics",
+          "Authorized supplier wholesale article",
+          "Includes original brand box wrapping"
+        ];
+
+        return {
+          id: `supplier-${p.id || p.handle}`,
+          title: p.title,
+          description: p.body_html ? p.body_html.replace(/<\/?[^>]+(>|$)/g, "") : "Digital printed luxury suite from designer catalog.",
+          price: markedPrice,
+          originalPrice: basePrice,
+          fabric,
+          type,
+          pieces,
+          image: p.images?.[0]?.src || "/lawn-1.jpeg",
+          gallery: p.images ? p.images.map((im: any) => im.src) : ["/lawn-1.jpeg"],
+          sizes,
+          stock: p.variants?.[0]?.available !== false ? 50 : 0,
+          sku: p.variants?.[0]?.sku || `EJ-${p.id || Math.floor(Math.random() * 100000)}`,
+          details,
+          isNew: true,
+          brand: "Akash Collection"
+        };
+      });
+    } else {
+      // Offline mapper fallback using static PRODUCTS, applying current settings markup
+      finalProductsList = PRODUCTS.map(p => ({
+        ...p,
+        originalPrice: p.originalPrice || p.price,
+        price: Math.round((p.price * (1 + markupPercent / 100)) / 50) * 50
+      }));
+    }
+
+    // Write synchronized list
+    fs.writeFileSync(SYNC_PRODUCTS_PATH, JSON.stringify(finalProductsList, null, 2));
+
+    // Compile sync statistics
+    const inStock = finalProductsList.filter(p => p.stock > 0).length;
+    const outOfStock = finalProductsList.length - inStock;
+
+    configData.stats = {
+      lastSyncTime: new Date().toISOString(),
+      status: "success",
+      productCount: finalProductsList.length,
+      inStockCount: inStock,
+      outOfStockCount: outOfStock,
+      failedLogs: [
+        `[${new Date().toLocaleTimeString()}] ${logMessage}`,
+        ...configData.stats.failedLogs
+      ].slice(0, 30) // cap logs at 30 entries
+    };
+
+    fs.writeFileSync(SYNC_SETTINGS_PATH, JSON.stringify(configData, null, 2));
+    res.json({ success: true, stats: configData.stats, products: finalProductsList });
+
+  } catch (syncErr: any) {
+    console.error("[SYNC ENGINE] Fatal sync process exception:", syncErr);
+    configData.stats.status = "failed";
+    configData.stats.failedLogs = [
+      `[${new Date().toLocaleTimeString()}] FATAL CRITICAL ERROR: ${syncErr.message || syncErr}`,
+      ...configData.stats.failedLogs
+    ].slice(0, 30);
+    fs.writeFileSync(SYNC_SETTINGS_PATH, JSON.stringify(configData, null, 2));
+    res.status(500).json({ success: false, message: syncErr.message, stats: configData.stats });
+  }
+});
+
+// 5. Get all customer orders from server database
+app.get("/api/admin/orders", (req, res) => {
+  try {
+    const ordersData = fs.readFileSync(ORDERS_DB_PATH, "utf8");
+    res.json(JSON.parse(ordersData));
+  } catch (err: any) {
+    res.status(500).json({ error: "Failed to read orders database", details: err.message });
+  }
+});
+
+// 6. Update order status
+app.post("/api/admin/orders/:id/status", (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    
+    const ordersData = fs.readFileSync(ORDERS_DB_PATH, "utf8");
+    const orders = JSON.parse(ordersData);
+    
+    const updatedOrders = orders.map((o: any) => {
+      if (o.id === id) {
+        return { ...o, status };
+      }
+      return o;
+    });
+    
+    fs.writeFileSync(ORDERS_DB_PATH, JSON.stringify(updatedOrders, null, 2));
+    res.json(updatedOrders);
+  } catch (err: any) {
+    res.status(500).json({ error: "Failed to update order status", details: err.message });
+  }
+});
+
+// 7. Book courier and attach tracking variables to order
+app.post("/api/admin/orders/:id/book-courier", (req, res) => {
+  try {
+    const { id } = req.params;
+    const { trackingNo, carrier, trackingUrl } = req.body;
+    
+    const ordersData = fs.readFileSync(ORDERS_DB_PATH, "utf8");
+    const orders = JSON.parse(ordersData);
+    
+    const updatedOrders = orders.map((o: any) => {
+      if (o.id === id) {
+        return {
+          ...o,
+          status: "Shipped",
+          trackingNo,
+          carrier,
+          trackingUrl
+        };
+      }
+      return o;
+    });
+    
+    fs.writeFileSync(ORDERS_DB_PATH, JSON.stringify(updatedOrders, null, 2));
+    res.json(updatedOrders);
+  } catch (err: any) {
+    res.status(500).json({ error: "Failed to record courier booking details", details: err.message });
   }
 });
 
