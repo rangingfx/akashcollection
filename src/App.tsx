@@ -59,6 +59,12 @@ import { PrivacyPolicyModal, RefundPolicyModal, ShippingPolicyModal, TermsCondit
 import { PRODUCTS, MOCK_REVIEWS } from './data/products';
 import { Product, CartItem, FilterState, Order, CustomerDetails, Review } from './types';
 import { createPostExOrder } from './services/postex';
+import {
+  saveOrderToFirestore,
+  fetchOrdersFromFirestore,
+  saveReviewToFirestore,
+  fetchReviewsFromFirestore
+} from './lib/firebase';
 
 import unstitchedBannerImg from './assets/images/unstitched_banner_1782097511336.jpg';
 import rtwBannerImg from './assets/images/ready_to_wear_banner_1782097529638.jpg';
@@ -170,13 +176,58 @@ export default function App() {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const [reviewFilter, setReviewFilter] = useState<number | null>(null);
+  const [reviewsState, setReviewsState] = useState<Review[]>(MOCK_REVIEWS);
+  const [isAddReviewOpen, setIsAddReviewOpen] = useState(false);
+
+  // Review Submissions Form State
+  const [newReviewName, setNewReviewName] = useState('');
+  const [newReviewRating, setNewReviewRating] = useState(5);
+  const [newReviewComment, setNewReviewComment] = useState('');
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+
+  const handleSubmitReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newReviewName.trim() || !newReviewComment.trim()) {
+      triggerToast('Validation Error', 'Please fill in all fields before submitting.', 'unfavorite');
+      return;
+    }
+    
+    setIsSubmittingReview(true);
+    const newReview: Review = {
+      id: `rev-${Date.now()}`,
+      customerName: newReviewName.trim(),
+      rating: newReviewRating,
+      comment: newReviewComment.trim(),
+      verified: true,
+      date: new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    };
+    
+    try {
+      await saveReviewToFirestore(newReview as any);
+      setReviewsState(prev => [newReview, ...prev]);
+      setIsAddReviewOpen(false);
+      setNewReviewName('');
+      setNewReviewComment('');
+      setNewReviewRating(5);
+      triggerToast('Review Submitted', 'Thank you! Your feedback has been synchronized to Firestore.', 'success');
+    } catch (err) {
+      console.error("Failed to save review:", err);
+      triggerToast('Error Submitting', 'There was a problem syncing your review. Please try again.', 'unfavorite');
+    } finally {
+      setIsSubmittingReview(false);
+    }
+  };
 
   // Banner Slideshow State
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
 
   const filteredReviews = reviewFilter === null 
-    ? MOCK_REVIEWS 
-    : MOCK_REVIEWS.filter(r => r.rating === reviewFilter);
+    ? reviewsState 
+    : reviewsState.filter(r => r.rating === reviewFilter);
 
   // Advanced Filters State
   const [filters, setFilters] = useState<FilterState>({
@@ -189,7 +240,7 @@ export default function App() {
     sortBy: 'best-seller'
   });
 
-  // Load state from local storage and fetch synced products on mount
+  // Load state from local storage and fetch synced products and Firestore data on mount
   useEffect(() => {
     const savedCart = localStorage.getItem('akash_collection_cart');
     if (savedCart) {
@@ -232,6 +283,38 @@ export default function App() {
       })
       .catch(err => {
         console.warn('Sync products fetch fallback active:', err.message);
+      });
+
+    // Fetch orders from Firestore
+    fetchOrdersFromFirestore()
+      .then(dbOrders => {
+        if (dbOrders && dbOrders.length > 0) {
+          setPlacedOrders(dbOrders as unknown as Order[]);
+          localStorage.setItem('akash_collection_orders', JSON.stringify(dbOrders));
+          console.log(`Loaded ${dbOrders.length} orders from Firestore.`);
+        }
+      })
+      .catch(err => {
+        console.error("Failed to fetch orders from Firestore on mount:", err);
+      });
+
+    // Fetch reviews from Firestore
+    fetchReviewsFromFirestore()
+      .then(async (dbReviews) => {
+        if (dbReviews && dbReviews.length > 0) {
+          setReviewsState(dbReviews as unknown as Review[]);
+          console.log(`Loaded ${dbReviews.length} reviews from Firestore.`);
+        } else {
+          console.log("Firestore reviews empty. Seeding database with high-fidelity customer feedback...");
+          // Seed asynchronously so we don't block the UI thread
+          for (const rev of MOCK_REVIEWS) {
+            saveReviewToFirestore(rev as any).catch(e => console.error(e));
+          }
+          setReviewsState(MOCK_REVIEWS);
+        }
+      })
+      .catch(err => {
+        console.error("Failed to fetch reviews from Firestore on mount:", err);
       });
   }, []);
 
@@ -466,6 +549,16 @@ export default function App() {
     // Save order
     const nextOrders = [...placedOrders, newOrder];
     saveOrdersToStorage(nextOrders);
+    
+    // Save order to Firestore
+    saveOrderToFirestore(newOrder as any)
+      .then(() => {
+        console.log("Order successfully mirrored to Firestore cloud database.");
+      })
+      .catch(err => {
+        console.error("Failed to mirror order to Firestore cloud database:", err);
+      });
+      
     setLatestOrder(newOrder);
 
     // Send order directly to Gmail/Admin Mailbox via our server-side API
@@ -1109,26 +1202,36 @@ export default function App() {
                     </motion.span>
                     <h2 className="font-serif text-2xl font-bold text-stone-900 uppercase">Verifiable Feedback From Pakistani Buyers</h2>
                   </motion.div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-stone-500 uppercase">Filter:</span>
-                    <div className="flex flex-wrap gap-2">
-                      <button 
-                        onClick={() => setReviewFilter(null)}
-                        className={`px-3 py-1 text-xs border rounded-full transition-colors ${reviewFilter === null ? 'bg-stone-900 text-white border-stone-900' : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'}`}
-                      >
-                        All
-                      </button>
-                      {[5, 4, 3].map(rating => (
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono text-stone-500 uppercase">Filter:</span>
+                      <div className="flex flex-wrap gap-2">
                         <button 
-                          key={rating}
-                          onClick={() => setReviewFilter(rating)}
-                          className={`px-3 py-1 text-xs border rounded-full transition-colors flex items-center gap-1 ${reviewFilter === rating ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-stone-600 border-stone-200 hover:border-amber-300'}`}
+                          onClick={() => setReviewFilter(null)}
+                          className={`px-3 py-1 text-xs border rounded-full transition-colors cursor-pointer ${reviewFilter === null ? 'bg-stone-900 text-white border-stone-900' : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'}`}
                         >
-                          <span>{rating}</span>
-                          <span className={reviewFilter === rating ? 'text-white' : 'text-amber-500'}>★</span>
+                          All
                         </button>
-                      ))}
+                        {[5, 4, 3].map(rating => (
+                          <button 
+                            key={rating}
+                            onClick={() => setReviewFilter(rating)}
+                            className={`px-3 py-1 text-xs border rounded-full transition-colors flex items-center gap-1 cursor-pointer ${reviewFilter === rating ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-stone-600 border-stone-200 hover:border-amber-300'}`}
+                          >
+                            <span>{rating}</span>
+                            <span className={reviewFilter === rating ? 'text-white' : 'text-amber-500'}>★</span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
+                    
+                    <button
+                      onClick={() => setIsAddReviewOpen(true)}
+                      className="px-4 py-1.5 bg-amber-700 hover:bg-amber-800 text-white font-mono text-xs uppercase tracking-wider rounded-full transition-all flex items-center gap-1.5 shadow-sm hover:shadow cursor-pointer"
+                    >
+                      <Sparkles size={12} />
+                      <span>Write a Review</span>
+                    </button>
                   </div>
                 </div>
 
@@ -1778,6 +1881,94 @@ export default function App() {
               >
                 Close
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Write a Review Modal */}
+      {isAddReviewOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/40 backdrop-blur-sm">
+          <div className="bg-white rounded-xl max-w-md w-full shadow-2xl overflow-hidden relative border border-stone-100">
+            <button
+              onClick={() => setIsAddReviewOpen(false)}
+              className="absolute top-4 right-4 p-2 bg-stone-50 hover:bg-stone-150 rounded-full transition-colors z-10 border border-stone-200 cursor-pointer"
+            >
+              <X size={16} className="text-stone-600" />
+            </button>
+            <div className="p-6 sm:p-8">
+              <h3 className="font-serif text-xl font-bold text-stone-900 uppercase tracking-wide mb-1">Share Your Feedback</h3>
+              <p className="text-xs text-stone-500 font-sans mb-6">Your review will be securely synchronized to our Firestore database.</p>
+              
+              <form onSubmit={handleSubmitReview} className="space-y-5">
+                <div>
+                  <label className="block text-[11px] font-mono text-stone-600 uppercase tracking-wider mb-2 text-left">Your Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={newReviewName}
+                    onChange={(e) => setNewReviewName(e.target.value)}
+                    placeholder="e.g. Ayesha Khan"
+                    className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600/30"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-mono text-stone-600 uppercase tracking-wider mb-1.5 text-left">Rating</label>
+                  <div className="flex gap-1.5 items-center">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        type="button"
+                        key={star}
+                        onClick={() => setNewReviewRating(star)}
+                        className="text-2xl transition-transform hover:scale-115 focus:outline-none cursor-pointer"
+                      >
+                        <span className={star <= newReviewRating ? "text-amber-500" : "text-stone-200"}>★</span>
+                      </button>
+                    ))}
+                    <span className="text-xs font-mono text-stone-500 ml-2">({newReviewRating} out of 5)</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-mono text-stone-600 uppercase tracking-wider mb-2 text-left">Your Review</label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={newReviewComment}
+                    onChange={(e) => setNewReviewComment(e.target.value)}
+                    placeholder="Share your experience with the fabric, stitching quality, and speed of delivery..."
+                    className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600/30 resize-none"
+                  />
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsAddReviewOpen(false)}
+                    className="flex-1 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-mono uppercase tracking-wider rounded-lg transition-colors border border-stone-200 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmittingReview}
+                    className="flex-1 py-2.5 bg-amber-700 hover:bg-amber-800 disabled:bg-amber-700/50 text-white text-xs font-mono uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                  >
+                    {isSubmittingReview ? (
+                      <>
+                        <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Syncing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles size={12} />
+                        <span>Submit Review</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

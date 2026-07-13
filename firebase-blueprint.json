@@ -1,0 +1,47 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "An order submitted by a customer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "status": { "type": "string" },
+        "total": { "type": "number" },
+        "subtotal": { "type": "number" },
+        "shippingFee": { "type": "number" },
+        "carrier": { "type": "string" },
+        "trackingNo": { "type": "string" },
+        "trackingUrl": { "type": "string" },
+        "customer": { "type": "object" },
+        "items": { "type": "array" }
+      },
+      "required": ["id", "date", "status", "total", "customer", "items"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "A customer review with rating and comment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerName": { "type": "string" },
+        "rating": { "type": "integer" },
+        "comment": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "date": { "type": "string" }
+      },
+      "required": ["id", "customerName", "rating", "comment", "verified", "date"]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of customer orders"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Collection of public reviews from Pakistani buyers"
+    }
+  }
+}
